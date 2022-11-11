@@ -31,6 +31,7 @@ To prepare you computer for development you need to install PHP >=v8.1 and Compo
 We recommend using an __Ubuntu__ distribution that ships with these versions (e.g Ubuntu 22.04 or newer). You may install the required software with:
 
 ```bash
+sudo apt update
 sudo apt install git composer php8.1 php8.1-mbstring php8.1-xml php8.1-pgsql php8.1-curl
 ```
 
