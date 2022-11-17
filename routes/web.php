@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 // Home
 Route::get('/', 'Auth\LoginController@home');
 
@@ -32,3 +33,6 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 Route::get('home', 'HomeController@show');
+
+// Profile
+Route::get('profile/{id}', 'ProfileController@show');
