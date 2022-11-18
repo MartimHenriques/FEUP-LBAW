@@ -23,14 +23,14 @@
   <body>
     <main>
       <header>
-        <h1><a href="{{ url('/cards') }}">WeMeet</a></h1>
+        <h1><a href="{{ url('/home') }}">WeMeet</a></h1>
         @if (Auth::check())
+        <h4><a href="{{ url('/events') }}">Events</a></h4>
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
         @endif
       </header>
       <section id="content">
         @yield('content')
-        <h3>AAAAAAAAAAAAAAAAA</h3>
       </section>
     </main>
   </body>

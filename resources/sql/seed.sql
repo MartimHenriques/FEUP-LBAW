@@ -1,5 +1,3 @@
-create schema if not exists lbaw22102;
-
 
 DROP TABLE IF EXISTS attendee CASCADE;
 DROP TABLE IF EXISTS choose_Option CASCADE;
@@ -39,7 +37,7 @@ CREATE TABLE users (
 -- Table: event
 
 CREATE TABLE event (
-    idEvent     SERIAL PRIMARY KEY,
+    id     SERIAL PRIMARY KEY,
     title       TEXT NOT NULL,
     description TEXT,
     visibility  BOOLEAN NOT NULL,
@@ -59,7 +57,7 @@ CREATE TABLE poll (
     description TEXT,
     date        DATE NOT NULL,
     isOpen      BOOLEAN NOT NULL DEFAULT (True),
-    idEvent     INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent     INTEGER NOT NULL REFERENCES event (id),
     id          INTEGER NOT NULL REFERENCES users (id)        
 );
 
@@ -68,7 +66,7 @@ CREATE TABLE poll (
 
 CREATE TABLE report (
     idReport 	SERIAL PRIMARY KEY,
-    idEvent  	INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent  	INTEGER NOT NULL REFERENCES event (id),
     idManager   	INTEGER REFERENCES users (id),
     idReporter  	INTEGER NOT NULL REFERENCES users (id),
     date     	DATE NOT NULL,
@@ -96,7 +94,7 @@ CREATE TABLE tag (
 -- Table: attendee
 CREATE TABLE attendee (
     id      INTEGER NOT NULL REFERENCES users (id),
-    idEvent INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent INTEGER NOT NULL REFERENCES event (id),
     PRIMARY KEY (
         id,
         idEvent
@@ -121,7 +119,7 @@ CREATE TABLE choose_Option (
 
 CREATE TABLE event_Organizer (
     id      INTEGER NOT NULL REFERENCES users (id),
-    idEvent INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent INTEGER NOT NULL REFERENCES event (id),
     PRIMARY KEY (
         id,
         idEvent
@@ -133,7 +131,7 @@ CREATE TABLE event_Organizer (
 
 CREATE TABLE event_Tag (
     idTag   INTEGER NOT NULL REFERENCES tag (idTag),
-    idEvent INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent INTEGER NOT NULL REFERENCES event (id),
     PRIMARY KEY (
         idTag,
         idEvent
@@ -144,7 +142,7 @@ CREATE TABLE event_Tag (
 -- Table: invite
 
 CREATE TABLE invite (
-    idEvent     INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent     INTEGER NOT NULL REFERENCES event (id),
     idInvitee   INTEGER NOT NULL REFERENCES users (id),
     idOrganizer INTEGER NOT NULL REFERENCES users (id),
     accepted    BOOLEAN,
@@ -162,7 +160,7 @@ CREATE TABLE message (
     text      TEXT,
     date      DATE NOT NULL,
     likeCount INTEGER NOT NULL DEFAULT (0),
-    idEvent   INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent   INTEGER NOT NULL REFERENCES event (id),
     id	   INTEGER NOT NULL REFERENCES users (id),
     parent    INTEGER REFERENCES message (idMessage)
 );
@@ -259,7 +257,7 @@ CREATE TRIGGER event_search_update
 CREATE OR REPLACE FUNCTION check_event_organizer() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF OLD.id IN (SELECT id from event_organizer WHERE idevent = OLD.idEvent) and (select count(*) from event_organizer WHERE idevent = OLD.idEvent) = 1 AND (SELECT COUNT(*) FROM attendee WHERE idevent = OLD.idEvent) > 1
+    IF OLD.id IN (SELECT id from event_organizer WHERE idEvent = OLD.idEvent) and (select count(*) from event_organizer WHERE idEvent = OLD.idEvent) = 1 AND (SELECT COUNT(*) FROM attendee WHERE idEvent = OLD.idEvent) > 1
     THEN
         RAISE EXCEPTION 'Event with attendees must have at least one event organizer!';
     END IF;
@@ -279,8 +277,8 @@ EXECUTE PROCEDURE check_event_organizer();
 CREATE OR REPLACE FUNCTION add_invite_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-INSERT INTO notification(text, date, id, type, idinvitee, idevent)
-    VALUES (concat('You have been invited to a new event: ', (select title from event where event.idevent = new.idevent)) , now(),  NEW.idinvitee, 'Invite', NEW.idinvitee, NEW.idevent);
+INSERT INTO notification(text, date, id, type, idInvitee, idEvent)
+    VALUES (concat('You have been invited to a new event: ', (select title from event where event.id = new.idEvent)) , now(),  NEW.idInvitee, 'Invite', NEW.idInvitee, NEW.idEvent);
     RETURN NEW;
 END;
 $BODY$
@@ -367,7 +365,7 @@ $BODY$
 BEGIN
     IF OLD.accepted != TRUE AND NEW.accepted = TRUE
     THEN
-        INSERT INTO attendee (id, idevent) SELECT NEW.idInvitee, NEW.idevent;
+        INSERT INTO attendee (id, idEvent) SELECT NEW.idInvitee, NEW.idEvent;
     END IF;
     RETURN NEW;
 END;
@@ -389,8 +387,8 @@ BEGIN
 	IF NEW.state = 'Banned' THEN
     	INSERT INTO notification(text, date, id, type, idreport)
         VALUES ('Your event was banned!', NEW.date, 
-                (SELECT event_organizer.id from event_organizer WHERE event_organizer.idevent = New.idevent LIMIT 1),
-                'Report', NEW.idreport);
+                (SELECT event_organizer.id from event_Organizer WHERE event_organizer.idEvent = New.idEvent LIMIT 1),
+                'Report', NEW.idReport);
     END IF;
     RETURN NEW;
 END;
