@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Card;
+use App\Models\Event;
 
-class CardController extends Controller
+class EventController extends Controller
 {
     /**
      * Shows the card for a given id.
@@ -30,10 +30,21 @@ class CardController extends Controller
      */
     public function list()
     {
-      if (!Auth::check()) return redirect('/login');
       $this->authorize('list', Card::class);
       $cards = Auth::user()->cards()->orderBy('id')->get();
       return view('pages.cards', ['cards' => $cards]);
+    }
+
+    public static function showEvents(){
+      if(Auth::check()){
+        $events = Event::get();
+        return view('pages.feed',['events' => $events]);
+      }
+      else{
+        $events = Event::where('visibility', 1)->get();
+        return view('pages.feed',['events' => $events]);
+      }
+
     }
 
     /**
