@@ -36,8 +36,15 @@ class EventController extends Controller
     }
 
     public static function showEvents(){
-      $events = Event::get();
-      return view('pages.feed',['events' => $events]);
+      if(Auth::check()){
+        $events = Event::get();
+        return view('pages.feed',['events' => $events]);
+      }
+      else{
+        $events = Event::where('visibility', 1)->get();
+        return view('pages.feed',['events' => $events]);
+      }
+
     }
 
     /**

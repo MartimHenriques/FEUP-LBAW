@@ -24,9 +24,11 @@
     <main>
       <header>
         <h1><a href="{{ url('/home') }}">WeMeet</a></h1>
-        @if (Auth::check())
         <h4><a href="{{ url('/events') }}">Events</a></h4>
+        @if (Auth::check())
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
+        @else
+        <a class="button" href="{{ url('/login') }}"> Login </a> 
         @endif
       </header>
       <section id="content">
