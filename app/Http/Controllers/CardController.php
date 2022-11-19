@@ -13,7 +13,7 @@ class CardController extends Controller
     /**
      * Shows the card for a given id.
      *
-     * @param  int  $id
+     * @param  int  $ids
      * @return Response
      */
     public function show($id)

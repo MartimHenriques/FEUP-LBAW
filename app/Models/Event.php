@@ -14,6 +14,11 @@ class Event extends Model
     'title', 'description', 'visibility', 'picture', 'local', 'publish_date', 'start_date', 'final_date'
   ];
 
-
+    /**
+     * The cards this user owns.
+     */
+    public function messages() {
+      return $this->hasMany('App\Models\Message');
+    } 
 
 }

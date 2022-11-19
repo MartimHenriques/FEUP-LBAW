@@ -7,33 +7,24 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Event;
+use App\Models\Message;
 
 class EventController extends Controller
 {
     /**
-     * Shows the card for a given id.
+     * Shows the event for a given id.
      *
      * @param  int  $id
      * @return Response
      */
     public function show($id)
     {
-      $card = Card::find($id);
-      $this->authorize('show', $card);
-      return view('pages.card', ['card' => $card]);
+      $event = Event::find($id);
+      $messages = Message::where('idevent','=',$id)->get();
+      //pq q o authorize n funciona?
+      return view('pages.event', ['event' => $event, 'messages' => $messages]);
     }
 
-    /**
-     * Shows all cards.
-     *
-     * @return Response
-     */
-    public function list()
-    {
-      $this->authorize('list', Card::class);
-      $cards = Auth::user()->cards()->orderBy('id')->get();
-      return view('pages.cards', ['cards' => $cards]);
-    }
 
     public static function showEvents(){
       if(Auth::check()){
@@ -46,7 +37,6 @@ class EventController extends Controller
       }
 
     }
-
     /**
      * Creates a new card.
      *
