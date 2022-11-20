@@ -1,6 +1,6 @@
-create schema if not exists lbaw22102;
+create schema if not exists public;
 
-SET search_path TO lbaw22102;
+SET search_path TO public;
 DROP TABLE IF EXISTS attendee CASCADE;
 DROP TABLE IF EXISTS choose_Option CASCADE;
 DROP TABLE IF EXISTS EVENT CASCADE;
@@ -349,7 +349,7 @@ EXECUTE PROCEDURE edit_message();
 CREATE OR REPLACE FUNCTION create_event_organizer() RETURNS TRIGGER AS
 $BODY$
     BEGIN
-    INSERT INTO attendee (idUser, idEvent) SELECT NEW.idUser, NEW.idEvent;
+    INSERT INTO attendee (idUser, idEvent) SELECT NEW.id, NEW.idevent;
     RETURN NEW;
 END;
 $BODY$
