@@ -93,10 +93,10 @@ CREATE TABLE tag (
 
 -- Table: attendee
 CREATE TABLE attendee (
-    id      INTEGER NOT NULL REFERENCES users (id),
+    idUser      INTEGER NOT NULL REFERENCES users (id),
     idEvent INTEGER NOT NULL REFERENCES event (id),
     PRIMARY KEY (
-        id,
+        idUser,
         idEvent
     )
 );
@@ -347,7 +347,7 @@ EXECUTE PROCEDURE edit_message();
 CREATE OR REPLACE FUNCTION create_event_organizer() RETURNS TRIGGER AS
 $BODY$
     BEGIN
-    INSERT INTO attendee (id, idEvent) SELECT NEW.id, NEW.idEvent;
+    INSERT INTO attendee (idUser, idEvent) SELECT NEW.idUser, NEW.idEvent;
     RETURN NEW;
 END;
 $BODY$
@@ -365,7 +365,7 @@ $BODY$
 BEGIN
     IF OLD.accepted != TRUE AND NEW.accepted = TRUE
     THEN
-        INSERT INTO attendee (id, idEvent) SELECT NEW.idInvitee, NEW.idEvent;
+        INSERT INTO attendee (idUser, idEvent) SELECT NEW.idInvitee, NEW.idEvent;
     END IF;
     RETURN NEW;
 END;
@@ -493,19 +493,19 @@ INSERT INTO event_Organizer (id, idEvent) VALUES (5,7);
 INSERT INTO event_Organizer (id, idEvent) VALUES (9,8);
 INSERT INTO event_Organizer (id, idEvent) VALUES (9,9);
 
-INSERT INTO attendee (id, idEvent) VALUES (9,1);
-INSERT INTO attendee (id, idEvent) VALUES (3,1);
-INSERT INTO attendee (id, idEvent) VALUES (8,5);
-INSERT INTO attendee (id, idEvent) VALUES (2,3);
-INSERT INTO attendee (id, idEvent) VALUES (9,3);
-INSERT INTO attendee (id, idEvent) VALUES (5,5);
-INSERT into attendee (ID, idevent) VALUES (3,2);
-INSERT into attendee (ID, idevent) VALUES (3,4);
-INSERT into attendee (ID, idevent) VALUES (8,1);
-INSERT into attendee (ID, idevent) VALUES (4,3);
-INSERT into attendee (ID, idevent) VALUES (4,5);
-INSERT into attendee (ID, idevent) VALUES (4,6);
-INSERT into attendee (ID, idevent) VALUES (9,2);
+INSERT INTO attendee (idUser, idEvent) VALUES (9,1);
+INSERT INTO attendee (idUser, idEvent) VALUES (3,1);
+INSERT INTO attendee (idUser, idEvent) VALUES (8,5);
+INSERT INTO attendee (idUser, idEvent) VALUES (2,3);
+INSERT INTO attendee (idUser, idEvent) VALUES (9,3);
+INSERT INTO attendee (idUser, idEvent) VALUES (5,5);
+INSERT into attendee (idUser, idevent) VALUES (3,2);
+INSERT into attendee (idUser, idevent) VALUES (3,4);
+INSERT into attendee (idUser, idevent) VALUES (8,1);
+INSERT into attendee (idUser, idevent) VALUES (4,3);
+INSERT into attendee (idUser, idevent) VALUES (4,5);
+INSERT into attendee (idUser, idevent) VALUES (4,6);
+INSERT into attendee (idUser, idevent) VALUES (9,2);
 
 
 INSERT INTO choose_Option (id, idOption) VALUES (9, 1);

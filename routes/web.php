@@ -40,4 +40,5 @@ Route::get('events', 'EventController@showEvents');
 
 //event
 Route::get('events/{id}', 'EventController@show');
+Route::post('api/events/{event}', 'EventController@join');
 

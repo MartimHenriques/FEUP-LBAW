@@ -64,4 +64,15 @@ class EventController extends Controller
 
       return $card;
     }
+
+    public function join(Request $request, Event $event)
+    {
+      if (!Auth::check()) return redirect('/login');
+      $user = User::find(Auth::user()->id);
+      $this->authorize('attendee', [$user, $event]);
+      $event->invites()->attach($user->id); //parei aqui
+      return view('pages.event', [
+        'event' => $event,
+        'user' => User::find(Auth::user()->id)]);
+    }
 }

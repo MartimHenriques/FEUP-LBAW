@@ -6,7 +6,7 @@
 @section('content')
 
 <h1>{{ $event->title }}</h1>
-
+<button>Showing up</button>
 <button onclick="infoFunction()">Info</button>
 <button onclick="forumFunction()">Forum</button>
 
