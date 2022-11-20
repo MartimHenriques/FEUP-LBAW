@@ -28,7 +28,7 @@ class EventController extends Controller
      *
      * @return Response
      */
-    public function showOneEvent()
+    public function showOneEvent($id)
     {
       $event = Event::find($id);
       $messages = Message::where('idevent','=',$id)->get();
