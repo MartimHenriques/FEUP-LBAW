@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\EventController;
 
 // Cards
 Route::get('cards', 'CardController@list');
@@ -32,3 +33,5 @@ Route::post('register', 'Auth\RegisterController@register');
 
 Route::get('/', 'HomeController@show');
 Route::get('events', 'EventController@showEvents');
+Route::get('eventsCreate', [EventController::class, 'showForm']);
+Route::post('eventsCreate', [EventController::class, 'createEvent']);
