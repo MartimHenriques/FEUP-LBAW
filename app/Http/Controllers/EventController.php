@@ -9,6 +9,7 @@ use Carbon\Carbon;
 
 use App\Models\Event;
 use App\Models\EventOrganizer;
+use App\Models\Message;
 
 class EventController extends Controller
 {
@@ -23,17 +24,18 @@ class EventController extends Controller
     }
 
     /**
-     * Shows all cards.
+     * Shows the event for a given id.
      *
      * @return Response
      */
-    public function list()
+    public function showOneEvent()
     {
-      $this->authorize('list', Card::class);
-      $cards = Auth::user()->cards()->orderBy('id')->get();
-      return view('pages.cards', ['cards' => $cards]);
+      $event = Event::find($id);
+      $messages = Message::where('idevent','=',$id)->get();
+      //pq q o authorize n funciona?
+      return view('pages.event', ['event' => $event, 'messages' => $messages]);
     }
-
+    
     public static function showEvents(){
       if(Auth::check()){
         $events = Event::get();
@@ -45,7 +47,6 @@ class EventController extends Controller
       }
 
     }
-
     /**
      * Creates a new event.
      *
@@ -83,5 +84,16 @@ class EventController extends Controller
       $card->delete();
 
       return $card;
+    }
+
+    public function join(Request $request, Event $event)
+    {
+      if (!Auth::check()) return redirect('/login');
+      $user = User::find(Auth::user()->id);
+      $this->authorize('attendee', [$user, $event]);
+      $event->invites()->attach($user->id); //parei aqui
+      return view('pages.event', [
+        'event' => $event,
+        'user' => User::find(Auth::user()->id)]);
     }
 }

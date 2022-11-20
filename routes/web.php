@@ -1,5 +1,9 @@
 <?php
+namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EventController;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,7 +15,6 @@
 |
 */
 
-use App\Http\Controllers\EventController;
 
 // Cards
 Route::get('cards', 'CardController@list');
@@ -31,7 +34,17 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
+//home
 Route::get('/', 'HomeController@show');
+
+
+
+//feed
+Route::get('events', 'EventController@showEvents');
+
+//event
+Route::get('events/{id}', 'EventController@showOneEvent');
+Route::post('api/events/{event}', 'EventController@join');
 Route::get('events', 'EventController@showEvents');
 Route::get('eventsCreate', [EventController::class, 'showForm']);
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
