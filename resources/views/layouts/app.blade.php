@@ -23,23 +23,17 @@
   <body>
     <main>
       <header>
-        <h1><a href="{{ url('/home') }}">WeMeet</a></h1>
-<<<<<<< HEAD
-=======
+        <h1><a href="{{ url('/') }}">WeMeet</a></h1>
         <h4><a href="{{ url('/events') }}">Events</a></h4>
->>>>>>> 4f5ac6a123842a5a36a2cf8903abc162123e2e85
         @if (Auth::check())
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
         @else
-        <a class="button" href="{{ url('/login') }}"> Login </a> 
+        <a class="button" href="{{ route('login') }}"> Login </a> 
+        <a class="button" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
       <section id="content">
         @yield('content')
-<<<<<<< HEAD
-        <h3>HEADER</h3>
-=======
->>>>>>> 4f5ac6a123842a5a36a2cf8903abc162123e2e85
       </section>
     </main>
   </body>
