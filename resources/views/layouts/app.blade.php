@@ -29,6 +29,7 @@
       <header>
         <h1><a href="{{ url('/') }}">WeMeet</a></h1>
         <h4><a href="{{ url('/events') }}">Events</a></h4>
+        <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
         @if (Auth::check())
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
         @else

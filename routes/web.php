@@ -43,5 +43,5 @@ Route::get('events', 'EventController@showEvents')->name('events');
 //event
 Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
 Route::post('api/events/{event}', 'EventController@join');
-Route::get('eventsCreate', [EventController::class, 'showForm']);
+Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);

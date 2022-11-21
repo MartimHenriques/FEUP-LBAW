@@ -48,6 +48,27 @@ class EventController extends Controller
       }
 
     }
+
+    /**
+     * Get a validator for an incoming event request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'title' => 'required|string|max:255',
+            'description' => 'string',
+            'visibility' => 'required|boolean',
+            'picture' => 'file',
+            'local' => 'required|string',
+            'publish_date' => 'required|date',
+            'start_date' => 'required|date',
+            'final_date' => 'required|date',
+        ]);
+    }
+
     /**
      * Creates a new event.
      *
@@ -55,6 +76,14 @@ class EventController extends Controller
      */
     public function createEvent(Request $request)
     {
+      $current_date = Carbon::now();
+      $start_date = $request->input('start_date');
+      $final_date = $request->input('final_date');
+
+      if (($start_date > $final_date)) {
+        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      }
+
       $event = new Event();
 
       //$this->authorize('createEvent', $event);
@@ -64,9 +93,9 @@ class EventController extends Controller
       $event->visibility = $request->input('visibility');
       $event->picture = $request->input('picture');
       $event->local = $request->input('local');
-      $event->publish_date = Carbon::now();
-      $event->start_date = $request->input('start_date');
-      $event->final_date = $request->input('final_date');
+      $event->publish_date = $current_date;
+      $event->start_date = $start_date;
+      $event->final_date = $final_date;
       $event->save();
 
       $event_organizer = new EventOrganizer();
