@@ -1,13 +1,12 @@
 body {
   background-color: #ffffff;
-  color: #9b4dca;
+  color: #403f3f;
 }
 main > header {
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   grid-template-rows: auto;
   align-items: center;
-  background-color: #d2afe7;
   padding: 1em;
   margin: 1em;
 }
@@ -26,7 +25,7 @@ main > header a.button {
 .eventCard {
   display: flex;
   flex-direction: column;
-  background-color: #c3ebed;
+  background-color: #c3daed;
   padding: 1em;
   margin: 1em;
 }
@@ -127,21 +126,69 @@ main > header a.button {
  * Some styles might be missing
  **/
 button {
-  background-color: #9b4dca;
-  border-color: #9b4dca;
+  background-color: #a1b4e3;
+  border-color: #cec9d2;
 }
 a.button {
-  background-color: #9b4dca;
-  border-color: #9b4dca;
+  background-color: #a1b4e3;
+  border-color: #cec9d2;
 }
 a.button.button-outline {
-  color: #9b4dca;
+  color: #5e5e5e;
 }
 a {
-  color: #9b4dca;
+  color: #4b4b4b;
 }
 input[type=text]:focus,
 input[type=email]:focus,
 input[type=password]:focus {
-  border-color: #9b4dca;
+  border-color: #383838;
+}
+
+.col-sm-9{
+  padding-left: 10px;
+}
+
+.mb-0{
+  padding-left: 15px;
+}
+
+.col-lg-4{
+  margin-right: auto;
+}
+
+.editProfile{
+  margin: auto;
+  align-content: center;
+}
+
+.container-pic-editProfile {
+  width: fit-content;
+  background-color: #eee;
+  margin-right: auto;
+} 
+
+.container-password-editProfile {
+  width: max-content;
+  background-color: #eee;
+  margin-right: auto;
+  padding-left: 10px;
+} 
+
+.save-edit-profile-button{
+  width: fit-content;
+  padding-top: 30px;
+  margin-left: 40px;  
+}
+
+/* Add rounded corners to the top left and the top right corner of the image */
+img {
+  width: 20%;
+  border-radius: 5px 5px 5px 5px;
+}
+
+
+.title{
+  width: fit-content;
+  margin-bottom: auto;
 }

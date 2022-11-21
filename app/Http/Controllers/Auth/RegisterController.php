@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
         ]);
     }
-
+ 
     /**
      * Create a new user instance after a valid registration.
      *

@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+*/ 
+
+// Home
+Route::get('/', 'Auth\LoginController@home');
 
 
 // Cards
@@ -34,6 +37,14 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
+
+// edit profile
+Route::get('profile/editProfile', 'EditProfileController@show');
+Route::post('profile/editProfile', 'EditProfileController@saveChanges') -> name('saveChanges');
+
+// Profile
+Route::get('profile', 'ProfileController@show');
+
 //home
 Route::get('/', 'HomeController@show');
 
@@ -45,3 +56,5 @@ Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
 Route::post('api/events/{event}', 'EventController@join');
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
+
+Route::get('myevents', 'EventController@showMyEvents');
