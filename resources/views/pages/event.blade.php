@@ -9,6 +9,9 @@
 <button>Showing up</button>
 <button onclick="infoFunction()">Info</button>
 <button onclick="forumFunction()">Forum</button>
+@if ($event->visibility)
+<button onclick="copyLink();">Share Event</button>
+@endif
 
 <div id="info-content">
 <p>{{ $event->description }}</p>
@@ -67,6 +70,17 @@ function forumFunction() {
     x.style.display = "block";
     y.style.display = "none";
 }
+function copyLink(){
+    var dummy = document.createElement('input'),
+    text = window.location.href;
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
 
+    // Alert the copied text
+    alert("Copied the text: " + dummy.value);
+}
 </script>
 @endsection

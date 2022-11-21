@@ -23,8 +23,8 @@
   <body>
     <main>
       <header>
-        <h1><a href="{{ url('/') }}">WeMeet</a></h1>
-        <h4><a href="{{ url('/events') }}">Events</a></h4>
+        <h1><a href="{{ url('/') }}"><img src="/../logo.png" alt="logo"></a></h1>
+        <a class="button" href="{{ url('/events') }}">Events</a>
         @if (Auth::check())
         <a class="button" href="{{ url('/profile') }}"> Profile </a>
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
