@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 // Home
 Route::get('/', 'Auth\LoginController@home');
+
 
 // Cards
 Route::get('cards', 'CardController@list');
@@ -47,10 +49,12 @@ Route::get('profile', 'ProfileController@show');
 Route::get('/', 'HomeController@show');
 
 //feed
-Route::get('events', 'EventController@showEvents');
+Route::get('events', 'EventController@showEvents')->name('events');
 
 //event
-Route::get('events/{id}', 'EventController@show');
+Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
 Route::post('api/events/{event}', 'EventController@join');
+Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
+Route::post('eventsCreate', [EventController::class, 'createEvent']);
 
 Route::get('myevents', 'EventController@showMyEvents');
