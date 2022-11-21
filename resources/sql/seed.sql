@@ -1,6 +1,6 @@
-create schema if not exists lbaw22102;
+create schema if not exists public;
 
-
+SET search_path TO public;
 DROP TABLE IF EXISTS attendee CASCADE;
 DROP TABLE IF EXISTS choose_Option CASCADE;
 DROP TABLE IF EXISTS EVENT CASCADE;
@@ -39,7 +39,7 @@ CREATE TABLE users (
 -- Table: event
 
 CREATE TABLE event (
-    idEvent     SERIAL PRIMARY KEY,
+    id     SERIAL PRIMARY KEY,
     title       TEXT NOT NULL,
     description TEXT,
     visibility  BOOLEAN NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE poll (
     description TEXT,
     date        DATE NOT NULL,
     isOpen      BOOLEAN NOT NULL DEFAULT (True),
-    idEvent     INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent     INTEGER NOT NULL REFERENCES event (id),
     id          INTEGER NOT NULL REFERENCES users (id)        
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE poll (
 
 CREATE TABLE report (
     idReport 	SERIAL PRIMARY KEY,
-    idEvent  	INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent  	INTEGER NOT NULL REFERENCES event (id),
     idManager   	INTEGER REFERENCES users (id),
     idReporter  	INTEGER NOT NULL REFERENCES users (id),
     date     	DATE NOT NULL,
@@ -95,10 +95,10 @@ CREATE TABLE tag (
 
 -- Table: attendee
 CREATE TABLE attendee (
-    id      INTEGER NOT NULL REFERENCES users (id),
-    idEvent INTEGER NOT NULL REFERENCES event (idEvent),
+    idUser      INTEGER NOT NULL REFERENCES users (id),
+    idEvent INTEGER NOT NULL REFERENCES event (id),
     PRIMARY KEY (
-        id,
+        idUser,
         idEvent
     )
 );
@@ -121,7 +121,7 @@ CREATE TABLE choose_Option (
 
 CREATE TABLE event_Organizer (
     id      INTEGER NOT NULL REFERENCES users (id),
-    idEvent INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent INTEGER NOT NULL REFERENCES event (id),
     PRIMARY KEY (
         id,
         idEvent
@@ -133,7 +133,7 @@ CREATE TABLE event_Organizer (
 
 CREATE TABLE event_Tag (
     idTag   INTEGER NOT NULL REFERENCES tag (idTag),
-    idEvent INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent INTEGER NOT NULL REFERENCES event (id),
     PRIMARY KEY (
         idTag,
         idEvent
@@ -144,7 +144,7 @@ CREATE TABLE event_Tag (
 -- Table: invite
 
 CREATE TABLE invite (
-    idEvent     INTEGER NOT NULL REFERENCES event (idEvent),
+    idEvent     INTEGER NOT NULL REFERENCES event (id),
     idInvitee   INTEGER NOT NULL REFERENCES users (id),
     idOrganizer INTEGER NOT NULL REFERENCES users (id),
     accepted    BOOLEAN,
@@ -158,13 +158,13 @@ CREATE TABLE invite (
 -- Table: message
 
 CREATE TABLE message (
-    idMessage SERIAL PRIMARY KEY,
-    text      TEXT,
+    id SERIAL PRIMARY KEY,
+    content      TEXT,
     date      DATE NOT NULL,
     likeCount INTEGER NOT NULL DEFAULT (0),
-    idEvent   INTEGER NOT NULL REFERENCES event (idEvent),
-    id	   INTEGER NOT NULL REFERENCES users (id),
-    parent    INTEGER REFERENCES message (idMessage)
+    idEvent   INTEGER NOT NULL REFERENCES event (id),
+    idUser	   INTEGER NOT NULL REFERENCES users (id),
+    parent    INTEGER REFERENCES message (id)
 );
 
 
@@ -173,23 +173,23 @@ CREATE TABLE message (
 CREATE TABLE message_File (
     idFile    SERIAL PRIMARY KEY,
     file      TEXT,
-    idMessage INTEGER NOT NULL REFERENCES message (idMessage) 
+    idMessage INTEGER NOT NULL REFERENCES message (id) 
 );
 
 
 -- Table: notification
 
 CREATE TABLE notification (
-    idNotif   SERIAL PRIMARY KEY,
-    text      TEXT NOT NULL,
+    id        SERIAL PRIMARY KEY,
+    content   TEXT NOT NULL,
     date      DATE NOT NULL,
     read      BOOLEAN NOT NULL DEFAULT (False),
-    id        INTEGER NOT NULL REFERENCES users (id),
+    idUser    INTEGER NOT NULL REFERENCES users (id),
     Type	   notificationTypes,
     idReport  INTEGER REFERENCES report (idReport) CHECK ((idReport = NULL) or (idReport != NULL and type = 'Report')),
     idEvent   INTEGER CHECK ((idEvent = NULL) or (idEvent != NULL and type = 'Invite')),
     idInvitee INTEGER CHECK ((idInvitee = NULL) or (idInvitee != NULL and type = 'Invite')),
-    idMessage INTEGER REFERENCES message (idMessage) CHECK ((idMessage = NULL) or (idMessage != NULL and type = 'Message')),
+    idMessage INTEGER REFERENCES message (id) CHECK ((idMessage = NULL) or (idMessage != NULL and type = 'Message')),
     FOREIGN KEY (
         idEvent,
         idInvitee
@@ -202,7 +202,7 @@ CREATE TABLE notification (
 
 CREATE TABLE vote (
     id        INTEGER NOT NULL REFERENCES users (id),
-    idMessage INTEGER NOT NULL REFERENCES message (idMessage),
+    idMessage INTEGER NOT NULL REFERENCES message (id),
     PRIMARY KEY (
         id,
         idMessage
@@ -259,7 +259,7 @@ CREATE TRIGGER event_search_update
 CREATE OR REPLACE FUNCTION check_event_organizer() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF OLD.id IN (SELECT id from event_organizer WHERE idevent = OLD.idEvent) and (select count(*) from event_organizer WHERE idevent = OLD.idEvent) = 1 AND (SELECT COUNT(*) FROM attendee WHERE idevent = OLD.idEvent) > 1
+    IF OLD.id IN (SELECT id from event_organizer WHERE idEvent = OLD.idEvent) and (select count(*) from event_organizer WHERE idEvent = OLD.idEvent) = 1 AND (SELECT COUNT(*) FROM attendee WHERE idEvent = OLD.idEvent) > 1
     THEN
         RAISE EXCEPTION 'Event with attendees must have at least one event organizer!';
     END IF;
@@ -279,8 +279,8 @@ EXECUTE PROCEDURE check_event_organizer();
 CREATE OR REPLACE FUNCTION add_invite_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-INSERT INTO notification(text, date, id, type, idinvitee, idevent)
-    VALUES (concat('You have been invited to a new event: ', (select title from event where event.idevent = new.idevent)) , now(),  NEW.idinvitee, 'Invite', NEW.idinvitee, NEW.idevent);
+INSERT INTO notification(content, date, idUser, type, idInvitee, idEvent)
+    VALUES (concat('You have been invited to a new event: ', (select title from event where event.id = new.idEvent)) , now(),  NEW.idInvitee, 'Invite', NEW.idInvitee, NEW.idEvent);
     RETURN NEW;
 END;
 $BODY$
@@ -297,9 +297,9 @@ EXECUTE PROCEDURE add_invite_notification();
 CREATE OR REPLACE FUNCTION add_message_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO notification(text, date, id, type, idmessage)
-    VALUES (concat('New notification: ', NEW.text), NEW.date, 
-            (SELECT event_organizer.id FROM event_Organizer WHERE event_Organizer.idEvent = NEW.idEvent), 'Message', NEW.idmessage);
+    INSERT INTO notification(content, date, idUser, type, idMessage)
+    VALUES (concat('New notification: ', NEW.content), NEW.date, 
+            (SELECT event_organizer.id FROM event_Organizer WHERE event_Organizer.idEvent = NEW.idEvent), 'Message', NEW.id);
     RETURN NEW;
 END;
 $BODY$
@@ -315,7 +315,7 @@ EXECUTE PROCEDURE add_message_notification();
 CREATE OR REPLACE FUNCTION add_report_admin_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO notification(text, date, id, type, idreport)
+    INSERT INTO notification(content, date, idUser, type, idReport)
     VALUES (concat('New report notification: ',NEW.motive), NEW.date, 
             (SELECT users.id from users WHERE isadmin = TRUE ORDER BY random() LIMIT 1), 'Report', NEW.idreport);
     RETURN NEW;
@@ -349,7 +349,7 @@ EXECUTE PROCEDURE edit_message();
 CREATE OR REPLACE FUNCTION create_event_organizer() RETURNS TRIGGER AS
 $BODY$
     BEGIN
-    INSERT INTO attendee (id, idEvent) SELECT NEW.id, NEW.idEvent;
+    INSERT INTO attendee (idUser, idEvent) SELECT NEW.id, NEW.idevent;
     RETURN NEW;
 END;
 $BODY$
@@ -367,7 +367,7 @@ $BODY$
 BEGIN
     IF OLD.accepted != TRUE AND NEW.accepted = TRUE
     THEN
-        INSERT INTO attendee (id, idevent) SELECT NEW.idInvitee, NEW.idevent;
+        INSERT INTO attendee (idUser, idEvent) SELECT NEW.idInvitee, NEW.idEvent;
     END IF;
     RETURN NEW;
 END;
@@ -387,10 +387,10 @@ CREATE OR REPLACE FUNCTION add_banned_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
 	IF NEW.state = 'Banned' THEN
-    	INSERT INTO notification(text, date, id, type, idreport)
+    	INSERT INTO notification(content, date, idUser, type, idReport)
         VALUES ('Your event was banned!', NEW.date, 
-                (SELECT event_organizer.id from event_organizer WHERE event_organizer.idevent = New.idevent LIMIT 1),
-                'Report', NEW.idreport);
+                (SELECT event_organizer.id from event_Organizer WHERE event_organizer.idEvent = New.idEvent LIMIT 1),
+                'Report', NEW.idReport);
     END IF;
     RETURN NEW;
 END;
@@ -495,19 +495,19 @@ INSERT INTO event_Organizer (id, idEvent) VALUES (5,7);
 INSERT INTO event_Organizer (id, idEvent) VALUES (9,8);
 INSERT INTO event_Organizer (id, idEvent) VALUES (9,9);
 
-INSERT INTO attendee (id, idEvent) VALUES (9,1);
-INSERT INTO attendee (id, idEvent) VALUES (3,1);
-INSERT INTO attendee (id, idEvent) VALUES (8,5);
-INSERT INTO attendee (id, idEvent) VALUES (2,3);
-INSERT INTO attendee (id, idEvent) VALUES (9,3);
-INSERT INTO attendee (id, idEvent) VALUES (5,5);
-INSERT into attendee (ID, idevent) VALUES (3,2);
-INSERT into attendee (ID, idevent) VALUES (3,4);
-INSERT into attendee (ID, idevent) VALUES (8,1);
-INSERT into attendee (ID, idevent) VALUES (4,3);
-INSERT into attendee (ID, idevent) VALUES (4,5);
-INSERT into attendee (ID, idevent) VALUES (4,6);
-INSERT into attendee (ID, idevent) VALUES (9,2);
+INSERT INTO attendee (idUser, idEvent) VALUES (9,1);
+INSERT INTO attendee (idUser, idEvent) VALUES (3,1);
+INSERT INTO attendee (idUser, idEvent) VALUES (8,5);
+INSERT INTO attendee (idUser, idEvent) VALUES (2,3);
+INSERT INTO attendee (idUser, idEvent) VALUES (9,3);
+INSERT INTO attendee (idUser, idEvent) VALUES (5,5);
+INSERT into attendee (idUser, idevent) VALUES (3,2);
+INSERT into attendee (idUser, idevent) VALUES (3,4);
+INSERT into attendee (idUser, idevent) VALUES (8,1);
+INSERT into attendee (idUser, idevent) VALUES (4,3);
+INSERT into attendee (idUser, idevent) VALUES (4,5);
+INSERT into attendee (idUser, idevent) VALUES (4,6);
+INSERT into attendee (idUser, idevent) VALUES (9,2);
 
 
 INSERT INTO choose_Option (id, idOption) VALUES (9, 1);
@@ -571,17 +571,17 @@ INSERT INTO invite (idEvent, idInvitee, idOrganizer, accepted) VALUES (10,8,13, 
 INSERT INTO invite (idEvent, idInvitee, idOrganizer, accepted) VALUES (5,5,11, TRUE);
 INSERT INTO invite (idEvent, idInvitee, idOrganizer, accepted) VALUES (5,8,11, TRUE);
 -----
-INSERT INTO message (text, date, likeCount, idEvent, id) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 1, 5, 8);
-INSERT INTO message (text, date, likeCount, idEvent, id) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 0, 7, 3);
-INSERT INTO message (text, date, likeCount, idEvent, id, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 1, 5, 11, 1);
-INSERT INTO message (text, date, likeCount, idEvent, id, parent) VALUES (NULL, '2022-10-30 23:00:00', 2, 5, 8, 1);
+INSERT INTO message (content, date, likeCount, idEvent, idUser) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 1, 5, 8);
+INSERT INTO message (content, date, likeCount, idEvent, idUser) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 0, 7, 3);
+INSERT INTO message (content, date, likeCount, idEvent, idUser, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 1, 5, 11, 1);
+INSERT INTO message (content, date, likeCount, idEvent, idUser, parent) VALUES (NULL, '2022-10-30 23:00:00', 2, 5, 8, 1);
 
 INSERT INTO message_File (file, idMessage) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);
 
-INSERT INTO notification (text, date, read, id, type, idReport, idEvent, idInvitee, idMessage) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 3, 'Message', NULL, NULL, NULL, 1);
-INSERT INTO notification (text, date, read, id, type, idReport, idEvent, idInvitee, idMessage) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 9, 'Message', NULL, NULL, NULL, 1);
-INSERT INTO notification (text, date, read, id, type, idReport, idEvent, idInvitee, idMessage) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 2, 'Message', NULL, NULL, NULL, 2);
-INSERT INTO notification (text, date, read, id, type, idReport, idEvent, idInvitee, idMessage) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 9, 'Message', NULL, NULL, NULL, 2);
+INSERT INTO notification (content, date, read, idUser, type, idReport, idEvent, idInvitee, idMessage) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 3, 'Message', NULL, NULL, NULL, 1);
+INSERT INTO notification (content, date, read, idUser, type, idReport, idEvent, idInvitee, idMessage) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 9, 'Message', NULL, NULL, NULL, 1);
+INSERT INTO notification (content, date, read, idUser, type, idReport, idEvent, idInvitee, idMessage) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 2, 'Message', NULL, NULL, NULL, 2);
+INSERT INTO notification (content, date, read, idUser, type, idReport, idEvent, idInvitee, idMessage) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 9, 'Message', NULL, NULL, NULL, 2);
 
 INSERT INTO vote (id, idMessage) VALUES (11, 1);
 INSERT INTO vote (id, idMessage) VALUES (8, 3);
