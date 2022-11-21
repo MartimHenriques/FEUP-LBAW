@@ -27,6 +27,7 @@
         <h4><a href="{{ url('/events') }}">Events</a></h4>
         @if (Auth::check())
         <a class="button" href="{{ url('/profile') }}"> Profile </a>
+        <h4><a href="{{ url('/myevents') }}">My events</a></h4>
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
         @else
         <a class="button" href="{{ route('login') }}"> Login </a> 

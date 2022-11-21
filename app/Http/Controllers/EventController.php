@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Event;
 use App\Models\Message;
+use App\Models\Event_Organizer;
 
 class EventController extends Controller
 {
@@ -20,9 +21,23 @@ class EventController extends Controller
     public function show($id)
     {
       $event = Event::find($id);
-      $messages = Message::where('idevent','=',$id)->get();
+      $messages = Message::where('id_event','=',$id)->get();
       //pq q o authorize n funciona?
       return view('pages.event', ['event' => $event, 'messages' => $messages]);
+    }
+
+    public function showMyEvents()
+    {
+      $user = Auth::user()->id;
+      /*
+      $myeventsid = Event_Organizer::where('id_user','=',$user)->get(['id_event']);
+      $myevents = Event::where('id_event','=',$myeventsid)->get();*/
+      $myevents = DB::table('event')
+          ->join('event_organizer', 'event.id', '=', 'event_organizer.id_event')
+          ->where('event_organizer.id_user', $user)
+          ->get();
+      //pq q o authorize n funciona?
+      return view('pages.myevents', ['myevents' => $myevents]);
     }
 
 
@@ -65,6 +80,7 @@ class EventController extends Controller
       return $card;
     }
 
+    //n terminei ainda
     public function join(Request $request, Event $event)
     {
       if (!Auth::check()) return redirect('/login');
