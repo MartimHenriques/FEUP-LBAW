@@ -33,7 +33,8 @@ class EventController extends Controller
       $event = Event::find($id);
       $messages = Message::where('idevent','=',$id)->get();
       //pq q o authorize n funciona?
-      return view('pages.event', ['event' => $event, 'messages' => $messages]);
+      $showModal = false;
+      return view('pages.event', ['event' => $event, 'messages' => $messages, 'showModal' => $showModal]);
     }
     
     public static function showEvents(){
@@ -73,7 +74,9 @@ class EventController extends Controller
       $event_organizer->idevent = $event->id;
       $event_organizer->save();
 
-      return redirect('/events/'.$event->id);
+      $messages = [];
+      $showModal = true;
+      return redirect()->route('event',['event' => $event, 'messages' => $messages, 'showModal' => $showModal, 'id' => $event->id]);
     }
 
     public function delete(Request $request, $id)
@@ -92,8 +95,12 @@ class EventController extends Controller
       $user = User::find(Auth::user()->id);
       $this->authorize('attendee', [$user, $event]);
       $event->invites()->attach($user->id); //parei aqui
+      $messages = Message::where('idevent','=',$id)->get();
+      $showModal = false;
       return view('pages.event', [
         'event' => $event,
+        'messages'=> $messages,
+        'showModal' => $showModal,
         'user' => User::find(Auth::user()->id)]);
     }
 }

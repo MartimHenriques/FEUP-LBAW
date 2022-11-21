@@ -37,14 +37,11 @@ Route::post('register', 'Auth\RegisterController@register');
 //home
 Route::get('/', 'HomeController@show');
 
-
-
 //feed
-Route::get('events', 'EventController@showEvents');
+Route::get('events', 'EventController@showEvents')->name('events');
 
 //event
-Route::get('events/{id}', 'EventController@showOneEvent');
+Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
 Route::post('api/events/{event}', 'EventController@join');
-Route::get('events', 'EventController@showEvents');
 Route::get('eventsCreate', [EventController::class, 'showForm']);
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
