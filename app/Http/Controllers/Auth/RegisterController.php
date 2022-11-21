@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/cards';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
         ]);
     }
-
+ 
     /**
      * Create a new user instance after a valid registration.
      *

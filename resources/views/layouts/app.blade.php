@@ -25,8 +25,9 @@
       <header>
         <h1><a href="{{ url('/home') }}">WeMeet</a></h1>
         @if (Auth::check())
-        <a href="/profile/1"> GO_PROFILE</a>
-        <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->username }}</span>
+        <a class="button" href="{{ url('/profile') }}"> Profile </a> 
+        <a class="button" href="{{ url('/logout') }}"> Logout </a> 
+          <span>{{ Auth::user()->username }}</span>
         @endif
       </header>
       <section id="content">

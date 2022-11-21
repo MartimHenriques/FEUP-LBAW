@@ -155,3 +155,57 @@ input[type=email]:focus,
 input[type=password]:focus {
   border-color: #9b4dca;
 }
+
+.col-sm-9{
+  padding-left: 10px;
+}
+
+.mb-0{
+  padding-left: 15px;
+}
+
+.col-lg-4{
+  margin-right: auto;
+}
+
+.editProfile{
+  margin: auto;
+  align-content: center;
+}
+
+.container-pic-editProfile {
+  width: fit-content;
+  background-color: #eee;
+  margin-right: auto;
+} 
+
+.container-password-editProfile {
+  width: max-content;
+  background-color: #eee;
+  margin-right: auto;
+  padding-left: 10px;
+} 
+
+.save-edit-profile-button{
+  width: fit-content;
+  padding-top: 30px;
+  margin-left: 40px;  
+}
+
+
+
+/* Add rounded corners to the top left and the top right corner of the image */
+img {
+  width: 20%;
+  border-radius: 5px 5px 5px 5px;
+}
+
+/* .change_picture {
+  width: fit-content;
+  margin-right: auto;
+} */
+
+.title{
+  width: fit-content;
+  margin-bottom: auto;
+}

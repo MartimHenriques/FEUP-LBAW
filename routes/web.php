@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+*/ 
 
 // Home
 Route::get('/', 'Auth\LoginController@home');
@@ -34,5 +34,15 @@ Route::post('register', 'Auth\RegisterController@register');
 
 Route::get('home', 'HomeController@show');
 
+// edit profile
+Route::get('profile/editProfile', 'EditProfileController@show');
+Route::post('profile/editProfile', 'EditProfileController@saveChanges') -> name('saveChanges');
+
+
+
 // Profile
-Route::get('profile/{id}', 'ProfileController@show');
+Route::get('profile', 'ProfileController@show');
+
+
+
+
