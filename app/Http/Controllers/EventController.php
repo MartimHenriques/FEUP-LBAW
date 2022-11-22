@@ -41,11 +41,7 @@ class EventController extends Controller
     public function showOneEvent($id)
     {
       $event = Event::find($id);
-      //$messages = Message::where('id_event','=',$id)->get();
-      $messages = DB::table('message')
-          ->join('users', 'message.id_user', '=', 'users.id')
-          ->where('message.id_event', $event->id)
-          ->get(['username']);
+      $messages = Message::where('id_event','=',$id)->get();
       //pq q o authorize n funciona?
       $showModal = false;
       return view('pages.event', ['event' => $event, 'messages' => $messages, 'showModal' => $showModal]);
