@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use App\Models\Event;
-use App\Models\EventOrganizer;
 use App\Models\Message;
 use App\Models\Event_Organizer;
+use App\Models\User;
 
 class EventController extends Controller
 {
@@ -31,11 +31,17 @@ class EventController extends Controller
      */
     public function showOneEvent($id)
     {
+      $setMessage = [];
       $event = Event::find($id);
-      $messages = Message::where('id_event','=',$id)->get();
+      $messages = $event->messages;
+      foreach($messages as $message){
+        $user=User::find($message->id_user);
+        $setMessage[$message->id]=$user;
+      }
+
       //pq q o authorize n funciona?
       $showModal = false;
-      return view('pages.event', ['event' => $event, 'messages' => $messages, 'showModal' => $showModal]);
+      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal]);
     }
 
     public function showMyEvents()

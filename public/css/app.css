@@ -4,7 +4,7 @@ body {
 }
 main > header {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto auto auto auto;
   grid-template-rows: auto;
   align-items: center;
   padding: 1em;
@@ -67,6 +67,18 @@ main > header a.button {
   padding: 1rem;
 }
 
+.date{font-size: 11px}
+.comment-text{font-size: 12px}
+.fs-12{font-size: 12px}
+.shadow-none{box-shadow: none}
+.name{color: #007bff}
+.cursor:hover{color: blue}
+.cursor{cursor: pointer}
+.textarea{resize: none}
+
+#copyButton{
+  justify-self: center;
+}
 
 #content label {
   font-weight: normal;

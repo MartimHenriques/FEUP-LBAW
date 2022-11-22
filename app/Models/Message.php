@@ -1,32 +1,96 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Message
+ * 
+ * @property int $id
+ * @property string|null $content
+ * @property Carbon $date
+ * @property int $like_count
+ * @property int $id_event
+ * @property int $id_user
+ * @property int|null $parent
+ * 
+ * @property Event $event
+ * @property User $user
+ * @property Message|null $message
+ * @property Collection|Message[] $messages
+ * @property Collection|MessageFile[] $message_files
+ * @property Collection|Notification[] $notifications
+ * @property Collection|Vote[] $votes
+ *
+ * @package App\Models
+ */
 class Message extends Model
 {
-  // Don't add create and update timestamps in database.
-  public $timestamps  = false;
-  protected $table = 'message';
-  protected $fillable = [
-    'content', 'date', 'likeCount', 'idEvent', 'idUser', 'parent'
-  ];
-  /**
-   * The event this message belongs to
-   */
-  public function event() {
-    return $this->belongsTo('App\Models\Event');
-  }
+	protected $table = 'message';
+	public $timestamps = false;
 
-  public function user() {
-    return $this->belongsTo('App\Models\User');
-  }
+	protected $casts = [
+		'like_count' => 'int',
+		'id_event' => 'int',
+		'id_user' => 'int',
+		'parent' => 'int'
+	];
 
-  /**
-   * Items inside this card
-   */
-  public function items() {
-    return $this->hasMany('App\Models\Item');
-  }
+	protected $dates = [
+		'date'
+	];
+
+	protected $fillable = [
+		'content',
+		'date',
+		'like_count',
+		'id_event',
+		'id_user',
+		'parent'
+	];
+
+	public function event()
+	{
+		return $this->belongsTo(Event::class, 'id_event')
+					->where('event.id', '=', 'message.id_event');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('App\Models\User')
+					->where('users.id', '=', 'message.id_user');	
+        }
+
+	public function message()
+	{
+		return $this->belongsTo(Message::class, 'parent')
+					->where('message.id', '=', 'message.parent');
+	}
+
+	public function messages()
+	{
+		return $this->hasMany(Message::class, 'parent');
+	}
+
+	public function message_files()
+	{
+		return $this->hasMany(MessageFile::class, 'id_message');
+	}
+
+	public function notifications()
+	{
+		return $this->hasMany(Notification::class, 'id_message');
+	}
+
+	public function votes()
+	{
+		return $this->hasMany(Vote::class, 'id_message');
+	}
 }
