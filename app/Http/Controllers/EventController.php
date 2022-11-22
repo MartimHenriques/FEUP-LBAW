@@ -14,6 +14,16 @@ use App\Models\User;
 
 class EventController extends Controller
 {
+  /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Shows the form to create an event.
      *
@@ -134,9 +144,9 @@ class EventController extends Controller
       $event->final_date = $final_date;
       $event->save();
 
-      $event_organizer = new EventOrganizer();
-      $event_organizer->id = Auth::user()->id;
-      $event_organizer->idevent = $event->id;
+      $event_organizer = new Event_Organizer();
+      $event_organizer->id_user = Auth::id();
+      $event_organizer->id_event = $event->id;
       $event_organizer->save();
 
       $messages = [];

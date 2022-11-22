@@ -5,12 +5,12 @@
 
 @section('content')
 
-<div id="myModal" class="modal fade in">
+<div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title">Event created successfully!</h1>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Event created successfully!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <h5>You can access it in yours events.</h5>
