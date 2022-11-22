@@ -58,3 +58,4 @@ Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCr
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
 
 Route::get('myevents', 'EventController@showMyEvents');
+Route::get('calendar', 'EventController@showEventsAttend');

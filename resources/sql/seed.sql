@@ -1,6 +1,5 @@
-create schema if not exists public;
-
-SET search_path TO public;
+create schema if not exists lbaw;
+SET search_path TO lbaw;
 DROP TABLE IF EXISTS attendee CASCADE;
 DROP TABLE IF EXISTS choose_Option CASCADE;
 DROP TABLE IF EXISTS EVENT CASCADE;
@@ -427,6 +426,8 @@ INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VAL
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('apav', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'apav@gmail.com', 'apav.jpg', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('ligaportuguesacontraocancro', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'info@ligacontracancro.pt', 'ligaportuguesacontraocancro.jpg', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('manel142', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'manel142@gmail.com', 'manel142.jpg', NULL, FALSE);
+
+
 
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('MADFest', 'Festival de música', TRUE, 'Madalena' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Pinheiro', 'Festa popular em Guimarães', TRUE, 'Guimaraes' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');

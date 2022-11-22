@@ -51,6 +51,20 @@ class EventController extends Controller
       //pq q o authorize n funciona?
       return view('pages.myevents', ['myevents' => $myevents]);
     }
+    
+    public function showEventsAttend()
+    {
+      $user = Auth::user()->id;
+      /*
+      $myeventsid = Event_Organizer::where('id_user','=',$user)->get(['id_event']);
+      $myevents = Event::where('id_event','=',$myeventsid)->get();*/
+      $myevents = DB::table('event')
+          ->join('attendee', 'event.id', '=', 'attendee.id_event')
+          ->where('attendee.id_user', $user)
+          ->get();
+      //pq q o authorize n funciona?
+      return view('pages.calendar', ['myevents' => $myevents]);
+    }
 
 
     public static function showEvents(){
