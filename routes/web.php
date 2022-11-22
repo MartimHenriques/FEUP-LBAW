@@ -39,11 +39,11 @@ Route::post('register', 'Auth\RegisterController@register');
 
 
 // edit profile
-Route::get('profile/editProfile', 'EditProfileController@show');
-Route::post('profile/editProfile', 'EditProfileController@saveChanges') -> name('saveChanges');
+Route::get('profile/editProfile', 'UserController@showEditProfile');
+Route::post('profile/editProfile', 'UserController@saveChanges') -> name('saveChanges');
 
 // Profile
-Route::get('profile', 'ProfileController@show');
+Route::get('profile', 'UserController@showProfile');
 
 //home
 Route::get('/', 'HomeController@show');

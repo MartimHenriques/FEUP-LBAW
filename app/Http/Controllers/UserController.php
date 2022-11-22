@@ -6,19 +6,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
 
-class EditProfileController extends Controller { 
+class UserController extends Controller
+{
     /**
      * Shows the card for a given id.
      *
      * @param  int  $id
      * @return Response
      */
-    public function show()
+    public function showProfile()
+    {
+      // definir smp 
+      $users= User::find(Auth::user()->id);
+      return view('pages.profile', ['users' => $users]);
+    }
+
+    public function showEditProfile()
     {
       $users= User::find(Auth::user()->id);
       return view('pages.editProfile', ['users' => $users]);
