@@ -10,7 +10,15 @@ use App\Models\Event;
 use App\Models\Message;
 use App\Models\Event_Organizer;
 
-class event_OrganizerController extends Controller
+class Event_OrganizerController extends Controller
 {
-    
+    public function delete(Request $request, $id)
+    {
+      $card = Card::find($id);
+
+      $this->authorize('delete', $card);
+      $card->delete();
+
+      return $card;
+    }
 }

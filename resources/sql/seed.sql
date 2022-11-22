@@ -1,28 +1,21 @@
-create schema if not exists lbaw;
-SET search_path TO lbaw;
-DROP TABLE IF EXISTS attendee CASCADE;
-DROP TABLE IF EXISTS choose_Option CASCADE;
-DROP TABLE IF EXISTS EVENT CASCADE;
-DROP TABLE IF EXISTS event_Organizer CASCADE;
-DROP TABLE IF EXISTS event_Tag CASCADE;
-DROP TABLE IF EXISTS invite CASCADE;
-DROP TABLE IF EXISTS message CASCADE;
-DROP TABLE IF EXISTS message_File CASCADE;
-DROP TABLE IF EXISTS vote CASCADE;
-DROP TABLE IF EXISTS notification CASCADE;
-DROP TABLE IF EXISTS message_file CASCADE;
-DROP TABLE IF EXISTS message CASCADE;
-DROP TABLE IF EXISTS invite CASCADE;
-DROP TABLE IF EXISTS event_tag CASCADE;
-DROP TABLE IF EXISTS event_organizer CASCADE;
-DROP TABLE IF EXISTS choose_option CASCADE;
-DROP TABLE IF EXISTS attendee CASCADE;
-DROP TABLE IF EXISTS tag CASCADE;
-DROP TABLE IF EXISTS option CASCADE;
-DROP TABLE IF EXISTS report CASCADE;
-DROP TABLE IF EXISTS poll CASCADE;
-DROP TABLE IF EXISTS event CASCADE;
+create schema if not exists public;
+
+SET search_path TO public;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS event CASCADE;
+DROP TABLE IF EXISTS poll CASCADE;
+DROP TABLE IF EXISTS report CASCADE;
+DROP TABLE IF EXISTS option CASCADE;
+DROP TABLE IF EXISTS tag CASCADE;
+DROP TABLE IF EXISTS attendee CASCADE;
+DROP TABLE IF EXISTS choose_option CASCADE;
+DROP TABLE IF EXISTS event_organizer CASCADE;
+DROP TABLE IF EXISTS event_tag CASCADE;
+DROP TABLE IF EXISTS invite CASCADE;
+DROP TABLE IF EXISTS message CASCADE;
+DROP TABLE IF EXISTS message_file CASCADE;
+DROP TABLE IF EXISTS notification CASCADE;
+DROP TABLE IF EXISTS vote CASCADE;
 DROP TYPE IF EXISTS reportState CASCADE;
 DROP type if EXISTS notificationTypes CASCADE;
 
@@ -123,7 +116,7 @@ CREATE TABLE choose_option (
 
 
 
--- Table: event_Organizer
+-- Table: event_organizer
 
 CREATE TABLE event_organizer (
     id_user      INTEGER NOT NULL REFERENCES users (id),
@@ -491,17 +484,17 @@ INSERT INTO tag (tag_name) VALUES ('Comida e bebida');
 INSERT INTO tag (tag_name) VALUES ('Engenharia');
 INSERT INTO tag (tag_name) VALUES ('Infantil');
 
-INSERT INTO event_Organizer (id_user, id_event) VALUES (6,1);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (10,3);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (11,5);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (13,10);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (4,1);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (4,2);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (14,4);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (3,6);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (5,7);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (9,8);
-INSERT INTO event_Organizer (id_user, id_event) VALUES (9,9);
+INSERT INTO event_organizer (id_user, id_event) VALUES (6,1);
+INSERT INTO event_organizer (id_user, id_event) VALUES (10,3);
+INSERT INTO event_organizer (id_user, id_event) VALUES (11,5);
+INSERT INTO event_organizer (id_user, id_event) VALUES (13,10);
+INSERT INTO event_organizer (id_user, id_event) VALUES (4,1);
+INSERT INTO event_organizer (id_user, id_event) VALUES (4,2);
+INSERT INTO event_organizer (id_user, id_event) VALUES (14,4);
+INSERT INTO event_organizer (id_user, id_event) VALUES (3,6);
+INSERT INTO event_organizer (id_user, id_event) VALUES (5,7);
+INSERT INTO event_organizer (id_user, id_event) VALUES (9,8);
+INSERT INTO event_organizer (id_user, id_event) VALUES (9,9);
 
 INSERT INTO attendee (id_user, id_event) VALUES (9,1);
 INSERT INTO attendee (id_user, id_event) VALUES (3,1);

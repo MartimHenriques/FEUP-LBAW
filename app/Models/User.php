@@ -37,4 +37,11 @@ class User extends Authenticatable
      public function messages() {
       return $this->hasMany('App\Models\Message');
     } 
+
+    /**
+     * The cards this user owns.
+     */
+    public function eventOrganizer() {
+        return $this->hasMany('App\Models\Event_Organizer');
+      } 
 }
