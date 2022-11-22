@@ -169,7 +169,6 @@ input[type=password]:focus {
 } 
 
 .container-password-editProfile {
-  width: max-content;
   background-color: #eee;
   margin-right: auto;
   padding-left: 10px;

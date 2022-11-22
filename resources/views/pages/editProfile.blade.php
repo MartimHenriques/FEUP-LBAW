@@ -69,7 +69,7 @@
     @endif
 
     <div class="save-edit-profile-button">
-            <button class="btn btn-save-edit-profile">Save Changes</button>
+            <button>Save Changes</button>
     </div>
 </form>
 

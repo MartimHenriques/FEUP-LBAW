@@ -9,8 +9,33 @@
 <button>Showing up</button>
 <button onclick="infoFunction()">Info</button>
 <button onclick="forumFunction()">Forum</button>
+
 @if ($event->visibility)
-<button onclick="copyLink();">Share Event</button>
+
+<!-- Button trigger modal -->
+<button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Click Me!">
+        Share Event 
+    </button>
+  
+  <!-- Modal -->
+    <div class="modal fade" id="myModel" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModelLabel">Share Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                    <p>Copy link</p>
+                    <div class="field d-flex align-items-center justify-content-between">
+                        <span class="fas fa-link text-center"></span>
+                        <input type="text" value="http://127.0.0.1:8000//events/{{$event->id}}" id="copyText">
+                        <button onclick="copyLink()" id="copyButton">Copy Link</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endif
 
 <div id="info-content">
@@ -28,6 +53,8 @@
     <p>Data: {{ $event->start_date }}</p>
 @endif
 </div>
+
+
 <div id="forum-content" style="display: none">
     <form class="profile-post-form" method="post">
         <textarea class="form-control autogrow" placeholder="What's on your mind?" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
@@ -71,16 +98,28 @@ function forumFunction() {
     y.style.display = "none";
 }
 function copyLink(){
+    
+    /* ";
+    
     var dummy = document.createElement('input'),
     text = window.location.href;
     document.body.appendChild(dummy);
     dummy.value = text;
     dummy.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     document.body.removeChild(dummy);
 
-    // Alert the copied text
-    alert("Copied the text: " + dummy.value);
+     // Alert the copied text
+     alert("Copied the text: " + dummy.value); */
+
+
+
+    var btn = document.getElementById("copyButton");
+    btn.innerHTML = 'copied';
+    btn.style.backgroundColor = "green"
+
+    var copyText = document.getElementById("copyText");
+    navigator.clipboard.writeText(window.location.href); 
 }
 </script>
 @endsection

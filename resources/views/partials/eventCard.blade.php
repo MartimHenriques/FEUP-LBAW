@@ -16,9 +16,10 @@
   </a>
 
 
-  @if ($event->visibility)
-  <button onclick="copyLinkFeed( {{$event->id}} )">Share Event</button>
-  @endif
+@if ($event->visibility)
+  <!-- Button trigger modal -->
+    <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share Event</button>
+@endif
 
 <script>
   function copyLinkFeed(id){
@@ -31,7 +32,7 @@
     document.body.removeChild(dummy);
 
     // Alert the copied text
-    alert("Copied the text: " + dummy.value);
+    alert("Copied the text: " + dummy.value); 
   }
 </script>
 </div>
