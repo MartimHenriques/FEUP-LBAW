@@ -412,10 +412,10 @@ INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VAL
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('raulferreira21', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'raul_ferreira_21@gmail.com', 'raulferreira21.jpg', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('nunomaciel77', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'nunomaciel77@gmail.com', 'nunomaciel77.jpg', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('maraneves45', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'maraneves32@gmail.com', 'maraneves45.jpg', NULL, FALSE);
-INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('mcarlotacarneiro20', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'mcarlotaccar20@gmail.com', 'mcarlotacarneiro.jpg', NULL, FALSE);
-INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('andreoliveira56', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'dreoliveira56@gmail.com', 'andreoliveira.jpg', NULL, FALSE);
-INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('aefeup', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'aefeup@gmail.com', 'aefeup.jpg', NULL, FALSE);
-INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('associacaoanimalareosa', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'aanimalareosa@gmail.com', 'associacaoanimalareosa.jpg', NULL, FALSE);
+INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('mcarlotacarneiro20', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'mcarlotaccar20@gmail.com', 'mcarlotacarneiro20.jpg', NULL, FALSE);
+INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('andreoliveira56', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'dreoliveira56@gmail.com', 'andreoliveira56.jpg', NULL, FALSE);
+INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('aefeup', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'aefeup@gmail.com', 'aefeup.png', NULL, FALSE);
+INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('associacaoanimalareosa', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'aanimalareosa@gmail.com', 'associacaoanimalareosa.png', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('apav', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'apav@gmail.com', 'apav.jpg', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('ligaportuguesacontraocancro', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'info@ligacontracancro.pt', 'ligaportuguesacontraocancro.jpg', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('manel142', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'manel142@gmail.com', 'manel142.jpg', NULL, FALSE);
@@ -575,7 +575,7 @@ INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,8,11
 INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 1, 5, 8);
 INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 0, 7, 3);
 INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 1, 5, 11, 1);
-INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES (NULL, '2022-10-30 23:00:00', 2, 5, 8, 1);
+INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 2, 5, 8, 1);
 
 INSERT INTO message_File (file, id_message) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);
 

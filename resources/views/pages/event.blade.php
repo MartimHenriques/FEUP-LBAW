@@ -21,8 +21,6 @@
 
 <h1>{{ $event->title }}</h1>
 <button>Showing up</button>
-<button onclick="infoFunction()">Info</button>
-<button onclick="forumFunction()">Forum</button>
 
 @if ($event->visibility)
 
@@ -38,11 +36,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModelLabel">Share Event</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                    <p>Copy link</p>
+                </div>  
                     <div class="field d-flex align-items-center justify-content-between">
-                        <span class="fas fa-link text-center"></span>
-                        <input type="text" value="http://127.0.0.1:8000//events/{{$event->id}}" id="copyText">
                         <button onclick="copyLink()" id="copyButton">Copy Link</button>
                     </div>
                 </div>
@@ -51,7 +46,9 @@
     </div>
 
 @endif
-
+<br>
+<button onclick="infoFunction()">Info</button>
+<button onclick="forumFunction()">Forum</button>
 <div id="info-content">
 <p>{{ $event->description }}</p>
 @if ($event->visibility)
@@ -91,8 +88,35 @@
      </form>
     <!-- Forum List -->
     <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+        @if(count($messages)<1)
+            <p>There aren't messages yet</p>
+        @endif
         @foreach($messages as $message)
-            @include('partials.message', ['message' => $message])
+            <div class="container mt-5">
+                <div class="d-flex justify-content-center row">
+                    <div class="col-md-8">
+                        <div class="d-flex flex-column comment-section">
+                            <div class="bg-white p-2">
+                                <div class="d-flex flex-row user-info"><img class="rounded-circle" src="/../avatars/{{$setMessage[$message->id]->picture}}">
+                                    <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{ $setMessage[$message->id]->username }}</span><span class="date text-black-50">{{ $message->date }}</span></div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="comment-text">{{ $message->content }}</p>
+                                </div>
+                            </div>
+                            <div class="bg-white">
+                                <div class="d-flex flex-row fs-12">
+                                    <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                                    <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Reply</span></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
         @endforeach
     </div>
     <!-- /Forum List -->

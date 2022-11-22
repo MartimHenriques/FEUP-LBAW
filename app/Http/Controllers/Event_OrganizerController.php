@@ -12,13 +12,5 @@ use App\Models\Event_Organizer;
 
 class Event_OrganizerController extends Controller
 {
-    public function delete(Request $request, $id)
-    {
-      $card = Card::find($id);
 
-      $this->authorize('delete', $card);
-      $card->delete();
-
-      return $card;
-    }
 }
