@@ -1,3 +1,6 @@
+create schema if not exists public;
+
+SET search_path TO public;
 DROP TABLE IF EXISTS attendee CASCADE;
 DROP TABLE IF EXISTS choose_Option CASCADE;
 DROP TABLE IF EXISTS EVENT CASCADE;

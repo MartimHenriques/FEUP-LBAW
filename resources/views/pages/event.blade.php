@@ -5,6 +5,20 @@
 
 @section('content')
 
+<div id="myModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Event created successfully!</h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h5>You can access it in yours events.</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h1>{{ $event->title }}</h1>
 <button>Showing up</button>
 <button onclick="infoFunction()">Info</button>
@@ -121,5 +135,14 @@ function copyLink(){
     var copyText = document.getElementById("copyText");
     navigator.clipboard.writeText(window.location.href); 
 }
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const php_var = urlParams.get('showModal');
+var myModal = new bootstrap.Modal(document.getElementById('myModal'), {});
+if (php_var) {
+    myModal.toggle();
+}
+
 </script>
 @endsection
