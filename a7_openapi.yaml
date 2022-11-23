@@ -20,7 +20,7 @@ tags:
   description: 'Web resources associated with events. Includes the following system features:  create, edit, join, invite and delete events.'
 - name: 'M03: Messages and Forum'
   description: 'Web resources associated with events forum and messages. Includes the following system features:  add, edit, vote and delete comments, create and answer polls and upload files.'
-- name: 'M05: User Administration'
+- name: 'M04: User Administration'
   description: 'Web resources associated with users administration, including the following system features: block/unblock users, manage event reports and delete events and user accounts.'
 - name: 'M05: Static pages'
   description: 'Web resources associated with static pages, including the following system features: about us, contacts, user help.'
@@ -309,5 +309,16 @@ paths:
         '200':
          description: 'Ok'
 
+ /:   
+    get:
+      operationId: R501
+      summary: 'R501: View Home Page'
+      description: "View Home page. Access: PUB"
+      tags:
+        - 'M05: Static pages'      
+        
+      responses:
+        '200':
+          description: 'OK. Show'
 
 
