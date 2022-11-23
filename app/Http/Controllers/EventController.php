@@ -154,6 +154,47 @@ class EventController extends Controller
       return redirect()->route('event',['event' => $event, 'messages' => $messages, 'showModal' => $showModal, 'id' => $event->id]);
     }
 
+    /**
+     * Shows the form to edit an event.
+     *
+     * @return Response
+     */
+    public function showEditEventForm($id)
+    {
+      $event = Event::find($id);
+      return view('pages.eventsEdit', ['event'=>$event,'id'=>$id]);
+    }
+
+    /**
+     * Edits event's info.
+     *
+     * @return Event The event changed.
+     */
+    public function editEvent(Request $request, $id)
+    {
+      $event = Event::find($id);
+      $start_date = $request->input('start_date');
+      $final_date = $request->input('final_date');
+
+      if (($start_date > $final_date)) {
+        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      }
+
+      //$this->authorize('createEvent', $event);
+
+      $event->title = $request->input('title');
+      $event->description = $request->input('description');
+      $event->visibility = $request->input('visibility');
+      $event->picture = $request->input('picture');
+      $event->local = $request->input('local');
+      $event->start_date = $start_date;
+      $event->final_date = $final_date;
+      $event->save();
+
+      $showModal = false; 
+      return redirect()->route('event',['event' => $event, 'messages' => $event->messages, 'showModal' => $showModal, 'id' => $event->id]);
+    }
+
     public function delete(Request $request, $id)
     {
       $card = Card::find($id);
