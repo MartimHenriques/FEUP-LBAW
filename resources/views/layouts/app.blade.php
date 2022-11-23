@@ -30,7 +30,9 @@
     <main>
       <header>
         <a href="{{ url('/') }}"><img src="/../logo.png" alt="logo"></a>
+        @if (Auth::check())
         <div><input type="text" placeholder="search"></div>
+        @endif
         <a class="button" href="{{ url('/events') }}">Events</a>
         <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
         @if (Auth::check())
