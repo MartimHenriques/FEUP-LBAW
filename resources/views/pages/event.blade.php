@@ -62,6 +62,16 @@
 @else
     <p>Data: {{ $event->start_date }}</p>
 @endif
+@if($event->event_organizers()->get()->contains(Auth::user()))
+    <h4>Participants</h4>
+    @foreach($event->attendees()->get() as $attendee)
+        @if( $event->event_organizers()->get()->contains($attendee))
+            <p>{{$attendee->username}} - Organizer</p>
+        @else
+            <p>{{$attendee->username}}</p>
+        @endif
+    @endforeach
+@endif
 </div>
 
 
