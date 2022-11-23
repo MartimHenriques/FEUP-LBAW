@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -24,21 +24,16 @@
     </script>
     <script type="text/javascript" src={{ asset('js/app.js') }} defer>
 </script>
+
   </head>
   <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <main>
       <header>
         <a href="{{ url('/') }}"><img src="/../logo.png" alt="logo"></a>
-        @if (Auth::check())
         <div><input type="text" placeholder="search"></div>
-        @endif
-        <a class="button" href="{{ url('/events') }}">Events</a>
         <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
         @if (Auth::check())
-        <a class="button" href="{{ url('/myevents') }}">My events</a>
-        <a class="button" href="{{ url('/calendar') }}">My calendar</a>
-
         <a class="button" href="{{ url('/profile') }}"> Profile </a>
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
         @else
@@ -46,6 +41,28 @@
         <a class="button" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-list" style="font-size: 4em; color: #a1b4e3;"></i></button>
+
+      <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul>
+            <li><a href="{{ url('/') }}">Home</a></li>
+            <li><a href="{{ url('/events') }}">Events feed</a></li>
+            @if (Auth::check())
+            <li><a href="{{ url('/myevents') }}">My events</a></li>
+            <li><a href="{{ url('/calendar') }}">My calendar</a></li>
+            <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
+            @endif
+
+          </ul>
+                    
+        </div>
+      </div>
+
       <section id="content">
         @yield('content')
       </section>
