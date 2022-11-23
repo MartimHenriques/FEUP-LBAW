@@ -11,6 +11,7 @@ use App\Models\Event;
 use App\Models\Message;
 use App\Models\Event_Organizer;
 use App\Models\User;
+use App\Models\Attendee;
 
 class EventController extends Controller
 {
@@ -178,5 +179,21 @@ class EventController extends Controller
         'messages'=> $messages,
         'showModal' => $showModal,
         'user' => User::find(Auth::user()->id)]);
+    }
+
+    /**
+     * The user joins a event.
+     *
+     * @return Redirect back to the page
+     */
+    public function joinEvent($id) {
+      
+      $attendee = new Attendee;
+
+      $attendee->id_user = Auth::id();
+      $attendee->id_event = $id;
+      $attendee->save();
+
+      return redirect()->back();
     }
 }

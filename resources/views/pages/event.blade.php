@@ -20,7 +20,7 @@
 </div>
 
 <h1>{{ $event->title }}</h1>
-<button>Showing up</button>
+<a type='button' class='button' href="/joinEvent/{{$event->id}}">Showing up</a>
 
 @if ($event->visibility)
 
