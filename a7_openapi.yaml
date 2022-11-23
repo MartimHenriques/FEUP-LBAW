@@ -7,23 +7,23 @@ info:
 
 servers:
 - url: http://lbaw22102.lbaw-prod.fe.up.pt/
- description: Production server
+  description: Production server
 
 externalDocs:
  description: Find more info here.
  url: https://git.fe.up.pt/lbaw/lbaw2223/lbaw22102/-/wikis/Architecture-Specification-and-Prototype
 
 tags:
- - name: 'M01: Authentication and Individual Profile'
-    description: 'Web resources associated with user authentication and individual profile management, includes the following system features: login/logout, registration, credential recovery, view and edit personal profile information.'
- - name: 'M02: Events'
-    description: 'Web resources associated with events. Includes the following system features:  create, edit, join, invite and delete events.'
- - name: 'M03: Messages and Forum'
-    description: 'Web resources associated with events forum and messages. Includes the following system features:  add, edit, vote and delete comments, create and answer polls and upload files.'
- - name: 'M05: User Administration'
-    description: 'Web resources associated with users administration, including the following system features: block/unblock users, manage event reports and delete events and user accounts.'
- - name: 'M05: Static pages'
-    description: 'Web resources associated with static pages, including the following system features: about us, contacts, user help.'
+- name: 'M01: Authentication and Individual Profile'
+  description: 'Web resources associated with user authentication and individual profile management, includes the following system features: login/logout, registration, credential recovery, view and edit personal profile information.'
+- name: 'M02: Events'
+  description: 'Web resources associated with events. Includes the following system features:  create, edit, join, invite and delete events.'
+- name: 'M03: Messages and Forum'
+  description: 'Web resources associated with events forum and messages. Includes the following system features:  add, edit, vote and delete comments, create and answer polls and upload files.'
+- name: 'M05: User Administration'
+  description: 'Web resources associated with users administration, including the following system features: block/unblock users, manage event reports and delete events and user accounts.'
+- name: 'M05: Static pages'
+  description: 'Web resources associated with static pages, including the following system features: about us, contacts, user help.'
 
 paths:
  /login:
@@ -53,8 +53,6 @@ paths:
                password:    
                  type: string
                email:          
-                 type: string
-               password:    
                  type: string
              required:
                   - password
@@ -144,8 +142,7 @@ paths:
                  description: 'Failed authentication. Redirect to login form.'
                  value: '/login'
 
-
-/profile:
+ /profile:
     get:
       operationId: R106
       summary: 'R106: View User Profile'
@@ -160,11 +157,12 @@ paths:
           description: 'Not Found.'
 
 
-/profile/editProfile:
+ /profile/editProfile:
     post:
       operationId: R107
       summary: 'R107: Edit Profile'
-      description: 'Edit account information. Access: ACO'
+
+      description: 'Edit profile information. Access: ACO'
       tags:
         - 'M01: Authentication and Individual Profile'
 
@@ -177,7 +175,7 @@ paths:
               properties:
                 password:
                   type: string
-                avatar:
+                picture:
                   type: string
                   format: byte
 
@@ -185,26 +183,131 @@ paths:
         '200':
           description: 'Ok'
         "401":
-          description: "Unauthorized"
+          description: "Unauthorized" 
 
 
  /events:
+  get:
+      operationId: R201
+      summary: "R201: Show Events"
+      description: "Shows all public events and private events if user is attending them. Access: PUB, USR"
+      tags:
+        - 'M02: Events'
 
-
+      responses:
+            '200':
+              description: Ok
+            '400':
+              description: Bad Request
 
  /events/{id}:
+  get:
+      operationId: R202
+      summary: "R202: Show Event Card"
+      description: "Shows Event's information. Access: USR"
+      tags:
+        - 'M02: Events'
 
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
 
+      responses:
+            '200':
+              description: Ok
+            '400':
+              description: Bad Request
 
  /eventsCreate:
- 
+  get:
+      operationId: R203
+      summary: "R203: Event Form"
+      description: "Provide event form. Access: USR"
+      tags:
+        - 'M02: Events'
 
+      responses:
+       '200':
+         description: 'Ok'
+
+  post:
+      operationId: R204
+      summary: "R204: Event Action"
+      description: "Processes the event form submission. Access: USR"
+      tags:
+        - 'M02: Events'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:    
+                  type: string
+                description:          
+                  type: string
+                visibility:
+                  type: integer
+                picture:
+                  type: string
+                  format: byte
+                local:
+                  type: string
+                start_date:
+                  type: string
+                final_date:
+                  type: string
+              required:
+                    - title 
+                    - visibility
+                    - local
+                    - start_date 
+                    - final_date 
+
+      responses:
+        '302':
+          description: 'Redirect after processing the event form.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful creation. Redirect to events page.'
+                  value: '/events'
+                302Error:
+                  description: 'Creation failed. Redirect to event form.'
+                  value: '/eventsCreate'
 
  /myevents:
+  get:
+      operationId: R205
+      summary: "R205: View events created by user"
+      description: "Show events created by user. Access: OWR??"
+      tags:
+        - 'M02: Events'
+
+      responses:
+       '200':
+         description: 'Ok'
 
 
  /calendar:
+  get:
+      operationId: R206
+      summary: "R206: View attended/to attend events"
+      description: "Show events attened/to attend by user. Access: USR"
+      tags:
+        - 'M02: Events'
 
+      responses:
+        '200':
+         description: 'Ok'
 
 
 
