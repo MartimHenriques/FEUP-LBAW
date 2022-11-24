@@ -20,7 +20,13 @@
 </div>
 
 <h1>{{ $event->title }}</h1>
-<a type='button' class='button' style="{{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">Showing up</a>
+<a id="join" type='button' class='button' style="{{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+    @if($attendee)
+        Showing up
+    @else
+        Show up
+    @endif
+</a>
 
 @if ($event->visibility)
 
@@ -115,6 +121,7 @@
 </div>
 
 <script>
+
 function infoFunction() {
     var x = document.getElementById("forum-content");
     var y = document.getElementById("info-content");

@@ -63,3 +63,5 @@ Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
 
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
+
+Route::post('/api/search', 'SearchController@show');

@@ -17,10 +17,11 @@ main > header a.button {
   justify-self: right;
 }
 
-.event-feed {
+.event-feed, .eventsAttended, .eventsToAttend {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
+
 .eventCard {
   display: flex;
   flex-direction: column;
@@ -29,6 +30,7 @@ main > header a.button {
   margin: 1em;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
   max-width: 25em;
+  border-radius: 5%;
 }
 
 .inner-main {
@@ -110,6 +112,10 @@ li a:hover{
   border-bottom: 2px solid rgba(90, 90, 90, 0.852);
 }
 
+#info, #forum{
+  font-size: 2em;
+  margin: 1em;
+}
 
 #content label {
   font-weight: normal;
@@ -118,7 +124,8 @@ li a:hover{
   margin: 0 auto;
   padding: 1em;
   max-width: 20em;
-  border: 1px solid #d2afe7;
+  border: 2px solid #a1b4e3c1;
+  border-radius: 5%;
 }
 #content > form .error {
   font-weight: bold;
@@ -128,7 +135,7 @@ li a:hover{
   background-color: white;
 }
 @media (max-width: 70em) {
-  .event-feed {
+  .event-feed, .eventsAttended, .eventsToAttend {
     grid-template-columns: repeat(2, 1fr);
   }
   main > header {
@@ -140,7 +147,7 @@ li a:hover{
   }
 }
 @media (max-width: 40em) {
-  .event-feed {
+  .event-feed, .eventsAttended, .eventsToAttend {
     grid-template-columns: 1fr;
     align-items: center;
   }
@@ -193,6 +200,7 @@ input[type=email]:focus,
 input[type=password]:focus {
   border-color: #383838;
 }
+
 
 .col-sm-9{
   padding-left: 10px;

@@ -68,12 +68,20 @@ class EventController extends Controller
       /*
       $myeventsid = Event_Organizer::where('id_user','=',$user)->get(['id_event']);
       $myevents = Event::where('id_event','=',$myeventsid)->get();*/
-      $myevents = DB::table('event')
+      
+      $dt = Carbon::now();
+      $eventstoattend = DB::table('event')
           ->join('attendee', 'event.id', '=', 'attendee.id_event')
-          ->where('attendee.id_user', $user)
+          ->where('attendee.id_user', $user)->where('event.final_date','>=', $dt)
+          ->orderby('event.start_date')
+          ->get();
+      $eventsattended = DB::table('event')
+          ->join('attendee', 'event.id', '=', 'attendee.id_event')
+          ->where('attendee.id_user', $user)->where('event.final_date','<', $dt)
+          ->orderby('event.start_date')
           ->get();
       //pq q o authorize n funciona?
-      return view('pages.calendar', ['myevents' => $myevents]);
+      return view('pages.calendar', ['eventstoattend' => $eventstoattend, 'eventsattended' => $eventsattended]);
     }
 
 
@@ -158,13 +166,12 @@ class EventController extends Controller
       return $card;
     }
 
-    //n terminei ainda
     public function join(Request $request, Event $event)
     {
       if (!Auth::check()) return redirect('/login');
       $user = User::find(Auth::user()->id);
       $this->authorize('attendee', [$user, $event]);
-      $event->invites()->attach($user->id); //parei aqui
+      $event->invites()->attach($user->id);
       $messages = Message::where('idevent','=',$id)->get();
       $showModal = false;
       return view('pages.event', [

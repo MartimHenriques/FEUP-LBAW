@@ -32,7 +32,8 @@ CREATE TABLE users (
     email     TEXT UNIQUE NOT NULL,
     picture   TEXT,
     is_blocked TEXT,
-    is_admin   BOOLEAN DEFAULT (False) 
+    is_admin   BOOLEAN DEFAULT (False),
+    remember_token VARCHAR
 );
 
 -- Table: event
@@ -220,8 +221,7 @@ CREATE INDEX tag_alphabetic ON tag USING btree (tag_name);
 -- FTS INDEXES
 
 ALTER TABLE event ADD COLUMN tsvectors TSVECTOR;
-
-CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS $BODY$
 BEGIN
  IF TG_OP = 'INSERT' THEN
         NEW.tsvectors = (
@@ -238,7 +238,7 @@ BEGIN
          END IF;
  END IF;
  RETURN NEW;
-END $$
+END $BODY$
 LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS event_search_update on event CASCADE;

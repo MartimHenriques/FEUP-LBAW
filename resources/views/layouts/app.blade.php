@@ -16,6 +16,7 @@
     <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="/js/search.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -31,7 +32,13 @@
     <main>
       <header>
         <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
-        <div><input type="text" placeholder="search"></div>
+
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" id="searchbar">
+        <div id = "searchResults">
+          <h2 id = "eventsTitleSearch" style="display: none;">events</h2>
+          <div id = "eventsSearch"></div>
+        </div>
+  
         <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
         @if (Auth::check())
         <a class="button" href="{{ url('/profile') }}"> Profile </a>
@@ -67,5 +74,6 @@
         @yield('content')
       </section>
     </main>
+    
   </body>
 </html>
