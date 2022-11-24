@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+//use hasCompositePrimaryKey;
 
 /**
  * Class Attendee
@@ -20,10 +21,15 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  */
 class Attendee extends Model
-{
+{	
+	public $timestamps = false;
 	protected $table = 'attendee';
 	public $incrementing = false;
-	public $timestamps = false;
+	protected $primaryKey = ['id_user', 'id_event'];
+
+	protected $fillable = [
+		'id_user', 'id_event'
+	 ];
 
 	protected $casts = [
 		'id_user' => 'int',

@@ -20,6 +20,7 @@
 </div>
 
 <h1>{{ $event->title }}</h1>
+<a type='button' class='button' style="{{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">Showing up</a>
 
 @if ($event->visibility)
 
