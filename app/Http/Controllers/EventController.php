@@ -174,7 +174,6 @@ class EventController extends Controller
         'user' => User::find(Auth::user()->id)]);
     }
 
-<<<<<<< app/Http/Controllers/EventController.php
      /**
      * An attendee is removed from an event.
      *
