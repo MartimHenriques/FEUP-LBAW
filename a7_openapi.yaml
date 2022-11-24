@@ -321,4 +321,95 @@ paths:
         '200':
           description: 'OK. Show'
 
+ /deleteUser/{id}: 
+    get:
+      operationId: R401
+      summary: "R401: Delete User"
+      description: "Delete User . Access: ADM"
+      tags:
+        - 'M04: User Administration'
 
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok'
+   
+ /manageUsers:
+    get:
+      operationId: R402
+      summary: "R402: View User Management Page"
+      description: "View user management page . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      responses:
+        '200':
+         description: 'Ok'
+
+ /removeFromEvent/{id_attendee}/{id_event}: 
+    get:
+      operationId: R403
+      summary: "R403: Manage Attendees"
+      description: "Manages Attendees . Access: OWN"
+      tags:
+        - 'M04: User Administration'
+
+      parameters:
+        - in: path
+          name: id_attendee
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: id_events
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok'
+
+ /joinEvent/{id}: 
+    get:
+      operationId: R207
+      summary: "R207: Join Event"
+      description: "Join Event . Access: USR"
+      tags:
+        - 'M02: Events'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok'
+
+ /abstainEvent/{id}:
+  get:
+      operationId: R208
+      summary: "R208: Join Event"
+      description: "Join Event . Access: USR"
+      tags:
+        - 'M02: Events'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok'
