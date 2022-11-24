@@ -403,6 +403,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE add_banned_notification();
 
 
+
 ---POPULATE
 
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('admin', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'admin1_wemeet@gmail.com', '', NULL, TRUE);

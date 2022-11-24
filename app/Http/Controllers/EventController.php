@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Carbon\Carbon;
 
 use App\Models\Event;
@@ -36,7 +37,7 @@ class EventController extends Controller
       $setMessage = [];
       $event = Event::find($id);
       $messages = $event->messages;
-      foreach($messages as $message){
+      foreach($messages as $message) {
         $user=User::find($message->id_user);
         $setMessage[$message->id]=$user;
       }
@@ -79,15 +80,22 @@ class EventController extends Controller
 
     public static function showEvents(){
       if(Auth::check()){
-        $events = Event::get();
-        return view('pages.feed',['events' => $events]);
+        $events = DB::table('event')->orderBy('id')->get();
+        $event_organizer = [];
+        foreach ($events as $event) {
+          $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+        }
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer]);
       }
       else{
-        $events = Event::where('visibility', 1)->get();
-        return view('pages.feed',['events' => $events]);
+        $event_organizer = [];
+        $events = Event::where('visibility', 1)->orderBy('id')->get();
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer]);
       }
 
     }
+
+
 
     /**
      * Get a validator for an incoming event request.
