@@ -11,6 +11,7 @@ use App\Models\Event;
 use App\Models\Message;
 use App\Models\Event_Organizer;
 use App\Models\User;
+use App\Models\Attendee;
 
 class EventController extends Controller
 {
@@ -170,4 +171,18 @@ class EventController extends Controller
         'showModal' => $showModal,
         'user' => User::find(Auth::user()->id)]);
     }
+
+     /**
+     * An attendee is removed from an event.
+     *
+     * @return Redirect back to the page
+     */
+    public function removeFromEvent($id_attendee,$id_event) {
+
+      $attendee = Attendee::where(['id_user' => $id_attendee,'id_event' => $id_event]);
+      $attendee->delete();
+      return redirect()->back();
+    }
+
+
 }

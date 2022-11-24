@@ -68,7 +68,7 @@
         @if( $event->event_organizers()->get()->contains($attendee))
             <p>{{$attendee->username}} - Organizer</p>
         @else
-            <p>{{$attendee->username}}</p>
+            <p>{{$attendee->username}} <a type='button' class='button' href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a> </p>
         @endif
     @endforeach
 @endif
