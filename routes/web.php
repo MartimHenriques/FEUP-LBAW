@@ -49,7 +49,8 @@ Route::get('profile', 'UserController@showProfile');
 Route::get('/', 'HomeController@show');
 
 //administrater
-Route::get('deleteUser/{id}', [HomeController::class, 'deleteUser']) -> name('deleteUser');
+Route::get('deleteUser/{id}', [AdminController::class, 'deleteUser']) -> name('deleteUser');
+Route::get('manageUsers', 'AdminController@show');
 
 //feed
 Route::get('events', 'EventController@showEvents')->name('events');
