@@ -21,8 +21,9 @@ class UserController extends Controller
      */
     public function showProfile()
     {
-      // definir smp 
+
       $users= User::find(Auth::user()->id);
+      $this -> authorize('show', $users);
       return view('pages.profile', ['users' => $users]);
     }
 
