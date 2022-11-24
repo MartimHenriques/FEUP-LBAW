@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
@@ -32,7 +33,12 @@ class UserController extends Controller
     }
 
     public function savePicture(Request $request, User $users){
-      $users->picture = $request->input('picture');      
+      $img = $request->picture; 
+      if($img != null){
+          $imageName = $users->username . '.' . $img->extension();
+          $img -> move(public_path('avatars/'), $imageName);
+          $users->picture = $imageName;
+      }     
     }
 
     public function savePassword(Request $request){

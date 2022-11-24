@@ -11,18 +11,10 @@ use App\Models\Event;
 use App\Models\Message;
 use App\Models\Event_Organizer;
 use App\Models\User;
+use App\Models\Attendee;
 
 class EventController extends Controller
 {
-  /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Shows the form to create an event.
@@ -49,9 +41,11 @@ class EventController extends Controller
         $setMessage[$message->id]=$user;
       }
 
-      //pq q o authorize n funciona?
       $showModal = false;
-      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal]);
+
+      $attendee = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$id)->exists();
+
+      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee]);
     }
 
     public function showMyEvents()
@@ -219,5 +213,34 @@ class EventController extends Controller
         'messages'=> $messages,
         'showModal' => $showModal,
         'user' => User::find(Auth::user()->id)]);
+    }
+
+    /**
+     * The user joins a event.
+     *
+     * @return Redirect back to the page
+     */
+    public function joinEvent($id) {
+      
+      $attendee = new Attendee;
+
+      $attendee->id_user = Auth::id();
+      $attendee->id_event = $id;
+      $attendee->save();
+
+      return redirect()->back();
+    }
+
+    /**
+     * The user abstains from a event.
+     *
+     * @return Redirect back to the page
+     */
+    public function abstainEvent($id) {
+      //SEE LATER > dont delete everything related to this -> keep info
+
+      $attendee = Attendee::where(['id_user' => Auth::id(),'id_event' => $id]);
+      $attendee->delete();
+      return redirect()->back();
     }
 }

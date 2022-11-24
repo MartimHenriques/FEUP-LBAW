@@ -417,7 +417,7 @@ INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VAL
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('aefeup', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'aefeup@gmail.com', 'aefeup.png', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('associacaoanimalareosa', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'aanimalareosa@gmail.com', 'associacaoanimalareosa.png', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('apav', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'apav@gmail.com', 'apav.jpg', NULL, FALSE);
-INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('ligaportuguesacontraocancro', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'info@ligacontracancro.pt', 'ligaportuguesacontraocancro.jpg', NULL, FALSE);
+INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('ligaportuguesacontraocancro', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'info@ligacontracancro.pt', 'ligaportuguesacontraocancro.png', NULL, FALSE);
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('manel142', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'manel142@gmail.com', 'manel142.jpg', NULL, FALSE);
 
 
