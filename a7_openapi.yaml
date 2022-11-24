@@ -35,7 +35,7 @@ paths:
        - 'M01: Authentication and Individual Profile'
      responses:
        '200':
-         description: 'Ok. Show Log-in UI'
+         description: 'Ok. Show [UI06]'
    post:
      operationId: R102
      summary: 'R102: Login Action'
@@ -100,7 +100,7 @@ paths:
        - 'M01: Authentication and Individual Profile'
      responses:
        '200':
-         description: 'Ok. Show Sign-Up UI'
+         description: 'Ok. Show [UI07]'
 
    post:
      operationId: R105
@@ -152,7 +152,7 @@ paths:
 
       responses:
         '200':
-          description: 'Ok. Show'
+          description: 'Ok. Show [UI10]'
         '404':
           description: 'Not Found.'
 
@@ -180,11 +180,19 @@ paths:
                   format: byte
 
       responses:
-        '200':
-          description: 'Ok'
-        "401":
-          description: "Unauthorized" 
-
+       '302':
+         description: 'Redirect after processing update of information.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful update. Redirect to edit user profile.'
+                 value: '/profile/editProfile'
+               302Failure:
+                 description: 'Update Failed. Redirect to edit profile form.'
+                 value: '/profile/editProfile'
 
  /events:
   get:
@@ -196,7 +204,7 @@ paths:
 
       responses:
             '200':
-              description: Ok
+              description: Ok. Show [UI14]
             '400':
               description: Bad Request
 
@@ -217,7 +225,7 @@ paths:
 
       responses:
             '200':
-              description: Ok
+              description: Ok. Show [UI15]
             '400':
               description: Bad Request
 
@@ -294,7 +302,7 @@ paths:
 
       responses:
        '200':
-         description: 'Ok'
+         description: 'Ok. Show [UI12]'
 
 
  /calendar:
@@ -307,7 +315,7 @@ paths:
 
       responses:
         '200':
-         description: 'Ok'
+         description: 'Ok. Show [UI12]'
 
  /:   
     get:
@@ -319,7 +327,7 @@ paths:
         
       responses:
         '200':
-          description: 'OK. Show'
+          description: 'OK. Show [UI01]'
 
  /deleteUser/{id}: 
     get:
@@ -338,7 +346,7 @@ paths:
 
       responses:
         '200':
-         description: 'Ok'
+         description: 'Ok. Show [UI02]'
    
  /manageUsers:
     get:
@@ -350,7 +358,7 @@ paths:
 
       responses:
         '200':
-         description: 'Ok'
+         description: 'Ok. Show [UI02]'
 
  /removeFromEvent/{id_attendee}/{id_event}: 
     get:
@@ -374,7 +382,7 @@ paths:
 
       responses:
         '200':
-         description: 'Ok'
+         description: 'Ok. Show [UI03]'
 
  /joinEvent/{id}: 
     get:
@@ -398,8 +406,8 @@ paths:
  /abstainEvent/{id}:
   get:
       operationId: R208
-      summary: "R208: Join Event"
-      description: "Join Event . Access: USR"
+      summary: "R208: Abstain Event"
+      description: "Abstain Event . Access: USR"
       tags:
         - 'M02: Events'
 
