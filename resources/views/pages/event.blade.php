@@ -25,8 +25,8 @@
 @if ($event->visibility)
 
 <!-- Button trigger modal -->
-<button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Click Me!">
-        Share Event 
+<button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Share event!">
+        Share
     </button>
   
   <!-- Modal -->
@@ -47,8 +47,8 @@
 
 @endif
 <br>
-<button onclick="infoFunction()">Info</button>
-<button onclick="forumFunction()">Forum</button>
+<span id="info" onclick="infoFunction()" style="border-bottom: 1px solid rgba(90, 90, 90, 0.852);">Info</span>
+<span id="forum" onclick="forumFunction()" style="border-bottom: 1px solid white;">Forum</span>
 <div id="info-content">
 <p>{{ $event->description }}</p>
 @if ($event->visibility)
@@ -63,41 +63,32 @@
 @else
     <p>Data: {{ $event->start_date }}</p>
 @endif
+@if($event->event_organizers()->get()->contains(Auth::user()))
+    <h4>Participants</h4>
+    @foreach($event->attendees()->get() as $attendee)
+        @if( $event->event_organizers()->get()->contains($attendee))
+            <p>{{$attendee->username}} - Organizer</p>
+        @else
+            <p>{{$attendee->username}}</p>
+        @endif
+    @endforeach
+@endif
 </div>
 
 
 <div id="forum-content" style="display: none">
-    <form class="profile-post-form" method="post">
-        <textarea class="form-control autogrow" placeholder="What's on your mind?" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 80px;"></textarea>
-        <div class="form-options">
-            <div class="post-type">
-                <a href="#" class="tooltip-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Upload a Picture">
-                    <i class="entypo-camera"></i>
-                </a>
-                <a href="#" class="tooltip-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Attach a file">
-                    <i class="entypo-attach"></i>
-                </a>
-                <a href="#" class="tooltip-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Check-in">
-                    <i class="entypo-location"></i>
-                </a>
-            </div>
-            <div class="post-submit">
-                <button type="button" class="btn btn-primary">POST</button>
-            </div>
-        </div>
-     </form>
     <!-- Forum List -->
     <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
         @if(count($messages)<1)
             <p>There aren't messages yet</p>
         @endif
-        @foreach($messages as $message)
             <div class="container mt-5">
                 <div class="d-flex justify-content-center row">
                     <div class="col-md-8">
+                        @foreach($messages as $message)
                         <div class="d-flex flex-column comment-section">
                             <div class="bg-white p-2">
-                                <div class="d-flex flex-row user-info"><img class="rounded-circle" src="/../avatars/{{$setMessage[$message->id]->picture}}">
+                                <div class="d-flex flex-row user-info"><img class="profile-picture" src="/../avatars/{{$setMessage[$message->id]->picture}}">
                                     <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{ $setMessage[$message->id]->username }}</span><span class="date text-black-50">{{ $message->date }}</span></div>
                                 </div>
                                 <div class="mt-2">
@@ -112,12 +103,13 @@
                             </div>
                             
                         </div>
+            
+                        @endforeach
                     </div>
                 </div>
             </div>
 
-            
-        @endforeach
+
     </div>
     <!-- /Forum List -->
 </div>
@@ -126,12 +118,17 @@
 function infoFunction() {
     var x = document.getElementById("forum-content");
     var y = document.getElementById("info-content");
+    document.getElementById("info").style.borderBottomColor = "rgba(90, 90, 90, 0.852)";
+    document.getElementById("forum").style.borderBottomColor = "white";
     x.style.display = "none";
     y.style.display = "block";
+
 }
 function forumFunction() {
     var x = document.getElementById("forum-content");
     var y = document.getElementById("info-content");
+    document.getElementById("info").style.borderBottomColor = "white";
+    document.getElementById("forum").style.borderBottomColor = "rgba(90, 90, 90, 0.852)";
     x.style.display = "block";
     y.style.display = "none";
 }

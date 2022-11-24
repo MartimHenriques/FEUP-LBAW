@@ -15,15 +15,6 @@ use App\Models\Attendee;
 
 class EventController extends Controller
 {
-  /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Shows the form to create an event.
