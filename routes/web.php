@@ -58,6 +58,8 @@ Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCr
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
+Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
+
 
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
