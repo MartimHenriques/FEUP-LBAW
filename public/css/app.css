@@ -243,3 +243,8 @@ img {
   width: fit-content;
   margin-bottom: auto;
 }
+
+#info, #forum{
+  font-size: 2em;
+  margin: 1em;
+}
