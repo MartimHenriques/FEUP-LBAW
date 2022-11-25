@@ -30,9 +30,9 @@
         </span>
         @endif
 
-        <div class="field" style="padding-bottom: 24px">
+        <div class="field" style="padding-bottom: 24px;">
           <label for="visibility">Visibility</label>
-          <select name="visibility" class="form-select" required>
+          <select name="visibility" required>
               <option value="1">Public</option>
               <option value="0">Private</option>
           </select>
