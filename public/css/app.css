@@ -17,7 +17,7 @@ main > header a.button {
   justify-self: right;
 }
 
-.event-feed {
+.event-feed, .eventsAttended, .eventsToAttend{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
@@ -127,7 +127,7 @@ li a:hover{
   background-color: white;
 }
 @media (max-width: 70em) {
-  .event-feed {
+  .event-feed, .eventsAttended, .eventsToAttend {
     grid-template-columns: repeat(2, 1fr);
   }
   main > header {
@@ -139,11 +139,10 @@ li a:hover{
   }
 }
 @media (max-width: 40em) {
-  .event-feed {
+  .event-feed, .eventsAttended, .eventsToAttend {
     grid-template-columns: 1fr;
     align-items: center;
   }
-  .eventCard{}
 }
 @media (max-width: 25em) {
   body {
