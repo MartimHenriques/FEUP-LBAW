@@ -22,7 +22,7 @@
         // Fix for Firefox autofocus CSS bug
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
-    <script type="text/javascript" src={{ asset('js/app.js') }} defer>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer>
 </script>
 
   </head>
@@ -55,6 +55,7 @@
             @if (Auth::check())
             <li><a href="{{ url('/myevents') }}">My events</a></li>
             <li><a href="{{ url('/calendar') }}">My calendar</a></li>
+            <li><a href="{{ url('/eventsCreate') }}">Create a event</a></li>
             @if (Auth::user()->is_admin)
             <li><a href="{{url('/manageUsers')}}">Manage Users</a></li>
             @endif

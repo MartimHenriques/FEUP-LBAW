@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Carbon\Carbon;
 
 use App\Models\Event;
@@ -36,7 +37,7 @@ class EventController extends Controller
       $setMessage = [];
       $event = Event::find($id);
       $messages = $event->messages;
-      foreach($messages as $message){
+      foreach($messages as $message) {
         $user=User::find($message->id_user);
         $setMessage[$message->id]=$user;
       }
@@ -87,15 +88,22 @@ class EventController extends Controller
 
     public static function showEvents(){
       if(Auth::check()){
-        $events = Event::get();
-        return view('pages.feed',['events' => $events]);
+        $events = DB::table('event')->orderBy('id')->get();
+        $event_organizer = [];
+        foreach ($events as $event) {
+          $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+        }
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer]);
       }
       else{
-        $events = Event::where('visibility', 1)->get();
-        return view('pages.feed',['events' => $events]);
+        $event_organizer = [];
+        $events = Event::where('visibility', 1)->orderBy('id')->get();
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer]);
       }
 
     }
+
+
 
     /**
      * Get a validator for an incoming event request.
@@ -154,6 +162,47 @@ class EventController extends Controller
       $messages = [];
       $showModal = true;
       return redirect()->route('event',['event' => $event, 'messages' => $messages, 'showModal' => $showModal, 'id' => $event->id]);
+    }
+
+    /**
+     * Shows the form to edit an event.
+     *
+     * @return Response
+     */
+    public function showEditEventForm($id)
+    {
+      $event = Event::find($id);
+      return view('pages.eventsEdit', ['event'=>$event,'id'=>$id]);
+    }
+
+    /**
+     * Edits event's info.
+     *
+     * @return Event The event changed.
+     */
+    public function editEvent(Request $request, $id)
+    {
+      $event = Event::find($id);
+      $start_date = $request->input('start_date');
+      $final_date = $request->input('final_date');
+
+      if (($start_date > $final_date)) {
+        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      }
+
+      //$this->authorize('createEvent', $event);
+
+      $event->title = $request->input('title');
+      $event->description = $request->input('description');
+      $event->visibility = $request->input('visibility');
+      $event->picture = $request->input('picture');
+      $event->local = $request->input('local');
+      $event->start_date = $start_date;
+      $event->final_date = $final_date;
+      $event->save();
+
+      $showModal = false; 
+      return redirect()->route('event',['event' => $event, 'messages' => $event->messages, 'showModal' => $showModal, 'id' => $event->id]);
     }
 
     public function delete(Request $request, $id)

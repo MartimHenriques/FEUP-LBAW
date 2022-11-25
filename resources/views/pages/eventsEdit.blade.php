@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Novo evento')
+@section('title', 'Editar evento')
 
 @section('content')
 <div class="formbg-outer">
   <div class="formbg">
     <div class="formbg-inner" style="padding: 48px">
-      <span style="padding-bottom: 15px">New Event</span>
-      <form id="stripe-login" action="eventsCreate" method="POST">
+      <span style="padding-bottom: 15px; font-size: 50px;">Edit Event</span>
+      <form id="stripe-login" action="/editEvent/{{$id}}" method="POST">
         @csrf
 
         <div class="field" style="padding-bottom: 24px">
           <label for="title">Title</label>
-          <input id="title" type="text" name="title" value="{{ old('title') }}" required autofocus>
+          <input id="title" type="text" name="title" value="{{ $event->title }}" placeholder="{{ $event->title }}" required autofocus>
         </div>
         @if ($errors->has('title'))
         <span class="error">
@@ -22,7 +22,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="description">Description</label>
-          <input id="description" type="text" name="description" value="{{ old('description') }}" autofocus>
+          <input id="description" type="text" name="description" value="{{ $event->description }}" placeholder="{{ $event->description }}" autofocus>
         </div>
         @if ($errors->has('description'))
         <span class="error">
@@ -30,11 +30,16 @@
         </span>
         @endif
 
-        <div class="field" style="padding-bottom: 24px;">
+        <div class="field" style="padding-bottom: 24px">
           <label for="visibility">Visibility</label>
           <select name="visibility" required>
-              <option value="1">Public</option>
-              <option value="0">Private</option>
+              @if ($event->visibility == "1")
+              <option value="1" selected> Public </option>
+              <option value="0"> Private </option>
+              @else
+              <option value="1"> Public </option>
+              <option value="0" selected> Private </option>
+              @endif
           </select>
         </div>
         @if ($errors->has('visibility'))
@@ -45,7 +50,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="picture">Picture</label>
-          <input id="picture" type="file" name="picture" value="{{ old('picture') }}" autofocus>
+          <input id="picture" type="file" name="picture" value="{{ $event->picture }}" placeholder="{{ $event->picture }}" autofocus>
         </div>
         @if ($errors->has('picture'))
         <span class="error">
@@ -55,7 +60,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="local">Local</label>
-          <input id="local" type="text" name="local" value="{{ old('local') }}" required autofocus>
+          <input id="local" type="text" name="local" value="{{ $event->local }}" placeholder="{{ $event->local }}" required autofocus>
         </div>
         @if ($errors->has('local'))
         <span class="error">
@@ -65,7 +70,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="start_date">Start date</label>
-          <input id="start_date" type="date" name="start_date" value="{{ old('start_date') }}" required autofocus>
+          <input id="start_date" type="date" name="start_date" value="{{ date('Y-m-d',strtotime($event->start_date)) }}" required autofocus>
         </div>
         @if ($errors->has('start_date'))
         <span class="error">
@@ -75,7 +80,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="final_date">Final date</label>
-          <input id="final_date" type="date" name="final_date" value="{{ old('final_date') }}" required autofocus>
+          <input id="final_date" type="date" name="final_date" value="{{ date('Y-m-d',strtotime($event->final_date)) }}" required autofocus>
         </div>
         @if ($errors->has('final_date'))
         <span class="error">
@@ -84,7 +89,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <input type="submit" name="submit" value="Create Event">
+          <input type="submit" name="submit" value="Edit Event">
         </div>
       </form>
     </div>

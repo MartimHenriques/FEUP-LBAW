@@ -85,7 +85,7 @@
 <div id="forum-content" style="display: none">
     <!-- Forum List -->
     <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
-        @if(count($messages)<1)
+        @if( count($messages) < 1)
             <p>There aren't messages yet</p>
         @endif
             <div class="container mt-5">
@@ -167,7 +167,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const php_var = urlParams.get('showModal');
 var myModal = new bootstrap.Modal(document.getElementById('myModal'), {});
-if (php_var) {
+if (php_var == true) {
     myModal.toggle();
 }
 
