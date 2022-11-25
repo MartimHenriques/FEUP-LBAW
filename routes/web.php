@@ -48,6 +48,10 @@ Route::get('profile', 'UserController@showProfile');
 //home
 Route::get('/', 'HomeController@show');
 
+//administrater
+Route::get('deleteUser/{id}', [AdminController::class, 'deleteUser']) -> name('deleteUser');
+Route::get('manageUsers', 'AdminController@show');
+
 //feed
 Route::get('events', 'EventController@showEvents')->name('events');
 
@@ -58,6 +62,8 @@ Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCr
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
 Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
+
+Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);

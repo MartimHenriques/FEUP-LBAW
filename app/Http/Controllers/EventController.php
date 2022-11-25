@@ -223,6 +223,18 @@ class EventController extends Controller
         'user' => User::find(Auth::user()->id)]);
     }
 
+     /**
+     * An attendee is removed from an event.
+     *
+     * @return Redirect back to the page
+     */
+    public function removeFromEvent($id_attendee,$id_event) {
+
+      $attendee = Attendee::where(['id_user' => $id_attendee,'id_event' => $id_event]);
+      $attendee->delete();
+      return redirect()->back();
+    }
+
     /**
      * The user joins a event.
      *

@@ -3,19 +3,19 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Card;
+use App\Models\Event;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
-class CardPolicy
+class EventPolicy
 {
     use HandlesAuthorization;
 
-    public function show(User $user, Card $card)
+    public function show(User $user, Event $event)
     {
       // Only a card owner can see it
-      return $user->id == $card->user_id;
+      return $user->id == $event->user_id;
     }
 
     public function list(User $user)

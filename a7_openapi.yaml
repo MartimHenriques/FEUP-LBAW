@@ -162,7 +162,7 @@ paths:
       operationId: R107
       summary: 'R107: Edit Profile'
 
-      description: 'Edit profile information. Access: ACO'
+      description: 'Edit profile information. Access: OWN'
       tags:
         - 'M01: Authentication and Individual Profile'
 
@@ -204,7 +204,7 @@ paths:
   get:
       operationId: R202
       summary: "R202: Show Event Card"
-      description: "Shows Event's information. Access: USR"
+      description: "Shows Event's information. Access: PUB, USR"
       tags:
         - 'M02: Events'
 
@@ -288,7 +288,7 @@ paths:
   get:
       operationId: R205
       summary: "R205: View events created by user"
-      description: "Show events created by user. Access: OWR??"
+      description: "Show events created by user. Access: OWN"
       tags:
         - 'M02: Events'
 

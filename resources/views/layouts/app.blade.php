@@ -55,6 +55,9 @@
             @if (Auth::check())
             <li><a href="{{ url('/myevents') }}">My events</a></li>
             <li><a href="{{ url('/calendar') }}">My calendar</a></li>
+            @if (Auth::user()->is_admin)
+            <li><a href="{{url('/manageUsers')}}">Manage Users</a></li>
+            @endif
             <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
             @endif
 
