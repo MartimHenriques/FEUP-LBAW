@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\Event;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Event_Organizer;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EventPolicy
@@ -12,7 +14,10 @@ class EventPolicy
 
     public function edit(User $user, Event $event)
     {
-    return $user->id === $event->id_user;
+        //dd($event->id_user);
+        
+        dd(Event_Organizer::find($event->id)->where('id_user', Auth::user()->id));
+        return Auth::user()->id === $event->id_user;
     }
     
     /**

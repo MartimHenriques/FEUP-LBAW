@@ -421,3 +421,62 @@ paths:
       responses:
         '200':
          description: 'Ok'
+
+
+ /event:
+    get:
+      operationId: R209
+      summary: "R209: Search Events"
+      description: "Searches for events and returns the results as JSON. Access: PUB"
+      tags:
+        - 'M02: Events'
+
+      parameters:
+        - in: query
+          name: query
+          description: String to use for full-text search
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: closed
+          description: Boolean with the closed flag value
+          schema:
+            type: boolean
+          required: false
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: Bad Request
+
+components:
+  schemas:
+    Event:
+        type: object
+        properties:
+          id:
+            type: integer
+          title:
+            type: string
+          description:
+            type: string
+          visibility:
+            type: boolean
+          picture:
+            type: string
+            format: byte
+          publish_date:
+            type: string 
+          start_date:
+            type: string
+          final_sate:
+            type: string
+

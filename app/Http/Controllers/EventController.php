@@ -104,7 +104,6 @@ class EventController extends Controller
     }
 
 
-
     /**
      * Get a validator for an incoming event request.
      *
@@ -203,16 +202,6 @@ class EventController extends Controller
 
       $showModal = false; 
       return redirect()->route('event',['event' => $event, 'messages' => $event->messages, 'showModal' => $showModal, 'id' => $event->id]);
-    }
-
-    public function delete(Request $request, $id)
-    {
-      $card = Card::find($id);
-
-      $this->authorize('delete', $card);
-      $card->delete();
-
-      return $card;
     }
 
     //n terminei ainda
