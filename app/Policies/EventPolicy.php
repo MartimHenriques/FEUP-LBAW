@@ -10,6 +10,11 @@ class EventPolicy
 {
     use HandlesAuthorization;
 
+    public function edit(User $user, Event $event)
+    {
+    return $user->id === $event->id_user;
+    }
+    
     /**
      * Determine whether the user can view any models.
      *
