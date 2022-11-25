@@ -101,10 +101,9 @@ li a:hover{
   color: #a1b4e3;
 }
 
-. {
+#info, #forum{
   font-size: 2em;
   margin: 1em;
-  
 }
 .eventPart:hover{
   border-bottom: 2px solid rgba(90, 90, 90, 0.852);
@@ -242,9 +241,4 @@ img {
 .title{
   width: fit-content;
   margin-bottom: auto;
-}
-
-#info, #forum{
-  font-size: 2em;
-  margin: 1em;
 }
