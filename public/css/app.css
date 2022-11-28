@@ -3,11 +3,15 @@ body {
   color: #403f3f;
 }
 main > header {
+  position: fixed;
+  width:100%;
   display: grid;
-  grid-template-columns: auto 1fr auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   grid-template-rows: auto;
   align-items: center;
-  margin: 1em;
+  background-color: white;
+  top: 0;
+  margin-bottom: 1em;
 }
 main > header h1 {
   margin-right: 1em;
@@ -17,18 +21,23 @@ main > header a.button {
   justify-self: right;
 }
 
-.event-feed, .eventsAttended, .eventsToAttend{
+.event-feed, .eventsAttended, .eventsToAttend {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
+
 .eventCard {
-  display: flex;
   flex-direction: column;
   background-color: #c3daed;
   padding: 1em;
   margin: 1em;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-  max-width: 25em;
+  max-width: 20em;
+  max-height: 20em;
+  border-radius: 5%;
+}
+.eventCard h4, .eventCard p{
+  margin-bottom: 0.5em;
 }
 
 .inner-main {
@@ -89,26 +98,26 @@ main > header a.button {
   border-color: transparent;
   
 }
-ul{
-  list-style-type: none;
+
+a:hover{
+  color: #688ade;
 }
-li a{
-  font-size: 2em;
-  
-  color: #8aa5e9; 
-}
-li a:hover{
-  color: #a1b4e3;
+
+
+.eventPart:hover{
+  border-bottom: 2px solid rgba(90, 90, 90, 0.852);
 }
 
 #info, #forum{
   font-size: 2em;
   margin: 1em;
-}
-.eventPart:hover{
-  border-bottom: 2px solid rgba(90, 90, 90, 0.852);
+  cursor: pointer;
 }
 
+#content{
+  padding-left: 13em;
+  padding-top: 5em;
+}
 
 #content label {
   font-weight: normal;
@@ -117,7 +126,9 @@ li a:hover{
   margin: 0 auto;
   padding: 1em;
   max-width: 20em;
-  border: 1px solid #d2afe7;
+  border: 2px solid #a1b4e3c1;
+  border-radius: 5%;
+  margin-left: 17em;
 }
 #content > form .error {
   font-weight: bold;
@@ -126,13 +137,24 @@ li a:hover{
 #content > form input {
   background-color: white;
 }
+
+
+
+    
+  @media (min-width: 768px) {
+    .main {
+    padding-right: 40px;
+    padding-left: 220px; /* 180 + 40 */
+    }
+    }
+
 @media (max-width: 70em) {
   .event-feed, .eventsAttended, .eventsToAttend {
     grid-template-columns: repeat(2, 1fr);
   }
   main > header {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto auto auto auto auto;
   }
   main > header h1 {
     grid-row-end: span 2;
@@ -171,9 +193,14 @@ li a:hover{
 button, a.button {
   background-color: #a1b4e3;
   border-color: #a1b4e3;
-  max-width: 20em;
-  text-align: center;
+  max-width: 13em;
+  align-items: center;
+}
 
+#createButton{
+  margin: auto;
+  display: flex;
+  padding: 0 1em;
 }
 button:hover, a.button:hover{
   background-color: #a1b4e3ce;
@@ -191,6 +218,7 @@ input[type=email]:focus,
 input[type=password]:focus {
   border-color: #383838;
 }
+
 
 .col-sm-9{
   padding-left: 10px;
@@ -235,9 +263,118 @@ img {
   max-width: 30%;
   border-radius: 5px 5px 5px 5px;
 }
-
+#logo{
+  min-width: 5em;
+}
 
 .title{
   width: fit-content;
   margin-bottom: auto;
+}
+.menu-toggle {
+	display: none;
+	position: fixed;
+	top: 5rem;
+	width: 2em;
+	height: 2em;
+	cursor: pointer;
+  right: 1em;
+  background-color: #fff;
+  border-radius: 10%;
+}
+
+.hamburger {
+	position: relative;
+	top: calc(50% - 2px);
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 1.5em;
+}
+
+.hamburger > span,
+.hamburger > span::before,
+.hamburger > span::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 99px;
+  background-color: #a1b4e3;
+  transition-duration: .25s;
+}
+
+.hamburger > span::before {
+  content: '';
+  top: -8px;
+}
+.hamburger > span::after {
+  content: '';
+  top: 8px;
+}
+.menu-toggle.is-active .hamburger > span {
+  transform: rotate(45deg);
+}
+.menu-toggle.is-active .hamburger > span::before {
+  top: 0;
+  transform: rotate(0deg);
+}
+.menu-toggle.is-active .hamburger > span::after {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+.sidebar {
+	background-color: #ffffff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  top: 3.7em;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  border-right: 2px solid #a1b4e3;
+  width: 13em;
+}
+
+.sidebar .menu .menu-item {
+	display: block;
+	padding: 1em;
+	color: #c3daed;
+	text-decoration: none;
+	transition: 0.2s linear;
+}
+
+.sidebar .menu .menu-item:hover,
+.sidebar .menu .menu-item.is-active {
+	color: #a1b4e3;
+	border-right: 4px solid #a1b4e3;
+}
+
+.sidebar .menu .menu-item:hover {
+	border-right: 4px solid #a1b4e3;
+}
+
+
+@media (max-width: 768px) {
+	.menu-toggle {
+		display: block;
+	}
+	#content {
+    padding-left: 0;
+	}
+	.sidebar {
+		position: fixed;
+		top: 3.7em;
+		left: -300px;
+		height: 100vh;
+		width: 100%;
+		max-width: 15em;
+		transition: 0.2s linear;
+	}
+  #content > form{
+    margin: 0 auto;
+  }
+	.sidebar.is-active {
+		left: 0;
+	}
 }

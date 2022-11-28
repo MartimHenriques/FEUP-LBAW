@@ -204,13 +204,12 @@ class EventController extends Controller
       return redirect()->route('event',['event' => $event, 'messages' => $event->messages, 'showModal' => $showModal, 'id' => $event->id]);
     }
 
-    //n terminei ainda
     public function join(Request $request, Event $event)
     {
       if (!Auth::check()) return redirect('/login');
       $user = User::find(Auth::user()->id);
       $this->authorize('attendee', [$user, $event]);
-      $event->invites()->attach($user->id); //parei aqui
+      $event->invites()->attach($user->id);
       $messages = Message::where('idevent','=',$id)->get();
       $showModal = false;
       return view('pages.event', [
@@ -218,18 +217,6 @@ class EventController extends Controller
         'messages'=> $messages,
         'showModal' => $showModal,
         'user' => User::find(Auth::user()->id)]);
-    }
-
-     /**
-     * An attendee is removed from an event.
-     *
-     * @return Redirect back to the page
-     */
-    public function removeFromEvent($id_attendee,$id_event) {
-
-      $attendee = Attendee::where(['id_user' => $id_attendee,'id_event' => $id_event]);
-      $attendee->delete();
-      return redirect()->back();
     }
 
     /**

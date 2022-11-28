@@ -16,6 +16,7 @@
     <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="/js/search.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -31,8 +32,14 @@
     <main>
       <header>
         <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
-        <div><input type="text" placeholder="search"></div>
-        <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
+
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" id="searchbar">
+        <div id = "searchResults">
+          <h2 id = "eventsTitleSearch" style="display: none;"></h2>
+          <div id = "eventsSearch"></div>
+        </div>
+  
+        
         @if (Auth::check())
         <a class="button" href="{{ url('/profile') }}"> Profile </a>
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
@@ -41,35 +48,37 @@
         <a class="button" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-list" style="font-size: 4em; color: #a1b4e3;"></i></button>
-
-      <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Menu</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul>
-            <li><a href="{{ url('/') }}">Home</a></li>
-            <li><a href="{{ url('/events') }}">Events feed</a></li>
-            @if (Auth::check())
-            <li><a href="{{ url('/myevents') }}">My events</a></li>
-            <li><a href="{{ url('/calendar') }}">My calendar</a></li>
-            <li><a href="{{ url('/eventsCreate') }}">Create a event</a></li>
-            @if (Auth::user()->is_admin)
-            <li><a href="{{url('/manageUsers')}}">Manage Users</a></li>
-            @endif
-            <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
-            @endif
-
-          </ul>
-                    
+      <div class="menu-toggle">
+        <div class="hamburger">
+          <span></span>
         </div>
       </div>
+  
+      <aside class="sidebar">
+        <nav class="menu">
+            <a href="{{ url('/events') }}" class="menu-item">Events feed</a>
+            @if (Auth::check())
+            <a href="{{ url('/myevents') }}" class="menu-item">My events</a>
+            <a href="{{ url('/calendar') }}" class="menu-item">My calendar</a>
+            <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event<i class="bi bi-plus" style="font-size:2em"></i></a>
+            @endif
+
+        </nav>
+  
+      </aside>
 
       <section id="content">
         @yield('content')
       </section>
     </main>
+    <script>
+      const menu_toggle = document.querySelector('.menu-toggle');
+      const sidebar = document.querySelector('.sidebar');
+  
+      menu_toggle.addEventListener('click', () => {
+        menu_toggle.classList.toggle('is-active');
+        sidebar.classList.toggle('is-active');
+      });
+    </script>
   </body>
 </html>
