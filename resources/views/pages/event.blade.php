@@ -69,16 +69,32 @@
 @else
     <p>Data: {{ $event->start_date }}</p>
 @endif
-@if($event->event_organizers()->get()->contains(Auth::user()))
     <h4>Participants</h4>
+    <table class="table table-striped">
+    <th>Organizers</th>
     @foreach($event->attendees()->get() as $attendee)
         @if( $event->event_organizers()->get()->contains($attendee))
-            <p>{{$attendee->username}} - Organizer</p>
-        @else
-            <p>{{$attendee->username}}</p>
+            <td>{{$attendee->username}}</td>
         @endif
     @endforeach
-@endif
+    </table>
+    
+    <table class="table table-striped">
+    <th>Attendee</th><th></th>
+    @foreach($event->attendees()->get() as $attendee)
+        @if( !($event->event_organizers()->get()->contains($attendee)))
+            <tr>
+                <td>{{$attendee->username}}</td>
+                @if($event->event_organizers()->get()->contains(Auth::user()))
+                <td><a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a></td>
+                @endif
+            </tr>
+        @endif
+    @endforeach
+    </table>
+
+
+
 </div>
 
 
