@@ -35,7 +35,7 @@
 
         <input type="search" class="form-control" placeholder="Search..." aria-label="Search" id="searchbar">
         <div id = "searchResults">
-          <h2 id = "eventsTitleSearch" style="display: none;">events</h2>
+          <h2 id = "eventsTitleSearch" style="display: none;"></h2>
           <div id = "eventsSearch"></div>
         </div>
   
@@ -48,32 +48,37 @@
         <a class="button" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-list" style="font-size: 4em; color: #a1b4e3;"></i></button>
-
-      <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Menu</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <div class="menu-toggle">
+        <div class="hamburger">
+          <span></span>
         </div>
-        <div class="offcanvas-body">
-          <ul>
-            <li><a href="{{ url('/') }}">Home</a></li>
-            <li><a href="{{ url('/events') }}">Events feed</a></li>
+      </div>
+  
+      <aside class="sidebar">
+        <nav class="menu">
+            <a href="{{ url('/events') }}" class="menu-item">Events feed</a>
             @if (Auth::check())
-            <li><a href="{{ url('/myevents') }}">My events</a></li>
-            <li><a href="{{ url('/calendar') }}">My calendar</a></li>
+            <a href="{{ url('/myevents') }}" class="menu-item">My events</a>
+            <a href="{{ url('/calendar') }}" class="menu-item">My calendar</a>
             <!--<a class="button" href="{{ route('eventsCreate') }}"> Create event </a>--><!--TODO-->
             @endif
 
-          </ul>
-                    
-        </div>
-      </div>
+        </nav>
+  
+      </aside>
 
       <section id="content">
         @yield('content')
       </section>
     </main>
-    
+    <script>
+      const menu_toggle = document.querySelector('.menu-toggle');
+      const sidebar = document.querySelector('.sidebar');
+  
+      menu_toggle.addEventListener('click', () => {
+        menu_toggle.classList.toggle('is-active');
+        sidebar.classList.toggle('is-active');
+      });
+    </script>
   </body>
 </html>

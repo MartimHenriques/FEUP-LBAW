@@ -156,15 +156,6 @@ class EventController extends Controller
       return redirect()->route('event',['event' => $event, 'messages' => $messages, 'showModal' => $showModal, 'id' => $event->id]);
     }
 
-    public function delete(Request $request, $id)
-    {
-      $card = Card::find($id);
-
-      $this->authorize('delete', $card);
-      $card->delete();
-
-      return $card;
-    }
 
     public function join(Request $request, Event $event)
     {

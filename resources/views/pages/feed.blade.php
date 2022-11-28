@@ -4,7 +4,6 @@
 
 @section('content')
 
-<h1>Feed</h1>
 <div class="event-feed">
     @each('partials.eventCard', $events, 'event')
     

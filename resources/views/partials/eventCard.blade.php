@@ -2,14 +2,14 @@
 
   <a href="/events/{{ $event->id}}">
       <div class="event-info">
-        <h2>{{ $event->title }}</h2>
+        <h4>{{ $event->title }}</h4>
         @if ($event->visibility)
-          <h5>Public</h5>
+          <p>Publico</p>
         @else
-          <h5>Private</h5>
+         <p>Privado</p>
         @endif
-        <h5>Local: {{$event->local}}</h5>
-        <h5>{{$event->start_date}}</h5>
+        <p>Local: {{$event->local}}</p>
+        <p>{{$event->start_date}}</p>
       </div>
   </a>
 
@@ -19,6 +19,8 @@
     <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
 @endif
 
+
+</div>
 <script>
   function copyLinkFeed(id){
     var dummy = document.createElement('input'),
@@ -33,5 +35,3 @@
     alert("Copied the text: " + dummy.value); 
   }
 </script>
-</div>
-
