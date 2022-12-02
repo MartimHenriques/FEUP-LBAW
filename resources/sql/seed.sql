@@ -32,7 +32,8 @@ CREATE TABLE users (
     email     TEXT UNIQUE NOT NULL,
     picture   TEXT,
     is_blocked TEXT,
-    is_admin   BOOLEAN DEFAULT (False) 
+    is_admin   BOOLEAN DEFAULT (False),
+    remember_token VARCHAR
 );
 
 -- Table: event
@@ -238,7 +239,7 @@ BEGIN
          END IF;
  END IF;
  RETURN NEW;
-END $$
+END $BODY$
 LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS event_search_update on event CASCADE;

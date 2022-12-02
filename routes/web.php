@@ -23,7 +23,6 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
-
 // edit profile
 Route::get('profile/editProfile', 'UserController@showEditProfile');
 Route::post('profile/editProfile', 'UserController@saveChanges') -> name('saveChanges');
@@ -34,7 +33,7 @@ Route::get('profile', 'UserController@showProfile');
 //home
 Route::get('/', 'HomeController@show');
 
-//administrater
+//admin
 Route::get('deleteUser/{id}', [AdminController::class, 'deleteUser']) -> name('deleteUser');
 Route::get('manageUsers', 'AdminController@show');
 
@@ -53,9 +52,15 @@ Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 
 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
+Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
+Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
+Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
 Route::post('api/eventsSearch', [EventController::class,'searchEvents']);
 
 //my events
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
+
+Route::post('/api/search', 'SearchController@show');
+
