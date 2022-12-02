@@ -11,7 +11,9 @@
 
     @foreach($users as $user)
         @if(!$user->is_admin)
-            <td>{{$user->username}}</td> <td><a href="{{route('deleteUser',['id'=>$user->id])}}">Delete User</a></td> 
+            <tr>
+                <td>{{$user->username}}</td> <td><a href="{{route('deleteUser',['id'=>$user->id])}}">Delete User</a></td>
+            </tr>
         @endif
     @endforeach
 
