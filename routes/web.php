@@ -54,6 +54,8 @@ Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
 
+Route::post('api/eventsSearch', [EventController::class,'searchEvents']);
+
 //my events
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');

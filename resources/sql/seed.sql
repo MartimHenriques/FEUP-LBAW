@@ -219,21 +219,21 @@ CREATE INDEX tag_alphabetic ON tag USING btree (tag_name);
 
 -- FTS INDEXES
 
-ALTER TABLE event ADD COLUMN tsvectors TSVECTOR;
+ALTER TABLE event ADD COLUMN search TSVECTOR;
 
 CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS $$
 BEGIN
  IF TG_OP = 'INSERT' THEN
-        NEW.tsvectors = (
-         setweight(to_tsvector('english', NEW.title), 'A') ||
-         setweight(to_tsvector('english', NEW.description), 'B')
+        NEW.search = ( SELECT
+         setweight(to_tsvector(NEW.title), 'A') ||
+         setweight(to_tsvector(NEW.description), 'B') FROM event WHERE NEW.id=event.id
         );
  END IF;
  IF TG_OP = 'UPDATE' THEN
          IF (NEW.title <> OLD.title OR NEW.description <> OLD.description) THEN
-           NEW.tsvectors = (
-             setweight(to_tsvector('english', NEW.title), 'A') ||
-             setweight(to_tsvector('english', NEW.description), 'B')
+           NEW.search = ( SELECT
+             setweight(to_tsvector(NEW.title), 'A') ||
+             setweight(to_tsvector(NEW.description), 'B') FROM event WHERE NEW.id=event.id
            );
          END IF;
  END IF;
@@ -247,7 +247,7 @@ CREATE TRIGGER event_search_update
  FOR EACH ROW
  EXECUTE PROCEDURE event_search_update();
 
- CREATE INDEX search_idx ON event USING GIN (tsvectors); 
+ CREATE INDEX search_idx ON event USING GIN (search); 
 
 
 -----------------------------------------
@@ -401,7 +401,6 @@ CREATE TRIGGER add_banned_notification
 AFTER UPDATE ON report
 FOR EACH ROW
 EXECUTE PROCEDURE add_banned_notification();
-
 
 
 ---POPULATE

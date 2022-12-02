@@ -104,6 +104,20 @@ class EventController extends Controller
     }
 
 
+    public static function searchEvents(Request $request){
+      $search = $request->search;
+      if(strlen($search) !=0 ) {
+      $events = Event::where('title', 'ILIKE', '%'.$search.'%')->get();
+      $event_organizer = [];
+      foreach ($events as $event) {
+        $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+      }
+      return redirect()->route('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer]);
+  }
+}
+
+
+
     /**
      * Get a validator for an incoming event request.
      *
