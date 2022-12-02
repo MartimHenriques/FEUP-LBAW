@@ -1,5 +1,5 @@
 body {
-  background-color: #ffffff;
+  background-color: #f6f6f6;
   color: #403f3f;
 }
 main > header {
@@ -24,16 +24,20 @@ main > header a.button {
 .event-feed, .eventsAttended, .eventsToAttend {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  background-color: white;
+  border-radius: 1%;
+  margin: 2.5em;
+  margin-top: 1em;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 }
 
 .eventCard {
   flex-direction: column;
-  background-color: #c3daed;
   padding: 1em;
   margin: 1em;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-  max-width: 20em;
-  max-height: 20em;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  max-width: 18em;
+  max-height: 15em;
   border-radius: 5%;
 }
 .eventCard h4, .eventCard p{
@@ -115,7 +119,7 @@ a:hover{
 }
 
 #content{
-  padding-left: 13em;
+  padding-left: 14em;
   padding-top: 5em;
 }
 
@@ -129,6 +133,7 @@ a:hover{
   border: 2px solid #a1b4e3c1;
   border-radius: 5%;
   margin-left: 17em;
+  background-color: white;
 }
 #content > form .error {
   font-weight: bold;
@@ -199,6 +204,7 @@ button, a.button {
 
 #createButton{
   margin: auto;
+  margin-top: 1em;
   display: flex;
   padding: 0 1em;
 }
@@ -260,11 +266,11 @@ input[type=password]:focus {
 }
 /* Add rounded corners to the top left and the top right corner of the image */
 img {
-  max-width: 30%;
+  max-width: 25%;
   border-radius: 5px 5px 5px 5px;
 }
 #logo{
-  min-width: 5em;
+  min-width: 10em;
 }
 
 .title{
@@ -274,11 +280,9 @@ img {
 .menu-toggle {
 	display: none;
 	position: fixed;
-	top: 5rem;
 	width: 2em;
 	height: 2em;
 	cursor: pointer;
-  right: 1em;
   background-color: #fff;
   border-radius: 10%;
 }
@@ -332,14 +336,26 @@ img {
   top: 3.7em;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  border-right: 2px solid #a1b4e3;
-  width: 13em;
+  width: 14em;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 30px 3px;
+}
+
+.sidebar h4{
+  margin-top: 1em;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+hr{
+  display: block;
+  border-top: 1px solid rgb(118, 118, 118);
+  margin: 1em 1em;
+
 }
 
 .sidebar .menu .menu-item {
 	display: block;
 	padding: 1em;
-	color: #c3daed;
+  font-weight: normal;
 	text-decoration: none;
 	transition: 0.2s linear;
 }
@@ -348,10 +364,7 @@ img {
 .sidebar .menu .menu-item.is-active {
 	color: #a1b4e3;
 	border-right: 4px solid #a1b4e3;
-}
-
-.sidebar .menu .menu-item:hover {
-	border-right: 4px solid #a1b4e3;
+  background-color: rgba(245, 245, 245, 0.692);
 }
 
 
@@ -377,4 +390,9 @@ img {
 	.sidebar.is-active {
 		left: 0;
 	}
+}
+
+footer{
+  margin-left: 14em;
+  bottom: 0;
 }

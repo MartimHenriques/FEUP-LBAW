@@ -31,15 +31,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <main>
       <header>
-        <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
-
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" id="searchbar">
-        <div id = "searchResults">
-          <h2 id = "eventsTitleSearch" style="display: none;"></h2>
-          <div id = "eventsSearch"></div>
+        <div class="menu-toggle">
+          <div class="hamburger">
+            <span></span>
+          </div>
         </div>
+        <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
   
-        
         @if (Auth::check())
         <a class="button" href="{{ url('/profile') }}"> Profile </a>
         <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
@@ -48,18 +46,15 @@
         <a class="button" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
-      <div class="menu-toggle">
-        <div class="hamburger">
-          <span></span>
-        </div>
-      </div>
   
       <aside class="sidebar">
+        <h4>Eventos</h4>
         <nav class="menu">
-            <a href="{{ url('/events') }}" class="menu-item">Events feed</a>
+            <a href="{{ url('/events') }}" class="menu-item">Home page</a>
             @if (Auth::check())
             <a href="{{ url('/myevents') }}" class="menu-item">My events</a>
             <a href="{{ url('/calendar') }}" class="menu-item">My calendar</a>
+            <a class="menu-item">Notifications</a>
             @if (Auth::user()->is_admin)
             <a href="{{url('/manageUsers')}}" class="menu-item">Manage Users</a>
             @endif
@@ -67,20 +62,37 @@
             @endif
 
         </nav>
+        <hr>
+        <h5>Categorias</h5>
   
       </aside>
 
       <section id="content">
         @yield('content')
       </section>
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <p class="col-md-4 mb-0 text-muted">© 2022 WeMeet, Inc</p>
+      
+          <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+          </a>
+      
+          <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">User help</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Contact us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About us</a></li>
+          </ul>
+        </footer>
+
     </main>
     <script>
       const menu_toggle = document.querySelector('.menu-toggle');
       const sidebar = document.querySelector('.sidebar');
-  
+
       menu_toggle.addEventListener('click', () => {
         menu_toggle.classList.toggle('is-active');
         sidebar.classList.toggle('is-active');
+
       });
     </script>
   </body>
