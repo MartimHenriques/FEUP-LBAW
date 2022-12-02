@@ -9,20 +9,44 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Poll;
 use App\Models\Attendee;
 use App\Models\ChooseOption;
+use App\Models\Event;
 use App\Models\Notification;
+use App\Models\Report;
 use App\Models\User;
 
 class AdminController extends Controller
 {
     /**
-     * Shows the admin page.
+     * Shows the adminUsers page.
      *
      * @return Response
      */
-    public function show()
+    public function showUsers()
     {
       $users = User::all();
-      return view('pages.admin',['users'=>$users]);
+      return view('pages.adminUsers',['users'=>$users]);
+    }
+
+    /**
+     * Shows the adminEvents page.
+     *
+     * @return Response
+     */
+    public function showEvents()
+    {
+      $events = Event::all();
+      return view('pages.adminEvents',['events'=>$events]);
+    }
+
+    /**
+     * Shows the adminReports page.
+     *
+     * @return Response
+     */
+    public function showReports()
+    {
+      $reports = Report::all();
+      return view('pages.adminReports',['reports'=>$reports]);
     }
 
     /**

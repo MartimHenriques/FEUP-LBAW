@@ -56,14 +56,19 @@
   
       <aside class="sidebar">
         <nav class="menu">
-            <a href="{{ url('/events') }}" class="menu-item">Events feed</a>
             @if (Auth::check())
-            <a href="{{ url('/myevents') }}" class="menu-item">My events</a>
-            <a href="{{ url('/calendar') }}" class="menu-item">My calendar</a>
-            @if (Auth::user()->is_admin)
-            <a href="{{url('/manageUsers')}}" class="menu-item">Manage Users</a>
-            @endif
-            <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event<i class="bi bi-plus" style="font-size:2em"></i></a>
+              @if (Auth::user()->is_admin)
+              <a href="{{url('/manageUsers')}}" class="menu-item">Users</a>
+              <a href="{{url('/manageEvents')}}" class="menu-item">Events</a>
+              <a href="{{url('/manageReports')}}" class="menu-item">Reports</a>
+              @else
+              <a href="{{ url('/events') }}" class="menu-item">Events feed</a>
+              <a href="{{ url('/myevents') }}" class="menu-item">My events</a>
+              <a href="{{ url('/calendar') }}" class="menu-item">My calendar</a>
+              <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event<i class="bi bi-plus" style="font-size:2em"></i></a>
+              @endif
+            @else
+            <a href="{{ url('/events') }}" class="menu-item">Events feed</a>
             @endif
 
         </nav>

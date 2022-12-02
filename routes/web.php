@@ -35,7 +35,9 @@ Route::get('/', 'HomeController@show');
 
 //admin
 Route::get('deleteUser/{id}', [AdminController::class, 'deleteUser']) -> name('deleteUser');
-Route::get('manageUsers', 'AdminController@show');
+Route::get('manageUsers', 'AdminController@showUsers');
+Route::get('manageEvents', 'AdminController@showEvents');
+Route::get('manageReports', 'AdminController@showReports');
 
 //feed
 Route::get('events', 'EventController@showEvents')->name('events');

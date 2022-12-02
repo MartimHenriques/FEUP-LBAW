@@ -1,6 +1,6 @@
 @extends ('layouts.app')
 
-@section('title', 'Admin')
+@section('title', 'AdminUsers')
 
 @section('content')
 
@@ -12,7 +12,7 @@
     @foreach($users as $user)
         @if(!$user->is_admin)
             <tr>
-                <td>{{$user->username}}</td> <td><a href="{{route('deleteUser',['id'=>$user->id])}}">Delete User</a></td>
+                <td>{{$user->username}}</td> <td><a class="button" href="{{route('deleteUser',['id'=>$user->id])}}">Delete User</a></td>
             </tr>
         @endif
     @endforeach
