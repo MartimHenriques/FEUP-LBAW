@@ -39,8 +39,13 @@
         <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
   
         @if (Auth::check())
-        <a class="button" href="{{ url('/profile') }}"> Profile </a>
-        <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
+        <a href="{{ url('/profile') }}">
+          @if (empty(Auth::user()->picture)) 
+          <img class="mini-picture" src="/../avatars/default.png" alt="Avatar">
+          @else
+          <img class="mini-picture" src="/../avatars/{{Auth::user()->picture}}" alt="Avatar">
+          @endif
+        </a>
         @else
         <a class="button" href="{{ route('login') }}"> Login </a> 
         <a class="button" href="{{ route('register') }}"> Register </a> 
@@ -50,32 +55,28 @@
       <aside class="sidebar">
         <h4>Eventos</h4>
         <nav class="menu">
-            <a href="{{ url('/events') }}" class="menu-item">Home page</a>
+            <a href="{{ url('/events') }}" class="menu-item"><i class="bi bi-house-door-fill"></i> Home page</a>
             @if (Auth::check())
-            <a href="{{ url('/myevents') }}" class="menu-item">My events</a>
-            <a href="{{ url('/calendar') }}" class="menu-item">My calendar</a>
-            <a class="menu-item">Notifications</a>
+            <a href="{{ url('/myevents') }}" class="menu-item"><i class="bi bi-person-fill"></i> My events</a>
+            <a href="{{ url('/calendar') }}" class="menu-item"><i class="bi bi-calendar-fill"></i> My calendar</a>
+            <a class="menu-item"><i class="bi bi-bell-fill"></i> Notifications</a>
             @if (Auth::user()->is_admin)
             <a href="{{url('/manageUsers')}}" class="menu-item">Manage Users</a>
             @endif
-            <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event<i class="bi bi-plus" style="font-size:2em"></i></a>
+            <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event <i class="bi bi-plus" style="font-size:2em"></i></a>
             @endif
 
         </nav>
         <hr>
-        <h5>Categorias</h5>
+        <h5>Categories</h5>
   
       </aside>
 
       <section id="content">
         @yield('content')
       </section>
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
           <p class="col-md-4 mb-0 text-muted">© 2022 WeMeet, Inc</p>
-      
-          <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-          </a>
       
           <ul class="nav col-md-4 justify-content-end">
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">User help</a></li>
