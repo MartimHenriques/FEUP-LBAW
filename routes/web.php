@@ -39,6 +39,9 @@ Route::get('manageUsers', 'AdminController@showUsers');
 Route::get('manageEvents', 'AdminController@showEvents');
 Route::get('manageReports', 'AdminController@showReports');
 
+Route::get('blockUser/{id}', 'AdminController@blockUser');
+Route::get('unblockUser/{id}', 'AdminController@unblockUser');
+
 //feed
 Route::get('events', 'EventController@showEvents')->name('events');
 

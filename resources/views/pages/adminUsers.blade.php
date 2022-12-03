@@ -12,7 +12,15 @@
     @foreach($users as $user)
         @if(!$user->is_admin)
             <tr>
-                <td>{{$user->username}}</td> <td><a class="button" href="{{route('deleteUser',['id'=>$user->id])}}">Delete User</a></td>
+                <td>{{$user->username}}</td> 
+                <td><a class="button" href="{{route('deleteUser',['id'=>$user->id])}}">Delete User</a></td>
+                <td><a id="block" type='button' class='button' style="{{ ($user->is_blocked) ? 'background-color: CornflowerBlue' : '' }}" href="/{{(!$user->is_blocked) ? 'blockUser' : 'unblockUser'}}/{{$user->id}}">
+                        @if(!$user->is_blocked)
+                            Block
+                        @else
+                            Unblock
+                        @endif
+                    </a></td>
             </tr>
         @endif
     @endforeach

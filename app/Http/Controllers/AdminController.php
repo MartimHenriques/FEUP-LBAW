@@ -55,7 +55,7 @@ class AdminController extends Controller
      * @return Redirect back to the page
      */
     public function deleteUser($id){
-        //to improve, not the best use
+        //to improve, not the best use; ON DELETE CASCADE
         $poll = Poll::where(['id_user' => $id]);
         $poll->delete();
         $notification = Notification::where(['id_user' => $id]);
@@ -68,4 +68,24 @@ class AdminController extends Controller
         $user->delete();
         return redirect()->back();
       }
+
+      /**
+     * The user is blocked.
+     *
+     * @return Redirect back to the page
+     */
+      public function blockUser($id){
+        DB::table('users')->where(['id'=>$id])->update(['is_blocked'=>TRUE]);
+        return redirect()->back();
+      }
+
+      /**
+     * The user is unblocked.
+     *
+     * @return Redirect back to the page
+     */
+    public function unblockUser($id){
+      DB::table('users')->where(['id'=>$id])->update(['is_blocked'=>FALSE]);
+      return redirect()->back();
+    }
 }

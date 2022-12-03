@@ -13,21 +13,21 @@
         <tr>
             <td>{{$report->date}}</td>
             <td>{{$report->motive}}</td>
-            <td>{{$type = $report->STATE}}</td>
-            @switch($type)
-                @case('Pending')
-                    {{$type = 'Pending'}}
-                    @break
-                @case('Banned')
-                    {{$type = 'Banned'}}
-                    @break
-                @case('Rejected')
-                    {{$type = 'Rejected'}}
-                    @break
-                @default
-                    {{$type = 'Not working'}} 
-            @endswitch
-            <td>{{$type}}</td>
+            <td>
+                @switch($report->STATE)
+                    @case(0)
+                        {{'Pending'}}
+                        @break
+                    @case(1)
+                        {{'Banned'}}
+                        @break
+                    @case(2)
+                        {{'Rejected'}}
+                        @break
+                    @default
+                        {{'Not working'}} 
+                @endswitch
+            </td>
             <td>{{--<a class="button" href="{{route('deleteUser',['id'=>$user->id])}}">User</a>--}}</td>
         </tr>
     @endforeach
