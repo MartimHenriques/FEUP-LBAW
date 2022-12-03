@@ -53,7 +53,7 @@
       </header>
   
       <aside class="sidebar">
-        <h4>Eventos</h4>
+        <h4>Events</h4>
         <nav class="menu">
             <a href="{{ url('/events') }}" class="menu-item"><i class="bi bi-house-door-fill"></i> Home page</a>
             @if (Auth::check())
