@@ -222,7 +222,8 @@ CREATE INDEX tag_alphabetic ON tag USING btree (tag_name);
 
 ALTER TABLE event ADD COLUMN search TSVECTOR;
 
-CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS
+$BODY$
 BEGIN
  IF TG_OP = 'INSERT' THEN
         NEW.search = ( SELECT

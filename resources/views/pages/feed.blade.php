@@ -6,10 +6,13 @@
 
 <h1>Feed</h1>
 <div class="input-group rounded w-50">
-    <input type="search" name="search" id="eventSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="font-size:17px;" />
-    <button type='submit' class='button' href="api/eventsSearch">
-        <i class="bi bi-search"></i>
+    <form action="api/eventsSearch" method="POST">
+        @csrf
+        <input type="search" name="search" id="eventSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="font-size:17px;" />
+        <button type='submit' name="button" value="searchEvent">
+            <i class="bi bi-search"></i>
     </button>
+    </form>
 </div>
 <div class="event-feed" id="eventFeed">
     @foreach($events as $event)
@@ -54,7 +57,7 @@
     // Alert the copied text
     alert("Copied the text: " + dummy.value); 
   }
-
+/*
     const eventsearch = document.getElementById("eventSearch");
     eventsearch.addEventListener("keyup", searchEvent);
     function searchEvent() {
@@ -87,7 +90,7 @@
                 document.body.innerHTML += '<button id="copyButton" onclick="copyLinkFeed('+event['id']+');">Share</button>';
 
         }
-    }
+    }*/
 
 </script>
 @endsection

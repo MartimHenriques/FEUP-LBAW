@@ -112,7 +112,8 @@ class EventController extends Controller
       foreach ($events as $event) {
         $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
       }
-      return redirect()->route('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer]);
+
+      return view('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer]);
   }
 }
 
