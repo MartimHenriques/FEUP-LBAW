@@ -55,30 +55,12 @@
                 </div>
             </div>
         </div>
-        </div>
-<h1>{{ $event->title }}</h1>
-<div id="eventActions">
-    <span id="info" onclick="infoFunction()" style="border-bottom: 1px solid rgba(90, 90, 90, 0.852);">Info</span>
-    <span id="forum" onclick="forumFunction()" style="border-bottom: 1px solid transparent;">Forum</span>
-    <a id="join" type='button' class='button' style="{{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
-        @if($attendee)
-            Showing up
-        @else
-            Show up
-        @endif
-    </a>
+    </div>
 
-    @if ($event->visibility)
-    
-    <!-- Button trigger modal -->
-    <button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Share event!">
-            Share
-    </button>
-
-    
-    @endif
-</div>
-
+@endif
+<br>
+<span id="info" onclick="infoFunction()" style="border-bottom: 1px solid rgba(90, 90, 90, 0.852);">Info</span>
+<span id="forum" onclick="forumFunction()" style="border-bottom: 1px solid white;">Forum</span>
 <div id="info-content">
 <p>{{ $event->description }}</p>
 @if ($event->visibility)
