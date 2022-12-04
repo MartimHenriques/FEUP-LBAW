@@ -14,11 +14,11 @@
     
 </div>
 <h1>Events to attend</h1>
-<div class="eventsToAttend">
-    @if(count($eventstoattend)>0)
-    @each('partials.eventCard', $eventstoattend, 'event')
-    @else
+@if(count($eventstoattend)>0)
+    <div class="eventsToAttend">
+        @each('partials.eventCard', $eventstoattend, 'event')
+    </div>
+@else
     <p>You don't have events to attend</p>
-    @endif
-</div>
+@endif
 @endsection

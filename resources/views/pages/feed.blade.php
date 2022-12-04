@@ -17,7 +17,7 @@
 
         <a href="/events/{{ $event->id}}">
             <div class="event-info">
-            <h2>{{ $event->title }}</h2>
+            <h4>{{ $event->title }}</h4>
             @if ($event->visibility)
                 <h5>Public</h5>
             @else
@@ -33,11 +33,11 @@
             </div>
         </a>
 
-    @if ($event->visibility)
-    <!-- Button trigger modal -->
-    <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
-    @endif
-</div>
+        @if ($event->visibility)
+        <!-- Button trigger modal -->
+        <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
+        @endif
+    </div>
     @endforeach 
 </div>
 

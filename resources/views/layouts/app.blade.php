@@ -32,56 +32,69 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <main>
       <header>
-        <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
-
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" id="searchbar">
-        <div id = "searchResults">
-          <h2 id = "eventsTitleSearch" style="display: none;"></h2>
-          <div id = "eventsSearch"></div>
+        <div class="menu-toggle">
+          <div class="hamburger">
+            <span></span>
+          </div>
         </div>
+        <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
   
-        
         @if (Auth::check())
-        <a class="button" href="{{ url('/profile') }}"> Profile </a>
-        <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
+        <a href="{{ url('/profile') }}">
+          @if (empty(Auth::user()->picture)) 
+          <img class="mini-picture" src="/../avatars/default.png" alt="Avatar">
+          @else
+          <img class="mini-picture" src="/../avatars/{{Auth::user()->picture}}" alt="Avatar">
+          @endif
+        </a>
         @else
         <a class="button" href="{{ route('login') }}"> Login </a> 
         <a class="button" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
-      <div class="menu-toggle">
-        <div class="hamburger">
-          <span></span>
-        </div>
-      </div>
   
       <aside class="sidebar">
+        <h4>Events</h4>
         <nav class="menu">
-            <a href="{{ url('/events') }}" class="menu-item">Events feed</a>
+            <a href="{{ url('/events') }}" class="menu-item"><i class="bi bi-house-door-fill"></i> Home page</a>
             @if (Auth::check())
-            <a href="{{ url('/myevents') }}" class="menu-item">My events</a>
-            <a href="{{ url('/calendar') }}" class="menu-item">My calendar</a>
+            <a href="{{ url('/myevents') }}" class="menu-item"><i class="bi bi-person-fill"></i> My events</a>
+            <a href="{{ url('/calendar') }}" class="menu-item"><i class="bi bi-calendar-fill"></i> My calendar</a>
+            <a class="menu-item"><i class="bi bi-bell-fill"></i> Notifications</a>
             @if (Auth::user()->is_admin)
             <a href="{{url('/manageUsers')}}" class="menu-item">Manage Users</a>
             @endif
-            <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event<i class="bi bi-plus" style="font-size:2em"></i></a>
+            <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event <i class="bi bi-plus" style="font-size:2em"></i></a>
             @endif
 
         </nav>
+        <hr>
+        <h5>Categories</h5>
   
       </aside>
 
       <section id="content">
         @yield('content')
       </section>
+      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <p class="col-md-4 mb-0 text-muted">© 2022 WeMeet, Inc</p>
+      
+          <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">User help</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Contact us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About us</a></li>
+          </ul>
+        </footer>
+
     </main>
     <script>
       const menu_toggle = document.querySelector('.menu-toggle');
       const sidebar = document.querySelector('.sidebar');
-  
+
       menu_toggle.addEventListener('click', () => {
         menu_toggle.classList.toggle('is-active');
         sidebar.classList.toggle('is-active');
+
       });
     </script>
   </body>
