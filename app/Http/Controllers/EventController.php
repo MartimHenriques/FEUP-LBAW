@@ -86,7 +86,7 @@ class EventController extends Controller
     }
 
 
-    public static function showEvents(){
+    public function showEvents(){
       if(Auth::check()){
         $events = DB::table('event')->orderBy('id')->get();
         $event_organizer = [];

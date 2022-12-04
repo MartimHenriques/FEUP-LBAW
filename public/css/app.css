@@ -12,9 +12,8 @@ main>header {
   align-items: center;
   background-color: white;
   top: 0;
-  margin-bottom: 1em;
   padding: 1em;
-  z-index: 1;
+  z-index: 10000;
 }
 
 main>header h1 {
@@ -22,8 +21,10 @@ main>header h1 {
 }
 
 main>header a.button {
-  margin: 1em;
+  margin-right: 1em;
   justify-self: right;
+  margin-bottom: 0;
+  top:50%;
 }
 
 .event-feed,
@@ -148,8 +149,8 @@ a:hover {
 #info,
 #forum {
   font-size: 2em;
-  margin: 1em;
   cursor: pointer;
+  margin-right: 1em;
 }
 
 #content {
@@ -181,7 +182,16 @@ a:hover {
 }
 
 
-
+.nav-item {
+  margin-right: 1em;
+  margin-bottom: 0;
+}
+.nav-item a{
+  color: #6c757d;
+}
+.nav-item a:hover{
+  color: #007bffa4;
+}
 
 @media (min-width: 768px) {
   .main {
@@ -253,7 +263,6 @@ a.button {
   background-color: #a1b4e3;
   border-color: #a1b4e3;
   max-width: 13em;
-  align-items: center;
 }
 
 #createButton {
@@ -267,10 +276,6 @@ button:hover,
 a.button:hover {
   background-color: #a1b4e3ce;
   border-color: #a1b4e3;
-}
-
-a.button.button-outline {
-  color: #5e5e5e;
 }
 
 a {
@@ -328,16 +333,15 @@ input[type=password]:focus {
 
 .mini-picture{
   width: 7%;
-  min-width: 2em;
+  min-width: 2.5em;
   border-radius: 50%;
-  
   float: right;
 
 }
 
 /* Add rounded corners to the top left and the top right corner of the image */
 img {
-  max-width: 25%;
+  max-width: 20%;
 }
 
 #logo {
@@ -408,7 +412,7 @@ img {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1;
   top: 3.7em;
   overflow-x: hidden;
   overflow-y: auto;
@@ -448,6 +452,11 @@ hr {
 .sidebar i {
   margin-right: 1em;
 }
+footer {
+  margin-left: 14em;
+  bottom: 0;
+}
+
 
 @media (max-width: 768px) {
   .menu-toggle {
@@ -460,7 +469,7 @@ hr {
 
   .sidebar {
     position: fixed;
-    top: 3.7em;
+    top: 4.3em;
     left: -300px;
     height: 100vh;
     width: 100%;
@@ -475,16 +484,27 @@ hr {
   .sidebar.is-active {
     left: 0;
   }
+  footer{
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
-footer {
-  margin-left: 14em;
-  bottom: 0;
-}
 
 .carousel-item{
   height: 80vh;
 }
 .carousel-control-next, .carousel-control-prev{
   top: 50%;
+}
+.carousel-control-next:hover, .carousel-control-prev:hover{
+  background-color: transparent;
+}
+
+#eventActions{
+  display: flex;
+
+}
+#evenActions #shareBtn{
+  float: right;
 }

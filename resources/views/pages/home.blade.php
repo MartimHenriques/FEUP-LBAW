@@ -13,7 +13,7 @@
 
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
+            <h1>Search for new experiences</h1>
             <p>Some representative placeholder content for the first slide of the carousel.</p>
             <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
           </div>
@@ -35,7 +35,7 @@
 
         <div class="container">
           <div class="carousel-caption text-end">
-            <h1>One more for good measure.</h1>
+            <h1>Meet new people</h1>
             <p>Some representative placeholder content for the third slide of this carousel.</p>
             <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
           </div>
