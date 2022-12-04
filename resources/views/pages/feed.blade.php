@@ -28,11 +28,6 @@
             @endif
             <h5>Local: {{$event->local}}</h5>
             <h5>{{$event->start_date}}</h5>
-            @if (Auth::check())
-                @if ($event_organizer[($event->id)])
-                    <a type='button' href="/editEvent/{{$event->id}}"><i class="bi bi-pencil"></i></a>
-                @endif
-            @endif
             </div>
         </a>
 

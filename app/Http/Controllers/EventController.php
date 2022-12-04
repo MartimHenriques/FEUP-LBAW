@@ -46,7 +46,9 @@ class EventController extends Controller
 
       $attendee = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$id)->exists();
 
-      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee]);
+      $event_organizer=Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+
+      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
     }
 
     public function showMyEvents()
@@ -227,11 +229,13 @@ class EventController extends Controller
       $event->invites()->attach($user->id);
       $messages = Message::where('idevent','=',$id)->get();
       $showModal = false;
+      $event_organizer = false;
       return view('pages.event', [
         'event' => $event,
         'messages'=> $messages,
         'showModal' => $showModal,
-        'user' => User::find(Auth::user()->id)]);
+        'user' => User::find(Auth::user()->id),
+        'event_organizer' => $event_organizer]);
     }
 
     /**

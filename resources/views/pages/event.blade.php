@@ -19,6 +19,12 @@
     </div>
 </div>
 
+@if (Auth::check())
+    @if ($event_organizer)
+        <a type='button' class="button" style="margin-right:2%; float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
+    @endif
+@endif
+
 <h1>{{ $event->title }}</h1>
 <a id="join" type='button' class='button' style="{{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
     @if($attendee)
