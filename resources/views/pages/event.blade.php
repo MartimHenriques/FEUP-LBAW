@@ -55,12 +55,30 @@
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+<h1>{{ $event->title }}</h1>
+<div id="eventActions">
+    <span id="info" onclick="infoFunction()" style="border-bottom: 1px solid rgba(90, 90, 90, 0.852);">Info</span>
+    <span id="forum" onclick="forumFunction()" style="border-bottom: 1px solid transparent;">Forum</span>
+    <a id="join" type='button' class='button' style="{{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        @if($attendee)
+            Showing up
+        @else
+            Show up
+        @endif
+    </a>
 
-@endif
-<br>
-<span id="info" onclick="infoFunction()" style="border-bottom: 1px solid rgba(90, 90, 90, 0.852);">Info</span>
-<span id="forum" onclick="forumFunction()" style="border-bottom: 1px solid white;">Forum</span>
+    @if ($event->visibility)
+    
+    <!-- Button trigger modal -->
+    <button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Share event!">
+            Share
+    </button>
+
+    
+    @endif
+</div>
+
 <div id="info-content">
 <p>{{ $event->description }}</p>
 @if ($event->visibility)
@@ -148,7 +166,7 @@ function infoFunction() {
     var x = document.getElementById("forum-content");
     var y = document.getElementById("info-content");
     document.getElementById("info").style.borderBottomColor = "rgba(90, 90, 90, 0.852)";
-    document.getElementById("forum").style.borderBottomColor = "white";
+    document.getElementById("forum").style.borderBottomColor = "transparent";
     x.style.display = "none";
     y.style.display = "block";
 
@@ -156,7 +174,7 @@ function infoFunction() {
 function forumFunction() {
     var x = document.getElementById("forum-content");
     var y = document.getElementById("info-content");
-    document.getElementById("info").style.borderBottomColor = "white";
+    document.getElementById("info").style.borderBottomColor = "transparent";
     document.getElementById("forum").style.borderBottomColor = "rgba(90, 90, 90, 0.852)";
     x.style.display = "block";
     y.style.display = "none";
