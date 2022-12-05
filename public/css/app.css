@@ -1,6 +1,8 @@
 body {
   background-color: #f6f6f6;
   color: #403f3f;
+  position: relative;
+  min-height: 100vh;
 }
 
 main>header {
@@ -453,8 +455,11 @@ hr {
   margin-right: 1em;
 }
 footer {
-  margin-left: 14em;
+  padding-left: 14em;
   bottom: 0;
+  position: absolute;
+  height: 2.5rem;
+  width: 100%;
 }
 
 
