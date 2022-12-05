@@ -329,6 +329,8 @@ input[type=password]:focus {
   min-width: 3em;
   margin: 1em;
   border-radius: 50%;
+  object-fit: cover; /* Required to prevent the image from stretching, use the object-position property to adjust the visible area */
+  aspect-ratio: 1/1;
 }
 
 .mini-picture{
@@ -336,7 +338,8 @@ input[type=password]:focus {
   min-width: 2.5em;
   border-radius: 50%;
   float: right;
-
+  object-fit: cover; /* Required to prevent the image from stretching, use the object-position property to adjust the visible area */
+  aspect-ratio: 1/1;
 }
 
 /* Add rounded corners to the top left and the top right corner of the image */
