@@ -79,4 +79,15 @@ class AdminController extends Controller
       DB::table('users')->where(['id'=>$id])->update(['is_blocked'=>FALSE]);
       return redirect()->back();
     }
+
+    /**
+     * The user is deleted.
+     *
+     * @return Redirect back to the page
+     */
+    public function deleteEvent($id){
+      $event = Event::where(['id'=>$id]);
+      $event->delete();
+      return redirect()->back();
+    }
 }

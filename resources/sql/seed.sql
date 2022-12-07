@@ -81,7 +81,7 @@ CREATE TABLE report (
 CREATE TABLE option (
     id	 SERIAL PRIMARY KEY,
     text     TEXT NOT NULL,
-    id_poll   INTEGER NOT NULL REFERENCES poll
+    id_poll   INTEGER NOT NULL REFERENCES poll ON DELETE CASCADE
 );
 
 

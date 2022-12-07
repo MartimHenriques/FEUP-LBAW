@@ -11,7 +11,7 @@
 
     @foreach($events as $event)
             <tr>
-                <td><a href="/events/{{ $event->id}}">{{$event->title}}</a></td> <td><a class="button" {{--href="{{route('',['id'=>$user->id])}}--}}>Delete Event</a></td>
+                <td><a href="/events/{{ $event->id}}">{{$event->title}}</a></td> <td><a class="button" href="{{route('deleteEvent',['id'=>$event->id])}}">Delete Event</a></td>
             </tr>
     @endforeach
 
