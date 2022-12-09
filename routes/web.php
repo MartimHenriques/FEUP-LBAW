@@ -44,10 +44,10 @@ Route::get('blockUser/{id}', 'AdminController@blockUser');
 Route::get('unblockUser/{id}', 'AdminController@unblockUser');
 
 //feed
-Route::get('events', 'EventController@showEvents')->name('events');
+Route::get('events', 'EventController@showEvents');
 
 //event
-Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
+Route::get('events/{id}', 'EventController@showOneEvent');
 
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
@@ -62,8 +62,9 @@ Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->nam
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
+Route::post('api/eventsSearch', [EventController::class,'searchEvents']);
+
+//my events
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
-
-Route::post('/api/search', 'SearchController@show');
 

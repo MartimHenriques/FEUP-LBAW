@@ -46,7 +46,9 @@ class EventController extends Controller
 
       $attendee = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$id)->exists();
 
-      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee]);
+      $event_organizer=Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+
+      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
     }
 
     public function showMyEvents()
@@ -86,7 +88,7 @@ class EventController extends Controller
     }
 
 
-    public static function showEvents(){
+    public function showEvents(){
       if(Auth::check()){
         $events = DB::table('event')->orderBy('id')->get();
         $event_organizer = [];
@@ -102,6 +104,21 @@ class EventController extends Controller
       }
 
     }
+
+
+    public static function searchEvents(Request $request){
+      $search = $request->search;
+      if(strlen($search) !=0 ) {
+      $events = Event::where('title', 'ILIKE', '%'.$search.'%')->get();
+      $event_organizer = [];
+      foreach ($events as $event) {
+        $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+      }
+
+      return view('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer]);
+  }
+}
+
 
 
     /**
@@ -212,11 +229,13 @@ class EventController extends Controller
       $event->invites()->attach($user->id);
       $messages = Message::where('idevent','=',$id)->get();
       $showModal = false;
+      $event_organizer = false;
       return view('pages.event', [
         'event' => $event,
         'messages'=> $messages,
         'showModal' => $showModal,
-        'user' => User::find(Auth::user()->id)]);
+        'user' => User::find(Auth::user()->id),
+        'event_organizer' => $event_organizer]);
     }
 
     /**

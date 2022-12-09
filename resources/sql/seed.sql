@@ -220,20 +220,22 @@ CREATE INDEX tag_alphabetic ON tag USING btree (tag_name);
 
 -- FTS INDEXES
 
-ALTER TABLE event ADD COLUMN tsvectors TSVECTOR;
-CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS $BODY$
+ALTER TABLE event ADD COLUMN search TSVECTOR;
+
+CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS
+$BODY$
 BEGIN
  IF TG_OP = 'INSERT' THEN
-        NEW.tsvectors = (
-         setweight(to_tsvector('english', NEW.title), 'A') ||
-         setweight(to_tsvector('english', NEW.description), 'B')
+        NEW.search = ( SELECT
+         setweight(to_tsvector(NEW.title), 'A') ||
+         setweight(to_tsvector(NEW.description), 'B') FROM event WHERE NEW.id=event.id
         );
  END IF;
  IF TG_OP = 'UPDATE' THEN
          IF (NEW.title <> OLD.title OR NEW.description <> OLD.description) THEN
-           NEW.tsvectors = (
-             setweight(to_tsvector('english', NEW.title), 'A') ||
-             setweight(to_tsvector('english', NEW.description), 'B')
+           NEW.search = ( SELECT
+             setweight(to_tsvector(NEW.title), 'A') ||
+             setweight(to_tsvector(NEW.description), 'B') FROM event WHERE NEW.id=event.id
            );
          END IF;
  END IF;
@@ -247,7 +249,7 @@ CREATE TRIGGER event_search_update
  FOR EACH ROW
  EXECUTE PROCEDURE event_search_update();
 
- CREATE INDEX search_idx ON event USING GIN (tsvectors); 
+ CREATE INDEX search_idx ON event USING GIN (search); 
 
 
 -----------------------------------------
@@ -403,7 +405,6 @@ FOR EACH ROW
 EXECUTE PROCEDURE add_banned_notification();
 
 
-
 ---POPULATE
 
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('admin', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'admin1_wemeet@gmail.com', '', NULL, TRUE);
@@ -423,8 +424,24 @@ INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VAL
 
 
 
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('MADFest', 'Festival de música', TRUE, 'Madalena' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Pinheiro', 'Festa popular em Guimarães', TRUE, 'Guimaraes' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Pedro Abrunhosa - Porto', 'Pedro Abrunhosa ao vivo na Casa da Música no Porto pela celebração dos 125 Anos da Delegação do Porto da Cruz Vermelha Portuguesa.', TRUE, 'pedro.jpg', 'Casa da Música' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Festas de São Gonçalinho - Aveiro', 'Neste dia, visitaremos Aveiro, terra dos Moliceiros, das salinas e Ovos moles, para assistirmos a uma das mais remotas festividades portuguesas, as festas de São Gonçalinho..
+Todos os anos, no fim de semana mais próximo de 10 de Janeiro, dia dedicado a São Gonçalinho, o mais típico bairro aveirense, o belo bairro da Beira-Mar, acolhe as tradicionais estas em honra ao Santo, promovidas pela Mordomia de São Gonçalinho..
+Celebração muito peculiar, que desde há séculos diverte novos e menos novos, a festividade é marcada pelo pagamento de promessas ao Santo, agradecendo o seu poder de cura para as doenças, particularmente as ósseas, bem como a sua imensa capacidade de resolver problemas conjugais e amorosos, e de arranjar namoro para os encalhados..
+Um dos pontos altos da esta são os muitos quilos de cavacas doces que se atiram da cúpula da Capela de São Gonçalinho, e que são recolhidas de todas as formas pelo muito público que assiste, com as mãos, com redes, guarda chuvas e qualquer tipo de objecto que sirva para o efeito..
+Entre muitos outros destaques que ocorrem nesta esta surpreendente, de referir a delirante "Dança dos Mancos", assim como a Entrega do Ramo, acontecimento..
+Venha desfrutar de um dia fantástico e muito divertido, a festejar o maior acontecimento de cultura popular aveirense, e levar com umas deliciosas cavacas nessa cabecinha !
+Data: Sábado, 7 Janeiro.
+Partida: 8h30 Tribunal da Relação do Porto (Cordoaria, nas escadas em frente ao Tribunal). Chegada pelas 20h.
+Valor: 51€ (inclui viagem em autocarro, almoço com bebidas, visita à festa de São Gonçalinho e eventos associados do dia, Guia Alma At Porto e seguros).
+Necessário reserva, inscrições limitadas.
+Para inscrição, escolha a opção "bilhetes disponíveis", envie email para info@almaatporto.pt ou ligue 963 382 659.
+Alma At Porto Marca Nacional Registada*
+* Cancelamento de reservas até 15 dias antes da actividade.
+** A actividade poderá ser adiada no caso de condições meteorológicas adversas.
+Empresa Licenciada pelo Turismo de Portugal
+Rnaat 428/2016
+Rnavt 7882', TRUE, 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Arraial', 'Festival de Engenharia', TRUE, 'Exponor' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
