@@ -19,87 +19,103 @@
     </div>
 </div>
 
-@if (Auth::check())
-    @if ($event_organizer)
-        <a type='button' class="button" style="margin-right:2%; float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
-    @endif
-@endif
 
-<h1>{{ $event->title }}</h1>
-<a id="join" type='button' class='button' style="{{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
-    @if($attendee)
-        Showing up
-    @else
-        Show up
-    @endif
-</a>
-
-@if ($event->visibility)
-
-<!-- Button trigger modal -->
-<button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Share event!">
-        Share
-    </button>
-  
-  <!-- Modal -->
-    <div class="modal fade" id="myModel" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModelLabel">Share Event</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>  
-                    <div class="field d-flex align-items-center justify-content-between">
-                        <button onclick="copyLink()" id="copyButton">Copy Link</button>
+<section id="eventHeader">
+    <img src="/../img_events/{{$event->picture}}" alt="event picture">
+    <h2>{{ $event->title }}</h2>
+    <span id="info" onclick="infoFunction()" style="border-bottom: 2px solid rgba(90, 90, 90, 0.852);">Info</span>
+    <span id="forum" onclick="forumFunction()" style="border-bottom: 2px solid transparent;">Forum</span>
+    <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        @if($attendee)
+            Showing up
+        @else
+            Show up
+        @endif
+    </a>
+    
+    @if ($event->visibility)
+    
+    <!-- Button trigger modal -->
+    <button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Share event!" style="float:right;">
+            Share
+        </button>
+      
+      <!-- Modal -->
+        <div class="modal fade" id="myModel" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModelLabel">Share Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>  
+                        <div class="field d-flex align-items-center justify-content-between">
+                            <button onclick="copyLink()" id="copyButton">Copy Link</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-@endif
-<br>
-<span id="info" onclick="infoFunction()" style="border-bottom: 1px solid rgba(90, 90, 90, 0.852);">Info</span>
-<span id="forum" onclick="forumFunction()" style="border-bottom: 1px solid white;">Forum</span>
-<div id="info-content">
-<p>{{ $event->description }}</p>
-@if ($event->visibility)
-    <h5>Public</h5>
-@else
-    <h5>Private</h5>
-@endif
-<p>Local: {{ $event->local }}</p>
-@if($event->start_date != $event->final_date )
-    <p>Data de início: {{ $event->start_date }}</p>
-    <p>Data de fim: {{ $event->final_date }}</p>
-@else
-    <p>Data: {{ $event->start_date }}</p>
-@endif
-    <h4>Participants</h4>
-    <table class="table table-striped">
-    <th>Organizers</th>
-    @foreach($event->attendees()->get() as $attendee)
-        @if( $event->event_organizers()->get()->contains($attendee))
-            <td>{{$attendee->username}}</td>
-        @endif
-    @endforeach
-    </table>
     
-    <table class="table table-striped">
-    <th>Attendee</th><th></th>
-    @foreach($event->attendees()->get() as $attendee)
-        @if( !($event->event_organizers()->get()->contains($attendee)))
-            <tr>
-                <td>{{$attendee->username}}</td>
-                @if($event->event_organizers()->get()->contains(Auth::user()))
-                <td><a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a></td>
-                @endif
-            </tr>
+    @endif
+    @if (Auth::check())
+        @if ($event_organizer)
+            <a type='button' class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
-    @endforeach
-    </table>
+    @endif
+    
+</section>
 
+<div id="info-content">
+    <h4>Details</h4>
+    <p>{{ $event->description }}</p>
+    @if ($event->visibility)
+        <i class="bi bi-globe-asia-australia"></i> <h5>Public</h5>
+    @else
+        <h5>Private</h5>
+    @endif
+    <p>Local: {{ $event->local }}</p>
+    @if($event->start_date != $event->final_date )
+        <p>Data de início: {{ $event->start_date }}</p>
+        <p>Data de fim: {{ $event->final_date }}</p>
+    @else
+        <p>Data: {{ $event->start_date }}</p>
+    @endif
+        
+</div>
+<div id="attendeeslist">
+    <h4>Attendees</h4>
+    <div class="list-group w-auto">
+        @foreach($event->attendees()->get() as $attendee)
+            @if( $event->event_organizers()->get()->contains($attendee))
+            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">{{$attendee->username}}</h6>
+                    <p class="mb-0 opacity-75">Organizer</p>
+                </div>
+            </div>
+            </span>
+            @endif
+        @endforeach
+        @foreach($event->attendees()->get() as $attendee)
+            @if( !($event->event_organizers()->get()->contains($attendee)))
+            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                    <div>
+                        <h6 class="mb-0">{{$attendee->username}}</h6>
+                        <p class="mb-0 opacity-75">Attendee</p>
+                    </div>
+                    @if($event->event_organizers()->get()->contains(Auth::user()))
+                        <a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a>
+                    @endif
+                </div>
+                </span>
+            @endif
+        @endforeach
 
+    </div>
 
 </div>
 

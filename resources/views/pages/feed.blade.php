@@ -4,7 +4,6 @@
 
 @section('content')
 
-<h1>Feed</h1>
 <div class="input-group rounded w-50">
     <form action="api/eventsSearch" method="POST">
         @csrf

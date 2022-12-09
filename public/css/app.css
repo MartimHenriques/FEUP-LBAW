@@ -150,9 +150,25 @@ a:hover {
 
 #info,
 #forum {
-  font-size: 2em;
+  font-size: 1.5em;
   cursor: pointer;
-  margin-right: 1em;
+  margin: 1em;
+  padding: 0.2em;
+}
+
+#info:hover, #forum:hover{
+  background-color: rgba(216, 216, 216, 0.413);
+  border-radius: 10%;
+}
+#eventHeader{
+  background-color: white;
+}
+
+#info-content, #attendeeslist{
+  background-color: white;
+  margin: 2em;
+  padding: 1em;
+  border-radius: 2%;
 }
 
 #content {
@@ -457,12 +473,12 @@ hr {
 .sidebar i {
   margin-right: 1em;
 }
-footer {
+#footer {
   padding-left: 14em;
   bottom: 0;
-  position: absolute;
-  height: 2.5rem;
   width: 100%;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 

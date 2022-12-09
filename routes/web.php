@@ -38,10 +38,10 @@ Route::get('deleteUser/{id}', [AdminController::class, 'deleteUser']) -> name('d
 Route::get('manageUsers', 'AdminController@show');
 
 //feed
-Route::get('events', 'EventController@showEvents')->name('events');
+Route::get('events', 'EventController@showEvents');
 
 //event
-Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
+Route::get('events/{id}', 'EventController@showOneEvent');
 
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
