@@ -59,8 +59,8 @@ CREATE TABLE poll (
     description TEXT,
     date        DATE NOT NULL,
     is_open      BOOLEAN NOT NULL DEFAULT (True),
-    id_event     INTEGER NOT NULL REFERENCES event (id),
-    id_user          INTEGER NOT NULL REFERENCES users (id)        
+    id_event     INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
+    id_user          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE       
 );
 
 
@@ -68,9 +68,9 @@ CREATE TABLE poll (
 
 CREATE TABLE report (
     id 	SERIAL PRIMARY KEY,
-    id_event  	INTEGER NOT NULL REFERENCES event (id),
-    id_manager   	INTEGER REFERENCES users (id),
-    id_reporter  	INTEGER NOT NULL REFERENCES users (id),
+    id_event  	INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
+    id_manager   	INTEGER REFERENCES users (id) ON DELETE CASCADE,
+    id_reporter  	INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     date     	DATE NOT NULL,
     motive   	TEXT NOT NULL,
   	STATE    	reportState NOT NULL DEFAULT ('Pending')
@@ -81,7 +81,7 @@ CREATE TABLE report (
 CREATE TABLE option (
     id	 SERIAL PRIMARY KEY,
     text     TEXT NOT NULL,
-    id_poll   INTEGER NOT NULL REFERENCES poll
+    id_poll   INTEGER NOT NULL REFERENCES poll ON DELETE CASCADE
 );
 
 
@@ -95,8 +95,8 @@ CREATE TABLE tag (
 
 -- Table: attendee
 CREATE TABLE attendee (
-    id_user      INTEGER NOT NULL REFERENCES users (id),
-    id_event INTEGER NOT NULL REFERENCES event (id),
+    id_user      INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    id_event INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     PRIMARY KEY (
         id_user,
         id_event
@@ -107,8 +107,8 @@ CREATE TABLE attendee (
 -- Table: choose_option
 
 CREATE TABLE choose_option (
-    id_user       INTEGER NOT NULL REFERENCES users (id),
-    id_option INTEGER NOT NULL REFERENCES option,
+    id_user       INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    id_option INTEGER NOT NULL REFERENCES option ON DELETE CASCADE,
     PRIMARY KEY (
         id_user,
         id_option
@@ -120,8 +120,8 @@ CREATE TABLE choose_option (
 -- Table: event_organizer
 
 CREATE TABLE event_organizer (
-    id_user      INTEGER NOT NULL REFERENCES users (id),
-    id_event INTEGER NOT NULL REFERENCES event (id),
+    id_user      INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    id_event INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     PRIMARY KEY (
         id_user,
         id_event
@@ -132,8 +132,8 @@ CREATE TABLE event_organizer (
 -- Table: event_Tag
 
 CREATE TABLE event_tag (
-    id_tag   INTEGER NOT NULL REFERENCES tag (id),
-    id_event INTEGER NOT NULL REFERENCES event (id),
+    id_tag   INTEGER NOT NULL REFERENCES tag (id) ON DELETE CASCADE,
+    id_event INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     PRIMARY KEY (
         id_tag,
         id_event
@@ -144,9 +144,9 @@ CREATE TABLE event_tag (
 -- Table: invite
 
 CREATE TABLE invite (
-    id_event     INTEGER NOT NULL REFERENCES event (id),
-    id_invitee   INTEGER NOT NULL REFERENCES users (id),
-    id_organizer INTEGER NOT NULL REFERENCES users (id),
+    id_event     INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
+    id_invitee   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    id_organizer INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     accepted    BOOLEAN,
     PRIMARY KEY (
         id_event,
@@ -162,9 +162,9 @@ CREATE TABLE message (
     content      TEXT,
     date      DATE NOT NULL,
     like_count INTEGER NOT NULL DEFAULT (0),
-    id_event   INTEGER NOT NULL REFERENCES event (id),
-    id_user	   INTEGER NOT NULL REFERENCES users (id),
-    parent    INTEGER REFERENCES message (id)
+    id_event   INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
+    id_user	   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    parent    INTEGER REFERENCES message (id) ON DELETE CASCADE
 );
 
 
@@ -173,7 +173,7 @@ CREATE TABLE message (
 CREATE TABLE message_file (
     id    SERIAL PRIMARY KEY,
     file      TEXT,
-    id_message INTEGER NOT NULL REFERENCES message (id) 
+    id_message INTEGER NOT NULL REFERENCES message (id) ON DELETE CASCADE
 );
 
 
@@ -184,25 +184,25 @@ CREATE TABLE notification (
     content   TEXT NOT NULL,
     date      DATE NOT NULL,
     read      BOOLEAN NOT NULL DEFAULT (False),
-    id_user    INTEGER NOT NULL REFERENCES users (id),
+    id_user    INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     type   notificationTypes,
-    id_report  INTEGER REFERENCES report (id) CHECK ((id_report = NULL) or (id_report != NULL and type = 'Report')),
+    id_report  INTEGER REFERENCES report (id)  ON DELETE CASCADE CHECK ((id_report = NULL) or (id_report != NULL and type = 'Report')),
     id_event   INTEGER CHECK ((id_event = NULL) or (id_event != NULL and type = 'Invite')),
     id_invitee INTEGER CHECK ((id_invitee = NULL) or (id_invitee != NULL and type = 'Invite')),
-    id_message INTEGER REFERENCES message (id) CHECK ((id_message = NULL) or (id_message != NULL and type = 'Message')),
+    id_message INTEGER REFERENCES message (id)  ON DELETE CASCADE CHECK ((id_message = NULL) or (id_message != NULL and type = 'Message')),
     FOREIGN KEY (
         id_event,
         id_invitee
     )
-    REFERENCES invite
+    REFERENCES invite ON DELETE CASCADE
 );
 
 
 -- Table: vote
 
 CREATE TABLE vote (
-    id_user        INTEGER NOT NULL REFERENCES users (id),
-    id_message INTEGER NOT NULL REFERENCES message (id),
+    id_user        INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    id_message INTEGER NOT NULL REFERENCES message (id) ON DELETE CASCADE,
     PRIMARY KEY (
         id_user,
         id_message
