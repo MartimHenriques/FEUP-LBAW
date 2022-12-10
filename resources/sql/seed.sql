@@ -425,7 +425,7 @@ INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VAL
 
 
 INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Pedro Abrunhosa - Porto', 'Pedro Abrunhosa ao vivo na Casa da Música no Porto pela celebração dos 125 Anos da Delegação do Porto da Cruz Vermelha Portuguesa.', TRUE, 'pedro.jpg', 'Casa da Música' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Festas de São Gonçalinho - Aveiro', 'Neste dia, visitaremos Aveiro, terra dos Moliceiros, das salinas e Ovos moles, para assistirmos a uma das mais remotas festividades portuguesas, as festas de São Gonçalinho..
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Festas de São Gonçalinho - Aveiro', 'Neste dia, visitaremos Aveiro, terra dos Moliceiros, das salinas e Ovos moles, para assistirmos a uma das mais remotas festividades portuguesas, as festas de São Gonçalinho..
 Todos os anos, no fim de semana mais próximo de 10 de Janeiro, dia dedicado a São Gonçalinho, o mais típico bairro aveirense, o belo bairro da Beira-Mar, acolhe as tradicionais estas em honra ao Santo, promovidas pela Mordomia de São Gonçalinho..
 Celebração muito peculiar, que desde há séculos diverte novos e menos novos, a festividade é marcada pelo pagamento de promessas ao Santo, agradecendo o seu poder de cura para as doenças, particularmente as ósseas, bem como a sua imensa capacidade de resolver problemas conjugais e amorosos, e de arranjar namoro para os encalhados..
 Um dos pontos altos da esta são os muitos quilos de cavacas doces que se atiram da cúpula da Capela de São Gonçalinho, e que são recolhidas de todas as formas pelo muito público que assiste, com as mãos, com redes, guarda chuvas e qualquer tipo de objecto que sirva para o efeito..
@@ -441,7 +441,7 @@ Alma At Porto Marca Nacional Registada*
 ** A actividade poderá ser adiada no caso de condições meteorológicas adversas.
 Empresa Licenciada pelo Turismo de Portugal
 Rnaat 428/2016
-Rnavt 7882', TRUE, 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
+Rnavt 7882', TRUE, 'aveiro.jpg' , 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Arraial', 'Festival de Engenharia', TRUE, 'Exponor' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');

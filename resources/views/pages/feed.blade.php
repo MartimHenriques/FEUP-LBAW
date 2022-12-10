@@ -18,22 +18,27 @@
         <div class="eventCard" data-id="{{ $event->id }}">
 
         <a href="/events/{{ $event->id}}">
+            <img src="/../img_events/{{ $event->picture}}" alt="event picture" id="eventMiniPicture">
             <div class="event-info">
-            <h4>{{ $event->title }}</h4>
-            @if ($event->visibility)
-                <h5>Public</h5>
-            @else
-                <h5>Private</h5>
-            @endif
-            <h5>Local: {{$event->local}}</h5>
-            <h5>{{$event->start_date}}</h5>
+            <p id="title">{{ $event->title }}</p>
+            <p id="local">{{$event->local}}</p>
+            <p>{{$event->start_date}}</p>
             </div>
         </a>
-
-        @if ($event->visibility)
+        <div>
+            @if ($event->visibility)
         <!-- Button trigger modal -->
-        <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
+            <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
+            <a id="join" type='button' class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+            @if($attendee[$event->id])
+                Showing up
+            @else
+                Show up
+            @endif
+        </a>
         @endif
+        </div>
+        
     </div>
     @endforeach 
 </div>

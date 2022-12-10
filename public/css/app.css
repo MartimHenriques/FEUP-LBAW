@@ -36,25 +36,52 @@ main>header a.button {
   grid-template-columns: repeat(3, 1fr);
   background-color: white;
   border-radius: 1%;
-  margin: 2.5em;
+  margin: 2em;
+  padding: 1em;
   margin-top: 1em;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  border: 1px solid rgba(167, 167, 167, 0.463);
 }
 
 .eventCard {
   flex-direction: column;
-  padding: 1em;
-  margin: 1em;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 2px 1px;
-  max-width: 18em;
-  max-height: 15em;
+  margin: 0.5em;
+  box-shadow: #0000001a 0px 2px 2px 1px;
+  max-width: 20em;
+  max-height: 25em;
   border-radius: 4%;
   background-color: white;
+  display: grid;
+  grid-template-rows: 1fr auto;
 }
 
-.eventCard h4,
+.eventCard:hover{
+  background-color: rgba(239, 239, 239, 0.509);
+  cursor: pointer;
+
+}
+#eventMiniPicture{
+  border-top-left-radius: 4%;
+  border-top-right-radius: 4%;
+  object-fit: cover;
+  aspect-ratio: 2/1;
+}
+.event-info{
+  margin: 0.4em 1em;
+}
+#title{
+  color: #000000;
+  font-size: large;
+}
+#local{
+  color: #6c757d;
+}
 .eventCard p {
-  margin-bottom: 0.5em;
+  margin-bottom: 0em;
+}
+.eventCard button, .eventCard .button{
+  margin: 0 1em 1em;
+
 }
 
 .inner-main {
@@ -148,6 +175,11 @@ a:hover {
   border-bottom: 2px solid rgba(90, 90, 90, 0.852);
 }
 
+#eventPicture{
+  object-fit: cover;
+  aspect-ratio: 1.5/1;
+
+}
 #info,
 #forum {
   font-size: 1.5em;
@@ -164,12 +196,17 @@ a:hover {
   background-color: white;
 }
 
-#info-content, #attendeeslist{
+#eventHeader .button, #eventHeader button{
+  margin-right: 1em;
+}
+
+#details, #attendeeslist{
   background-color: white;
   margin: 2em;
   padding: 1em;
   border-radius: 2%;
 }
+
 
 #content {
   padding-left: 14em;
@@ -237,13 +274,17 @@ a:hover {
   }
 }
 
-@media (max-width: 40em) {
+@media (max-width: 50em) {
 
   .event-feed,
   .eventsAttended,
   .eventsToAttend {
     grid-template-columns: 1fr;
-    align-items: center;
+    justify-items: center;
+  }
+  .eventCard{
+    max-width: 20em;
+    min-width: 19em;
   }
 }
 
@@ -360,12 +401,8 @@ input[type=password]:focus {
   aspect-ratio: 1/1;
 }
 
-/* Add rounded corners to the top left and the top right corner of the image */
-img {
-  max-width: 20%;
-}
-
 #logo {
+  max-width: 20%;
   min-width: 10em;
 }
 
@@ -496,8 +533,7 @@ hr {
     top: 4.3em;
     left: -300px;
     height: 100vh;
-    width: 100%;
-    max-width: 15em;
+    width: 15em;
     transition: 0.2s linear;
   }
 

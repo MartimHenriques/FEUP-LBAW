@@ -21,7 +21,7 @@
 
 
 <section id="eventHeader">
-    <img src="/../img_events/{{$event->picture}}" alt="event picture">
+    <img src="/../img_events/{{$event->picture}}" alt="event picture" id="eventPicture" style="width: 40%; aligns-items: center;">
     <h2>{{ $event->title }}</h2>
     <span id="info" onclick="infoFunction()" style="border-bottom: 2px solid rgba(90, 90, 90, 0.852);">Info</span>
     <span id="forum" onclick="forumFunction()" style="border-bottom: 2px solid transparent;">Forum</span>
@@ -64,60 +64,64 @@
     @endif
     
 </section>
-
-<div id="info-content">
-    <h4>Details</h4>
-    <p>{{ $event->description }}</p>
-    @if ($event->visibility)
-        <i class="bi bi-globe-asia-australia"></i> <h5>Public</h5>
-    @else
-        <h5>Private</h5>
-    @endif
-    <p>Local: {{ $event->local }}</p>
-    @if($event->start_date != $event->final_date )
-        <p>Data de início: {{ $event->start_date }}</p>
-        <p>Data de fim: {{ $event->final_date }}</p>
-    @else
-        <p>Data: {{ $event->start_date }}</p>
-    @endif
-        
-</div>
-<div id="attendeeslist">
-    <h4>Attendees</h4>
-    <div class="list-group w-auto">
-        @foreach($event->attendees()->get() as $attendee)
-            @if( $event->event_organizers()->get()->contains($attendee))
-            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-            <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-            <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                    <h6 class="mb-0">{{$attendee->username}}</h6>
-                    <p class="mb-0 opacity-75">Organizer</p>
-                </div>
-            </div>
-            </span>
-            @endif
-        @endforeach
-        @foreach($event->attendees()->get() as $attendee)
-            @if( !($event->event_organizers()->get()->contains($attendee)))
-            <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+<section id="info-content">
+    <div id="details" >
+        <h4>Details</h4>
+        <p>{{ $event->description }}</p>
+        @if ($event->visibility)
+            <i class="bi bi-globe-asia-australia"></i> <h5>Public</h5>
+        @else
+            <h5>Private</h5>
+        @endif
+        <p>Local: {{ $event->local }}</p>
+        @if($event->start_date != $event->final_date )
+            <p>Data de início: {{ $event->start_date }}</p>
+            <p>Data de fim: {{ $event->final_date }}</p>
+        @else
+            <p>Data: {{ $event->start_date }}</p>
+        @endif
+            
+    </div>
+    <div id="attendeeslist">
+        <h4>Attendees</h4>
+        <h5><strong>{{count($event->attendees()->get())}}</strong> are showing up</h5>
+        <div class="list-group w-auto">
+            @foreach($event->attendees()->get() as $attendee)
+                @if( $event->event_organizers()->get()->contains($attendee))
+                <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                 <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
                 <div class="d-flex gap-2 w-100 justify-content-between">
                     <div>
                         <h6 class="mb-0">{{$attendee->username}}</h6>
-                        <p class="mb-0 opacity-75">Attendee</p>
+                        <p class="mb-0 opacity-75">Organizer</p>
                     </div>
-                    @if($event->event_organizers()->get()->contains(Auth::user()))
-                        <a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a>
-                    @endif
                 </div>
                 </span>
-            @endif
-        @endforeach
-
+                @endif
+            @endforeach
+            @foreach($event->attendees()->get() as $attendee)
+                @if( !($event->event_organizers()->get()->contains($attendee)))
+                <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                    <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                        <div>
+                            <h6 class="mb-0">{{$attendee->username}}</h6>
+                            <p class="mb-0 opacity-75">Attendee</p>
+                        </div>
+                        @if($event->event_organizers()->get()->contains(Auth::user()))
+                            <a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a>
+                        @endif
+                    </div>
+                    </span>
+                @endif
+            @endforeach
+    
+        </div>
+    
     </div>
+</section>
 
-</div>
+
 
 
 <div id="forum-content" style="display: none">

@@ -94,8 +94,9 @@ class EventController extends Controller
         $event_organizer = [];
         foreach ($events as $event) {
           $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+          $attendee[$event->id] = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
         }
-        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer]);
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer, 'attendee' => $attendee]);
       }
       else{
         $event_organizer = [];
