@@ -23,7 +23,7 @@ class AdminController extends Controller
      */
     public function showUsers()
     {
-      $users = User::all();
+      $users = User::where('is_admin', '!=', true)->paginate(5);
       return view('pages.adminUsers',['users'=>$users]);
     }
 
