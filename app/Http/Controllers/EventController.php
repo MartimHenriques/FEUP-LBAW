@@ -113,24 +113,22 @@ class EventController extends Controller
     public static function searchEvents(Request $request){
       $search = $request->search;
       if(strlen($search) !=0 ) {
-      $events = Event::where('title', 'ILIKE', '%'.$search.'%')->get();
-      $event_organizer = [];
-      if(Auth::check()) {
-        foreach ($events as $event) {
-          $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
-          $attendee[$event->id] = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+        $events = Event::where('title', 'ILIKE', '%'.$search.'%')->get();
+        $event_organizer = [];
+        if(Auth::check()) {
+          foreach ($events as $event) {
+            $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+            $attendee[$event->id] = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+          }
+        } else {
+          foreach ($events as $event) {
+            $event_organizer[$event->id] = false;
+            $attendee[$event->id] = false;
+          } 
         }
-      } else {
-        foreach ($events as $event) {
-          $event_organizer[$event->id] = false;
-          $attendee[$event->id] = false;
-        } 
+        return view('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer, 'attendee' => $attendee]);
       }
-    
-    return view('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer, 'attendee' => $attendee]);
-  }
-}
-
+    }
 
 
     /**
