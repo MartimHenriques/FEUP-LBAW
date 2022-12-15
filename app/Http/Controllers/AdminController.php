@@ -34,7 +34,7 @@ class AdminController extends Controller
      */
     public function showEvents()
     {
-      $events = Event::all();
+      $events = Event::paginate(5);
       return view('pages.adminEvents',['events'=>$events]);
     }
 
@@ -45,7 +45,7 @@ class AdminController extends Controller
      */
     public function showReports()
     {
-      $reports = Report::all();
+      $reports = Report::paginate(5);
       return view('pages.adminReports',['reports'=>$reports]);
     }
 
