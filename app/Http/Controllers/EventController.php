@@ -90,7 +90,7 @@ class EventController extends Controller
 
     public function showEvents(){
       if(Auth::check()){
-        $events = DB::table('event')->orderBy('id')->get();
+        $events = DB::table('event')->orderBy('id')->paginate(6);
         $event_organizer = [];
         foreach ($events as $event) {
           $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();

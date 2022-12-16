@@ -39,6 +39,9 @@
             </div>
         </div>
     @endforeach 
+    <div class="text-center">
+        {!! $events->links() !!}
+    </div>
 </div>
 @endsection
 
