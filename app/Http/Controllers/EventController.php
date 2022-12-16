@@ -101,26 +101,20 @@ class EventController extends Controller
       else{
         $event_organizer = [];
         $events = Event::where('visibility', 1)->orderBy('id')->get();
-        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer]);
+        foreach ($events as $event) {
+          $attendee[$event->id] = false;
+        }
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer, 'attendee' => $attendee]);
       }
 
     }
 
 
     public static function searchEvents(Request $request){
-      $search = $request->search;
-      if(strlen($search) !=0 ) {
-      $events = Event::where('title', 'ILIKE', '%'.$search.'%')->get();
-      $event_organizer = [];
-      foreach ($events as $event) {
-        $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
-      }
-
-      return view('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer]);
-  }
-}
-
-
+      return DB::table('event')
+      ->where('title', 'ILIKE', '%'.$request->search.'%')
+      ->get();
+    }
 
     /**
      * Get a validator for an incoming event request.
