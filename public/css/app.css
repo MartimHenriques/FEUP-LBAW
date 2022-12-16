@@ -568,3 +568,7 @@ hr {
 #evenActions #shareBtn{
   float: right;
 }
+
+.w-5{
+  display: none;
+}
