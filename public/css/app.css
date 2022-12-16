@@ -1,8 +1,8 @@
-body {
+html,body {
   background-color: #f6f6f6;
   color: #403f3f;
-  position: relative;
-  min-height: 100vh;
+  min-height: 100%;
+  height: 100%;
 }
 
 main>header {
@@ -29,18 +29,21 @@ main>header a.button {
   top:50%;
 }
 
-.event-feed,
-.eventsAttended,
-.eventsToAttend {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.event-feed{
   background-color: white;
   border-radius: 1%;
-  margin: 2em;
-  padding: 1em;
-  margin-top: 1em;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
   border: 1px solid rgba(167, 167, 167, 0.463);
+}
+.event-feed,
+.eventsAttended,
+.eventsToAttend, .myevents {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 1.5em;
+  padding: 1em;
+  margin-top: 1em;
+
 }
 
 .eventCard {
@@ -75,6 +78,10 @@ main>header a.button {
 }
 #local{
   color: #6c757d;
+}
+
+#details *{
+  margin-bottom: 0.8em;
 }
 .eventCard p {
   margin-bottom: 0em;
@@ -192,12 +199,37 @@ a:hover {
   background-color: rgba(216, 216, 216, 0.413);
   border-radius: 10%;
 }
+
+#message{
+  background-color: #a1b4e36f;
+  border-radius: 2%;
+  padding: 1.5em;
+}
+#message > * {
+  margin-bottom: 1em;
+}
+
+#message p{
+  margin: 0;
+  padding: 0 1.3em;
+}
+#message #son{
+  padding-left: 1.5em;
+  padding-right: 0.5em;
+}
 #eventHeader{
   background-color: white;
+  justify-content: center;
 }
 
 #eventHeader .button, #eventHeader button{
   margin-right: 1em;
+}
+
+#eventHeader img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #details, #attendeeslist{
@@ -211,6 +243,8 @@ a:hover {
 #content {
   padding-left: 14em;
   padding-top: 5em;
+  min-height: 100%;
+  padding-bottom: 2em;
 }
 
 #content label {
@@ -313,15 +347,16 @@ a:hover {
   }
 }
 
-/**
- * Overide milligram colors
- * Some styles might be missing
- **/
 button,
 a.button {
   background-color: #a1b4e3;
   border-color: #a1b4e3;
   max-width: 13em;
+}
+#submit{
+  background-color: #7a9aebce;
+  border-color: #a1b4e3;
+  
 }
 
 #createButton {
@@ -333,8 +368,9 @@ a.button {
 
 button:hover,
 a.button:hover {
-  background-color: #a1b4e3ce;
+  background-color: #7a9aebce;
   border-color: #a1b4e3;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
 }
 
 a {
@@ -400,6 +436,7 @@ input[type=password]:focus {
   object-fit: cover; /* Required to prevent the image from stretching, use the object-position property to adjust the visible area */
   aspect-ratio: 1/1;
 }
+
 
 #logo {
   max-width: 20%;
@@ -518,6 +555,11 @@ hr {
   padding-bottom: 1em;
 }
 
+.formbg-outer{
+  background-color: white;
+  margin: 0 4em;
+  border-radius: 2%;
+}
 
 @media (max-width: 768px) {
   .menu-toggle {

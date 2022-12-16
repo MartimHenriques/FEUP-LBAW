@@ -22,14 +22,14 @@
 
 <section id="eventHeader">
     <img src="/../img_events/{{$event->picture}}" alt="event picture" id="eventPicture" style="width: 40%; aligns-items: center;">
-    <h2>{{ $event->title }}</h2>
+    <h3>{{ $event->title }}</h3>
     <span id="info" onclick="infoFunction()" style="border-bottom: 2px solid rgba(90, 90, 90, 0.852);">Info</span>
     <span id="forum" onclick="forumFunction()" style="border-bottom: 2px solid transparent;">Forum</span>
     <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
         @if($attendee)
-            Showing up
+            Attending
         @else
-            Show up
+            Attend
         @endif
     </a>
     
@@ -69,11 +69,11 @@
         <h4>Details</h4>
         <p>{{ $event->description }}</p>
         @if ($event->visibility)
-            <i class="bi bi-globe-asia-australia"></i> <h5>Public</h5>
+            <span style="display:block;"><i class="bi bi-globe-asia-australia"></i><p style="display:inline;">  Public</p></span>
         @else
-            <h5>Private</h5>
+            <i class="bi bi-lock-fill"></i><p style="display:inline;">  Private</p>
         @endif
-        <p>Local: {{ $event->local }}</p>
+        <span style="display:block;"><i class="bi bi-geo-alt-fill"></i><p style="display:inline;">  {{ $event->local }}</p></span>
         @if($event->start_date != $event->final_date )
             <p>Data de início: {{ $event->start_date }}</p>
             <p>Data de fim: {{ $event->final_date }}</p>
@@ -84,7 +84,7 @@
     </div>
     <div id="attendeeslist">
         <h4>Attendees</h4>
-        <h5><strong>{{count($event->attendees()->get())}}</strong> are showing up</h5>
+        <h5><strong>{{count($event->attendees()->get())}}</strong> people are attending</h5>
         <div class="list-group w-auto">
             @foreach($event->attendees()->get() as $attendee)
                 @if( $event->event_organizers()->get()->contains($attendee))
@@ -126,32 +126,56 @@
 
 <div id="forum-content" style="display: none">
     <!-- Forum List -->
-    <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+    <div class=" p-2 p-sm-3 collapse forum-content show">
         @if( count($messages) < 1)
             <p>There aren't messages yet</p>
         @endif
             <div class="container mt-5">
-                <div class="d-flex justify-content-center row">
+                <div class="d-flex justify-content-center row" style="margin: 0;">
                     <div class="col-md-8">
                         @foreach($messages as $message)
-                        <div class="d-flex flex-column comment-section">
-                            <div class="bg-white p-2">
-                                <div class="d-flex flex-row user-info"><img class="profile-picture" src="/../avatars/{{$setMessage[$message->id]->picture}}">
-                                    <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{ $setMessage[$message->id]->username }}</span><span class="date text-black-50">{{ $message->date }}</span></div>
+                        @if($message->parent == NULL)
+                        <div id="message">
+                            
+                                <div id="parent" class="d-flex flex-column comment-section">
+                                    <div class="bg-white p-2" style="border-top-left-radius: 1em; border-top-right-radius: 1em;">
+                                        <div class="d-flex flex-row user-info"><img class="profile-picture" src="/../avatars/{{$setMessage[$message->id]->picture}}">
+                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold" style="margin: 1em 0;">{{ $setMessage[$message->id]->username }}</span><span class="date text-black-50">{{ $message->date }}</span></div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="comment-text">{{ $message->content }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white" style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;">
+                                        <div class="d-flex flex-row fs-12">
+                                            <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                                <div class="mt-2">
-                                    <p class="comment-text">{{ $message->content }}</p>
+                            @endif
+                            @foreach ($message->messages as $son)
+
+                            <div id="son" class="d-flex flex-column comment-section">
+                                <div class="bg-white p-2" style="border-top-left-radius: 1em; border-top-right-radius: 1em;">
+                                    <div class="d-flex flex-row user-info"><img class="profile-picture" src="/../avatars/{{$setMessage[$son->id]->picture}}">
+                                        <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold" style="margin: 1em 0;">{{ $setMessage[$son->id]->username }}</span><span class="date text-black-50">{{ $message->date }}</span></div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="comment-text">{{ $son->content }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="bg-white">
-                                <div class="d-flex flex-row fs-12">
-                                    <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
-                                    <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Reply</span></div>
+                                <div class="bg-white" style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;"  >
+                                    <div class="d-flex flex-row fs-12">
+                                        <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                                    </div>
                                 </div>
+                                
                             </div>
                             
+                            @endforeach
                         </div>
-            
+                        
                         @endforeach
                     </div>
                 </div>

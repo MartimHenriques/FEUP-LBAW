@@ -1,16 +1,12 @@
 <div class="eventCard" data-id="{{ $event->id }}">
 
   <a href="/events/{{ $event->id}}">
-      <div class="event-info">
-        <h4>{{ $event->title }}</h4>
-        @if ($event->visibility)
-          <p>Publico</p>
-        @else
-         <p>Privado</p>
-        @endif
-        <p>Local: {{$event->local}}</p>
-        <p>{{$event->start_date}}</p>
-      </div>
+    <img src="/../img_events/{{ $event->picture}}" alt="event picture" id="eventMiniPicture">
+    <div class="event-info">
+    <p id="title">{{ $event->title }}</p>
+    <p id="local">{{$event->local}}</p>
+    <p>{{$event->start_date}}</p>
+    </div>
   </a>
 
 

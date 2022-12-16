@@ -1,3 +1,4 @@
+
 @section('sidebar')
 
 <aside class="sidebar">
@@ -17,5 +18,7 @@
 </nav>
 <hr>
 <h5>Categories</h5>
+<ul>
 
+</ul>
 </aside>

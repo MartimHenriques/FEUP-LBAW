@@ -13,7 +13,7 @@ use App\Models\Message;
 use App\Models\Event_Organizer;
 use App\Models\User;
 use App\Models\Attendee;
-
+use App\Models\Tag;
 class EventController extends Controller
 {
 
@@ -37,7 +37,15 @@ class EventController extends Controller
       $setMessage = [];
       $event = Event::find($id);
       $messages = $event->messages;
-      foreach($messages as $message) {
+      /* foreach($event->messages as $message) {
+        if($message->parent != NULL){
+          array_push($messages[$message->parent], $message);
+        }
+        else{
+          array_push($messages[$message->id], $message);
+        }
+      } */
+      foreach($event->messages as $message) {
         $user=User::find($message->id_user);
         $setMessage[$message->id]=$user;
       }
@@ -89,6 +97,7 @@ class EventController extends Controller
 
 
     public function showEvents(){
+      $tags = Tag::all();
       if(Auth::check()){
         $events = DB::table('event')->orderBy('id')->get();
         $event_organizer = [];
@@ -101,7 +110,7 @@ class EventController extends Controller
       else{
         $event_organizer = [];
         $events = Event::where('visibility', 1)->orderBy('id')->get();
-        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer]);
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer, 'tags' => $tags]);
       }
 
     }

@@ -93,4 +93,5 @@ class Message extends Model
 	{
 		return $this->hasMany(Vote::class, 'id_message');
 	}
+	
 }

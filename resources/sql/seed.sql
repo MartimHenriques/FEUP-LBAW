@@ -442,7 +442,14 @@ Alma At Porto Marca Nacional Registada*
 Empresa Licenciada pelo Turismo de Portugal
 Rnaat 428/2016
 Rnavt 7882', TRUE, 'aveiro.jpg' , 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Arraial', 'Festival de Engenharia', TRUE, 'Exponor' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Carnaval 23 - Orquestra Bamba Social - Festa de lançamento do álbum "Mundo Novo"', 'Na comemoração da celebração de 10 anos da Orquestra Bamba Social, nada melhor que uma festa de Carnaval, lançamento do novo álbum "Mundo Novo" e uma atuação dupla da Orquestra Bamba Social no Super Bock Arena.
+Será uma atuação no formato orquestra no palco e depois roda de samba no meio da plateia e com o público em redor da banda.
+Para continuar a celebração carnavalesca Farofa (Dj set)
+Bilhetes já à venda com o 1° lote a um preço promocional de 10€
+Pontos de venda:
+- Ticketline.pt
+- FNAC
+- Worten', TRUE, 'orquestra.jpg', 'Super Bock Arena' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Chikipark', 'Festa de piscina de bolas e trampolins', TRUE, 'Coimbra' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');

@@ -31,9 +31,9 @@
             <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
             <a id="join" type='button' class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
             @if($attendee[$event->id])
-                Showing up
+                Attending
             @else
-                Show up
+                Attend
             @endif
         </a>
         @endif
