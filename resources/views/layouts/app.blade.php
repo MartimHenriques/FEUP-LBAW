@@ -73,6 +73,7 @@
         </footer>
 
     </main>
+    @yield('script')
     <script>
       const menu_toggle = document.querySelector('.menu-toggle');
       const sidebar = document.querySelector('.sidebar');

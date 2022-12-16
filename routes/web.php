@@ -62,7 +62,7 @@ Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->nam
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
-Route::post('api/eventsSearch', [EventController::class,'searchEvents']);
+Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 
 //my events
 Route::get('myevents', 'EventController@showMyEvents');
