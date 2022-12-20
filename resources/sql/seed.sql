@@ -612,4 +612,5 @@ INSERT INTO notification (content, date, read, id_user, type, id_report, id_even
 INSERT INTO vote (id_user, id_message) VALUES (11, 1);
 INSERT INTO vote (id_user, id_message) VALUES (8, 3);
 INSERT INTO vote (id_user, id_message) VALUES (11, 4);
+INSERT INTO vote (id_user, id_message) VALUES (6, 4);
 INSERT INTO vote (id_user, id_message) VALUES (5, 4);

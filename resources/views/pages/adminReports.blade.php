@@ -5,10 +5,9 @@
 @section('content')
 
 <h1>Admin Page</h1>
-<h3>Manage Reports</h3>
-<table class="table table-striped">
-<th>Reports</th>
+<h3>Reports</h3>
 
+<table class="table table-striped">
     @foreach($reports as $report)
         <tr>
             <td>{{$report->date}}</td>
@@ -28,9 +27,10 @@
                         {{'Not working'}} 
                 @endswitch
             </td>
-            <td>{{--<a class="button" href="{{route('deleteUser',['id'=>$user->id])}}">User</a>--}}</td>
         </tr>
     @endforeach
-
 </table>
+<div class="text-center">
+    {!! $reports->links(); !!}
+</div>
 @endsection

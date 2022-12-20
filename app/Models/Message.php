@@ -9,7 +9,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 /**
  * Class Message
  * 
@@ -92,6 +93,9 @@ class Message extends Model
 	public function votes()
 	{
 		return $this->hasMany(Vote::class, 'id_message');
+	}
+	public function voted(User $user){
+		return ($this->hasMany('App\Models\Vote', 'id_message')->where('id_user', $user->id)->get()->isNotEmpty());
 	}
 	
 }

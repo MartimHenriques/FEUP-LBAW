@@ -23,8 +23,8 @@
         // Fix for Firefox autofocus CSS bug
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
-    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer>
-</script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
 
   </head>
   <body>
@@ -48,7 +48,7 @@
         </a>
         @else
         <a class="button" href="{{ route('login') }}"> Login </a> 
-        <a class="button" href="{{ route('register') }}"> Register </a> 
+        <a id="registerbtn" class="button" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
 
@@ -59,11 +59,11 @@
       @endif
       
 
-      <section id="content">
+      <section id="content" @if (!Request::is('login', 'register', '/')) style="padding-left: 14em;" @endif>
         @yield('content')
       </section>
-      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top">
-          <p class="col-md-4 mb-0 text-muted">© 2022 WeMeet, Inc</p>
+      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top" @if (!Request::is('login', 'register', '/')) style="padding-left: 14em;" @endif>
+          <p class="col-md-4 mb-0">© 2022 WeMeet, Inc</p>
       
           <ul class="nav col-md-4 justify-content-end">
             <li class="nav-item"><a href="#" class="nav-link px-2">User help</a></li>
@@ -73,6 +73,7 @@
         </footer>
 
     </main>
+    @yield('script')
     <script>
       const menu_toggle = document.querySelector('.menu-toggle');
       const sidebar = document.querySelector('.sidebar');

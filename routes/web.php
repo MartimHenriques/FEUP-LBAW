@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,6 @@ Route::post('eventsCreate', [EventController::class, 'createEvent']);
 Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 
-Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
@@ -62,7 +62,10 @@ Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->nam
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
-Route::post('api/eventsSearch', [EventController::class,'searchEvents']);
+Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
+
+Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
+Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
 
 //my events
 Route::get('myevents', 'EventController@showMyEvents');

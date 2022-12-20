@@ -37,14 +37,6 @@ class EventController extends Controller
       $setMessage = [];
       $event = Event::find($id);
       $messages = $event->messages;
-      /* foreach($event->messages as $message) {
-        if($message->parent != NULL){
-          array_push($messages[$message->parent], $message);
-        }
-        else{
-          array_push($messages[$message->id], $message);
-        }
-      } */
       foreach($event->messages as $message) {
         $user=User::find($message->id_user);
         $setMessage[$message->id]=$user;
@@ -99,7 +91,7 @@ class EventController extends Controller
     public function showEvents(){
       $tags = Tag::all();
       if(Auth::check()){
-        $events = DB::table('event')->orderBy('id')->get();
+        $events = DB::table('event')->orderBy('id')->paginate(6);
         $event_organizer = [];
         foreach ($events as $event) {
           $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
@@ -110,26 +102,20 @@ class EventController extends Controller
       else{
         $event_organizer = [];
         $events = Event::where('visibility', 1)->orderBy('id')->get();
-        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer, 'tags' => $tags]);
+        foreach ($events as $event) {
+          $attendee[$event->id] = false;
+        }
+        return view('pages.feed',['events' => $events, 'event_organizer' => $event_organizer, 'attendee' => $attendee]);
       }
 
     }
 
 
     public static function searchEvents(Request $request){
-      $search = $request->search;
-      if(strlen($search) !=0 ) {
-      $events = Event::where('title', 'ILIKE', '%'.$search.'%')->get();
-      $event_organizer = [];
-      foreach ($events as $event) {
-        $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
-      }
-
-      return view('pages.feed', ['events' => $events, 'event_organizer' => $event_organizer]);
-  }
-}
-
-
+      return DB::table('event')
+      ->where('title', 'ILIKE', '%'.$request->search.'%')
+      ->get();
+    }
 
     /**
      * Get a validator for an incoming event request.
@@ -276,4 +262,16 @@ class EventController extends Controller
       $attendee->delete();
       return redirect()->back();
     }
+         /**
+     * An attendee is removed from an event.
+     *
+     * @return Redirect back to the page
+     */
+    public function removeFromEvent($id_attendee,$id_event) {
+
+      $attendee = Attendee::where(['id_user' => $id_attendee,'id_event' => $id_event]);
+      $attendee->delete();
+      return redirect()->back();
+    }
+
 }
