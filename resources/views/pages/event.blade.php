@@ -135,7 +135,7 @@
                     <div class="col-md-8">
                         @foreach($messages as $message)
                         @if($message->parent == NULL)
-                        <div id="message">
+                        <div id="message" msg-id="{{ $message->id }}">
                             
                             <div id="parent" class="d-flex flex-column comment-section">
                                 <div class="bg-white" style="border-top-left-radius: 1em; border-top-right-radius: 1em;">
@@ -150,7 +150,7 @@
                                     <div class="d-flex flex-row fs-12">
                                         
                                         <div class="like p-2 cursor">
-                                            <span>{{ $message->like_count }}</span>
+                                            <span>{{ count($message->votes) }}</span>
                                             @if($message->voted(Auth::user()))
                                                 <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up-fill"></span>
 
@@ -178,7 +178,7 @@
                                     <div class="d-flex flex-row fs-12">
                                         
                                         <div class="like p-2 cursor">
-                                            <span>{{ $son->like_count }}</span>
+                                            <span>{{ count($son->votes) }}</span>
                                             @if($son->voted(Auth::user()))
                                                 <span id="like" data-id="{{ $son->id }}" class="bi bi-hand-thumbs-up-fill"></span>
 
@@ -192,7 +192,7 @@
                             @endforeach
                             <form action="" id="reply">
                                 <input id="replyInput" type="text" name="reply" placeholder="Write reply">
-                                <button type="submit">
+                                <button id="submitReply" type="submit">
                                     post
                                 </button>
                             </form>

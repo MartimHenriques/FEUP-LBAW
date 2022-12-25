@@ -31,9 +31,13 @@ function sendAjaxRequest(method, url, data, handler) {
 
   
 function likeMessageHandler(e) {
+  let prev = e.previousElementSibling;
+  prev.innerHTML = parseInt(prev.innerHTML) + 1;
   e.classList = "bi bi-hand-thumbs-up-fill"
 }
   
 function removeLikeMessageHandler(e) {
+  let prev = e.previousElementSibling;
+  prev.innerHTML = parseInt(prev.innerHTML) - 1;
   e.classList = "bi bi-hand-thumbs-up";
 }
