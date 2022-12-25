@@ -48,7 +48,7 @@
         </a>
         @else
         <a class="button" href="{{ route('login') }}"> Login </a> 
-        <a id="registerbtn" class="button" href="{{ route('register') }}"> Register </a> 
+        <a id="registerbtn" class="button register" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
 
@@ -58,10 +58,15 @@
         @yield('sidebar');
       @endif
       
-
-      <section id="content" @if (!Request::is('login', 'register', '/')) style="padding-left: 14em;" @endif>
+      @if (!Request::is('login', 'register', '/'))
+      <section id="content">
         @yield('content')
       </section>
+      @else
+      <section id="content2">
+        @yield('content2')
+      </section>
+      @endif
       <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top" @if (!Request::is('login', 'register', '/')) style="padding-left: 14em;" @endif>
           <p class="col-md-4 mb-0">© 2022 WeMeet, Inc</p>
       

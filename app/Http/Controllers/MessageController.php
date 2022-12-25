@@ -19,6 +19,10 @@ class MessageController extends Controller
                 'id_message' => $request->get('id'),
             )
         );
+        $msg = Message::find($request->get('id'));
+        $msg->like_count = ($msg->like_count + 1);
+        $msg->save();
+        
         return json_encode($request->get('id'));
     }
 

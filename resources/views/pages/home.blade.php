@@ -1,6 +1,6 @@
 @extends ('layouts.app')
 
-@section('content')
+@section('content2')
 <div id="landing">
 
   <div>
@@ -9,7 +9,7 @@
     
   </div>
   
-  <img src="../img_events/people.png" alt="happy people" style="width: 30%; min-width: 18em; display:block;">
+  <img src="../img_events/people.png" alt="happy people" style="width: 40%; min-width: 18em; display:block;">
 </div>
 
 

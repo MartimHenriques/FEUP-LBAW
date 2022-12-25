@@ -37,7 +37,7 @@ main>header a.button {
 }
 .event-feed{
   background-color: white;
-  border-radius: 1%;
+  border-radius: 1em;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
   border: 1px solid rgba(167, 167, 167, 0.463);
 }
@@ -58,7 +58,7 @@ main>header a.button {
   box-shadow: #0000001a 0px 2px 2px 1px;
   max-width: 20em;
   max-height: 25em;
-  border-radius: 4%;
+  border-radius: 1em;
   background-color: white;
   display: grid;
   grid-template-rows: 1fr auto;
@@ -70,8 +70,8 @@ main>header a.button {
 
 }
 #eventMiniPicture{
-  border-top-left-radius: 4%;
-  border-top-right-radius: 4%;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
   object-fit: cover;
   aspect-ratio: 2/1;
 }
@@ -161,7 +161,10 @@ main>header a.button {
   resize: none
 }
 
-
+#registerbutton, #registerbtn{
+  background-color: transparent;
+  color: #9bb6fcf6;
+}
 #copyButton {
   justify-self: center;
 }
@@ -203,7 +206,7 @@ a:hover {
 
 #info:hover, #forum:hover{
   background-color: rgba(216, 216, 216, 0.413);
-  border-radius: 10%;
+  border-radius: 0.2em;
 }
 
 #message{
@@ -222,6 +225,24 @@ a:hover {
 #message #son{
   padding-left: 1.5em;
   padding-right: 0.5em;
+}
+#reply{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-right: 0.5em;
+  margin-bottom: 0;
+}
+#replyInput{
+  margin-left: 1.5em;
+  margin-right: 0.5em;
+  background-color: white;
+  border-radius: 0.7em;
+  width: 95%;
+}
+#replyInput:focus{
+  border: 1px solid #a1b4e3d2;
+  outline: 1px solid #a1b4e3d2;
+  box-shadow: rgba(180, 180, 180, 0.253) 0px 8px 24px;
 }
 #eventHeader{
   background-color: white;
@@ -242,7 +263,7 @@ a:hover {
   background-color: white;
   margin: 2em;
   padding: 1em;
-  border-radius: 2%;
+  border-radius: 1em;
 }
 
 
@@ -250,19 +271,29 @@ a:hover {
   padding-top: 5em;
   min-height: 100%;
   padding-bottom: 2em;
+  padding-left: 14em;
+}
+#content2{
+  padding-top: 5em;
+  min-height: 100%;
+  padding-bottom: 2em;
 }
 
-#content label {
+#content2 label {
   font-weight: normal;
 }
 
-#content>form {
-  margin: 0 auto;
+#content>form, #content2>form {
+  margin: 5em auto;
   padding: 1em;
   max-width: 20em;
   border: 2px solid #a1b4e3c1;
-  border-radius: 5%;
+  border-radius: 1em;
   background-color: white;
+  box-shadow: rgba(122, 122, 122, 0.1) -4px 9px 25px -6px;
+}
+#content2>form input:focus{
+  border: 1px solid #a1b4e3c1; 
 }
 
 #content>form .error {
@@ -270,7 +301,7 @@ a:hover {
   color: #ff3333;
 }
 
-#content>form input {
+#content>form input, #content2>form input {
   background-color: white;
 }
 
@@ -293,8 +324,21 @@ a:hover {
     /* 180 + 40 */
   }
 }
+@media (min-width: 1700px) {
+  .event-feed,
+  .eventsAttended,
+  .eventsToAttend {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1400px) {
 
-@media (max-width: 70em) {
+  .eventCard{
+    max-width: 25em;
+    min-width: 19em;
+  }
+}
+@media (max-width: 75em) {
 
   .event-feed,
   .eventsAttended,
@@ -312,7 +356,7 @@ a:hover {
   }
 }
 
-@media (max-width: 50em) {
+@media (max-width: 63em) {
 
   .event-feed,
   .eventsAttended,
@@ -340,7 +384,7 @@ a:hover {
     margin: 0;
   }
 
-  #content form {
+  #content2 form {
     margin: 0;
     max-width: 25em;
   }
@@ -354,7 +398,7 @@ a:hover {
 button,
 a.button {
   background-color: #9bb6fcf6;
-  border-color: #a1b4e3;
+  border-color: #9bb6fcf6;
   max-width: 13em;
 }
 #submit{
@@ -462,7 +506,6 @@ input[type=password]:focus {
   height: 2em;
   cursor: pointer;
   background-color: #fff;
-  border-radius: 10%;
 }
 
 .hamburger {
@@ -515,7 +558,7 @@ input[type=password]:focus {
   bottom: 0;
   left: 0;
   z-index: 1;
-  top: 3.7em;
+  top: 0;
   overflow-x: hidden;
   overflow-y: auto;
   /* Scrollable contents if viewport is shorter than content. */
@@ -524,7 +567,7 @@ input[type=password]:focus {
 }
 
 .sidebar h4 {
-  margin-top: 1em;
+  margin-top: 4em;
   margin-bottom: 0;
   font-weight: bold;
 }
@@ -586,7 +629,13 @@ hr {
   grid-template-columns: auto auto;
 }
 #landing img{
+  margin-left: auto;
+  margin-right: 8em;
+}
+#landing > div *{
   margin: auto auto;
+  margin-top: 3em;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -606,8 +655,11 @@ hr {
     width: 15em;
     transition: 0.2s linear;
   }
+  .eventCard{
+    max-width: 21em;
+  }
 
-  #content>form {
+  #content2>form {
     margin: 0 auto;
   }
 

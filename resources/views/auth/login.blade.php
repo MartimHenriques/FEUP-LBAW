@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content2')
 <form method="POST" action="{{ route('login') }}">
     {{ csrf_field() }}
 
@@ -27,6 +27,6 @@
     <button type="submit">
         Login
     </button>
-    <a class="button button-outline" href="{{ route('register') }}">Register</a>
+    <a id="registerbutton" class="button" href="{{ route('register') }}">Register</a>
 </form>
 @endsection
