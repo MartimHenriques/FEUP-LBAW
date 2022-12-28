@@ -25,6 +25,7 @@
     </script>
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/reply_comment.js') }}" defer></script>
 
   </head>
   <body>
@@ -75,7 +76,7 @@
             <li class="nav-item"><a href="#" class="nav-link px-2">Contact us</a></li>
             <li class="nav-item"><a href="#" class="nav-link px-2">About us</a></li>
           </ul>
-        </footer>
+      </footer>
 
     </main>
     @yield('script')

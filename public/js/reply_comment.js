@@ -1,12 +1,15 @@
-let submit = document.getElementById('submitReply');
-submit.addEventListener('click', replyMessage);
+document.querySelectorAll("#submitReply").forEach((e) => {
+    e.addEventListener("click", () => {
+        let url = window.location.href;
+        let id = url.substring(url.lastIndexOf('/') + 1);
+        let id_parent = e.parentElement.parentElement.getAttribute('msg-id');
+        let content = e.previousElementSibling.value;
+        sendAjaxRequest('post', '/api/event/reply/create', {id:id, id_parent:id_parent, content:content} ,replyMessageHandler(e));
+    }
+    
+    )});
 
-function replyMessage() {
-    let url = window.location.href;
-    let id = url.substring(url.lastIndexOf('/') + 1);
-    sendAjaxRequest('post', '/api/event/reply/create', {id:id} , projectFavoriteHandler);
 
-  }
 
 function encodeForAjax(data) {
     if (data == null) return null;
@@ -23,4 +26,11 @@ function sendAjaxRequest(method, url, data, handler) {
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   request.addEventListener('load', handler);
   request.send(encodeForAjax(data));
+}
+
+function replyMessageHandler(e) {
+    let parent = e.parentElement.parentElement;
+    let div = document.createElement("div");
+    parent.appendChild(div);
+    
 }

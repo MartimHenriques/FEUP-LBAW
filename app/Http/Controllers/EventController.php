@@ -65,8 +65,7 @@ class EventController extends Controller
       return view('pages.myevents', ['myevents' => $myevents]);
     }
     
-    public function showEventsAttend()
-    {
+    public function showEventsAttend(){
       $user = Auth::user()->id;
       /*
       $myeventsid = Event_Organizer::where('id_user','=',$user)->get(['id_event']);
@@ -88,7 +87,7 @@ class EventController extends Controller
     }
 
 
-    public function showEvents(){
+    public function showEvents(){ 
       $tags = Tag::all();
       if(Auth::check()){
         $events = DB::table('event')->orderBy('id')->paginate(6);

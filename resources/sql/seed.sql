@@ -161,7 +161,6 @@ CREATE TABLE message (
     id SERIAL PRIMARY KEY,
     content      TEXT,
     date      DATE NOT NULL,
-    like_count INTEGER NOT NULL DEFAULT (0),
     id_event   INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_user	   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     parent    INTEGER REFERENCES message (id) ON DELETE CASCADE
@@ -597,10 +596,10 @@ INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (10,8,1
 INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,5,11, TRUE);
 INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,8,11, TRUE);
 -----
-INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 1, 5, 8);
-INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 0, 7, 3);
-INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 1, 5, 11, 1);
-INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 2, 5, 8, 1);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 5, 8);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 7, 3);
+INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 5, 11, 1);
+INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 5, 8, 1);
 
 INSERT INTO message_File (file, id_message) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);
 

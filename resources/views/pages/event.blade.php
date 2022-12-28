@@ -128,11 +128,21 @@
     <!-- Forum List -->
     <div class=" p-2 p-sm-3 collapse forum-content show">
         @if( count($messages) < 1)
-            <p>There aren't messages yet</p>
+            <p style="text-align: center;">There aren't messages yet</p>
         @endif
+        
             <div class="container mt-5">
                 <div class="d-flex justify-content-center row" style="margin: 0;">
                     <div class="col-md-8">
+                        <div>
+                            <form method="POST" action="/api/event/{{$event->id}}/message/create" id="postMessage">
+                                {{ csrf_field() }}
+                                <input id="messageInput" type="text" name="content" placeholder="Write a comment">
+                                <button type="submit">
+                                    post
+                                </button>
+                            </form>
+                        </div>
                         @foreach($messages as $message)
                         @if($message->parent == NULL)
                         <div id="message" msg-id="{{ $message->id }}">
@@ -146,16 +156,20 @@
                                         <p class="comment-text">{{ $message->content }}</p>
                                     </div>
                                 </div>
-                                <div class="bg-white" style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;">
+                                <div class="bg-white" style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em; position: relative;">
                                     <div class="d-flex flex-row fs-12">
                                         
                                         <div class="like p-2 cursor">
                                             <span>{{ count($message->votes) }}</span>
                                             @if($message->voted(Auth::user()))
-                                                <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up-fill"></span>
+                                                <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up-fill" style="margin: 0;"></span>
 
                                             @else
-                                                <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up"></span>
+                                                <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up" style="margin: 0;"></span>
+                                            @endif
+                                            @if($message->id_user == Auth::id())
+                                            <a id="editBtn" href="/editMessage/{{$message->id}}"><i class="bi bi-pencil-fill"></i></a>
+                                            <a id="deleteBtn" href="/deleteMessage/{{$message->id}}"><i class="bi bi-trash-fill"></i></a>
                                             @endif
                                         </div>
                                     </div>
@@ -174,28 +188,32 @@
                                         <p class="comment-text">{{ $son->content }}</p>
                                     </div>
                                 </div>
-                                <div class="bg-white" style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;"  >
+                                <div class="bg-white" style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em; position: relative;"  >
                                     <div class="d-flex flex-row fs-12">
                                         
                                         <div class="like p-2 cursor">
                                             <span>{{ count($son->votes) }}</span>
                                             @if($son->voted(Auth::user()))
-                                                <span id="like" data-id="{{ $son->id }}" class="bi bi-hand-thumbs-up-fill"></span>
+                                                <span id="like" data-id="{{ $son->id }}" class="bi bi-hand-thumbs-up-fill" style="margin: 0;"></span>
 
                                             @else
-                                                <span id="like" data-id="{{ $son->id }}" class="bi bi-hand-thumbs-up"></span>
+                                                <span id="like" data-id="{{ $son->id }}" class="bi bi-hand-thumbs-up" style="margin: 0;"></span>
+                                            @endif
+                                            @if($son->id_user == Auth::id())
+                                            <a id="editBtn" href="/editMessage/{{$son->id}}"><i class="bi bi-pencil-fill"></i></a>
+                                            <a id="deleteBtn" href="/deleteMessage/{{$son->id}}"><i class="bi bi-trash-fill"></i></a>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             @endforeach
-                            <form action="" id="reply">
+                            <div id="reply">
                                 <input id="replyInput" type="text" name="reply" placeholder="Write reply">
                                 <button id="submitReply" type="submit">
                                     post
                                 </button>
-                            </form>
+                            </div>
 
                         </div>
                         @endif

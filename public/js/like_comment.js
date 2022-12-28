@@ -1,6 +1,5 @@
 document.querySelectorAll("#like").forEach((e) => {
   e.addEventListener("click", () => {
-    console.log(e);
     let id = e.getAttribute('data-id');
     if(e.classList == 'bi bi-hand-thumbs-up'){
       sendAjaxRequest('post', '/api/comment/vote/create', {id:id} , likeMessageHandler(e));
