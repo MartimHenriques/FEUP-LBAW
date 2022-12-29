@@ -74,4 +74,5 @@ Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
 //static pages
-Route::get('aboutUS', [AboutUSController::class, 'showAbout']);
+Route::get('aboutUS', [StaticPagesController::class, 'showAbout']);
+Route::get('userHelp', [StaticPagesController::class, 'showUserHelp']);

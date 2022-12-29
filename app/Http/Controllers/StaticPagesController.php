@@ -18,4 +18,9 @@ class AboutUSController extends Controller
       return view('pages.aboutUS');
     }
 
+    public function showUserHelp()
+    {
+      return view('pages.userHelp');
+    }
+
 }
