@@ -85,5 +85,3 @@ Route::get('forgot_password', 'ForgotPassword@show')->middleware('guest')->name(
 Route::post('forgot_password', 'ForgotPassword@request')->middleware('guest')->name('password.email');
 Route::get('recover_password', 'ForgotPassword@showRecover')->middleware('guest')->name('password.reset');;
 Route::post('recover_password', 'ForgotPassword@recover')->middleware('guest')->name('password.update');;
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
