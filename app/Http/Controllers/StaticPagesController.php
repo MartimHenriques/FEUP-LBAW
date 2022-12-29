@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class AboutUSController extends Controller
+class StaticPagesController extends Controller
 {
     /**
      * Shows the card for a given id.
