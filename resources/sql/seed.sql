@@ -2,6 +2,7 @@ create schema if not exists public;
 
 SET search_path TO public;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS password_resets CASCADE;
 DROP TABLE IF EXISTS event CASCADE;
 DROP TABLE IF EXISTS poll CASCADE;
 DROP TABLE IF EXISTS report CASCADE;
@@ -34,6 +35,12 @@ CREATE TABLE users (
     is_blocked TEXT,
     is_admin   BOOLEAN DEFAULT (False),
     remember_token VARCHAR
+);
+
+CREATE TABLE password_resets (
+    email      VARCHAR NOT NULL,
+    token      VARCHAR NOT NULL,
+    created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
 );
 
 -- Table: event
@@ -208,6 +215,16 @@ CREATE TABLE vote (
     )
 );
 
+
+-----------------------------------------
+-- LARAVEL INDEXES
+-----------------------------------------
+
+DROP INDEX IF EXISTS password_resets_email_index;
+DROP INDEX IF EXISTS password_resets_token_index;
+
+CREATE INDEX password_resets_email_index ON password_resets (email);
+CREATE INDEX password_resets_token_index ON password_resets (token);
 
 -----------------------------------------
 -- INDEXES

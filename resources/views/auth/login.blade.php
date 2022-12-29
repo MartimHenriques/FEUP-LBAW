@@ -27,6 +27,8 @@
     <button type="submit">
         Login
     </button>
+    
     <a id="registerbutton" class="button" href="{{ route('register') }}">Register</a>
+    <a id="forgotpasswordbutton" href="{{ route('password.request') }}">Forgot Your Password?</a>
 </form>
 @endsection

@@ -763,7 +763,7 @@ hr {
 
 body{margin-top:20px;}
 .section_padding_130 {
-    padding-top: 130px;
+    padding-top: px;
     padding-bottom: 130px;
 }
 .faq_area {
@@ -792,7 +792,7 @@ body{margin-top:20px;}
 .faq-accordian .card .card-header h6 {
     cursor: pointer;
     padding: 1.75rem 2rem;
-    color: #3f43fd;
+    color: #94bee7;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -839,7 +839,7 @@ body{margin-top:20px;}
 
 .support-button a {
     text-transform: capitalize;
-    color: #2ecc71;
+    color: #2e5dcc;
 }
 @media only screen and (max-width: 575px) {
     .support-button a {

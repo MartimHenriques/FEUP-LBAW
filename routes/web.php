@@ -5,6 +5,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,3 +80,10 @@ Route::get('calendar', 'EventController@showEventsAttend');
 //static pages
 Route::get('aboutUS', [StaticPagesController::class, 'showAbout']);
 Route::get('userHelp', [StaticPagesController::class, 'showUserHelp']);
+
+Route::get('forgot_password', 'ForgotPassword@show')->middleware('guest')->name('password.request');
+Route::post('forgot_password', 'ForgotPassword@request')->middleware('guest')->name('password.email');
+Route::get('recover_password', 'ForgotPassword@showRecover')->middleware('guest')->name('password.reset');;
+Route::post('recover_password', 'ForgotPassword@recover')->middleware('guest')->name('password.update');;
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
