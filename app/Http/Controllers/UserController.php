@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 use App\Models\User;
 
@@ -34,9 +36,23 @@ class UserController extends Controller
     }
 
     public function savePicture(Request $request, User $users){
+      $request->validate([
+        'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
+
       $img = $request->picture; 
+
+      $uuid = Str::uuid()->toString();
+      $mytime = now()->toDateTimeString();
+
+      $file = public_path('avatars/').$users->picture;
+
       if($img != null){
-          $imageName = $users->username . '.' . $img->extension();
+
+          if(file_exists($file)) {
+            unlink($file);
+          }
+          $imageName =  $mytime. $uuid . '.' . $img->extension();
           $img -> move(public_path('avatars/'), $imageName);
           $users->picture = $imageName;
       }     
