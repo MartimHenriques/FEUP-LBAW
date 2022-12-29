@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */ 
 
-
 // Authentications
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
@@ -74,3 +73,5 @@ Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
+//static pages
+Route::get('aboutUS', [AboutUSController::class, 'showAbout']);
