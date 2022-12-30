@@ -55,8 +55,7 @@ class AdminController extends Controller
      * @return Redirect back to the page
      */
     public function deleteUser($id){
-        $user = User::where(['id'=>$id]);
-        $user->delete();
+        DB::table('users')->where(['id'=>$id])->update(['image'=>'']);
         return redirect()->back();
       }
 

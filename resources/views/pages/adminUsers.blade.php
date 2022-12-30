@@ -11,6 +11,13 @@
 <table class="table table-striped">
     @foreach($users as $user)
         <tr>
+            <td>
+                @if (empty($users->picture)) 
+                <img class="profile-picture" src="/../avatars/default.png" alt="Avatar">
+                @else
+                <img class="profile-picture" src="/../avatars/{{$users->picture}}" alt="Avatar">
+                @endif
+            </td>
             <td>{{$user->username}}</td> 
             <td>
                 <button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Delete User" style="float:right;">
