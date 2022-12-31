@@ -9,8 +9,6 @@ document.querySelectorAll("#submitReply").forEach((e) => {
     
     )});
 
-
-
 function encodeForAjax(data) {
     if (data == null) return null;
     return Object.keys(data).map(function(k){
@@ -29,8 +27,9 @@ function sendAjaxRequest(method, url, data, handler) {
 }
 
 function replyMessageHandler(e) {
-    let parent = e.parentElement.parentElement;
-    let div = document.createElement("div");
-    parent.appendChild(div);
+  let parentMessage = e.parentElement.parentElement;
+  let newMessage = document.createElement('div')
+  newMessage.innerHTML = JSON.parse(this.responseText) 
+  parentMessage.appendChild(newMessage);
     
 }

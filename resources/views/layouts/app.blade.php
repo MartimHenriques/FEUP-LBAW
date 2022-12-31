@@ -55,8 +55,8 @@
 
       @if (!Request::is('login', 'register', '/'))
         
-        @include('partials.sidebar');
-        @yield('sidebar');
+        @include('partials.sidebar')
+        @yield('sidebar')
       @endif
       
       @if (!Request::is('login', 'register', '/'))

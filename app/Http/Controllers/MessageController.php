@@ -31,7 +31,10 @@ class MessageController extends Controller
         $msg->id_event =  $request->get('id_event');
         $msg->parent =  $request->get('id_parent');
         $msg->save();
-        return json_encode(view('partials.message', ['message' => $msg])->render());
+        
+        $user=User::find(Auth::id());
+        $setMessage[$msg->id]=$user;
+        return json_encode(view('partials.message', ['message' => $msg, 'setMessage' => $setMessage])->render());
     }
 
 
