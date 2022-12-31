@@ -1,7 +1,13 @@
 <?php
+
+namespace App\Http\Controllers;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\ContactUs;
+use Mail;
 
 class StaticPagesController extends Controller
 {
@@ -29,5 +35,19 @@ class StaticPagesController extends Controller
     {
         return view('pages.contactUs');
     }
+
+    public function sendEmail(Request $request) {
+
+      $mailData = [
+          'name' => $request->name,
+          'email' => $request->email,
+          'message' => $request->message
+      ];
+
+      Mail::to('wemeet33@gmail.com')->send(new ContactUs($request));
+         
+      return redirect()->route('contactus');
+  }
+
 
 }

@@ -78,7 +78,8 @@ Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
 //contact us
-Route::get('contactUs', 'StaticPagesController@showContactUs');
+Route::get('contactUs', 'StaticPagesController@showContactUs')->name('contactus');
+Route::post('contactUs', [StaticPagesController::class, 'sendEmail']);
 //static pages
 Route::get('aboutUS', [StaticPagesController::class, 'showAbout']);
 Route::get('userHelp', [StaticPagesController::class, 'showUserHelp']);
