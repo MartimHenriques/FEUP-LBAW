@@ -12,10 +12,10 @@
     @foreach($users as $user)
         <tr>
             <td>
-                @if (empty($users->picture)) 
+                @if (empty($user->picture)) 
                 <img class="profile-picture" src="/../avatars/default.png" alt="Avatar">
                 @else
-                <img class="profile-picture" src="/../avatars/{{$users->picture}}" alt="Avatar">
+                <img class="profile-picture" src="/../avatars/{{$user->picture}}" alt="Avatar">
                 @endif
             </td>
             <td>{{$user->username}}</td> 
