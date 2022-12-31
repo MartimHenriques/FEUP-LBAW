@@ -1,6 +1,6 @@
 <div class="eventCard" data-id="{{ $event->id }}">
 
-  <a href="/events/{{ $event->id}}">
+  <a href="/events/{{ $event->id}}/info">
     <img src="/../img_events/{{ $event->picture}}" alt="event picture" id="eventMiniPicture">
     <div class="event-info">
     <p id="title">{{ $event->title }}</p>

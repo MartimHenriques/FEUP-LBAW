@@ -1,12 +1,10 @@
 let currentBtn
-document.querySelectorAll("#submitReply").forEach((e) => {
+document.querySelectorAll("#submitComment").forEach((e) => {
     e.addEventListener("click", () => {
-      currentBtn = e
+      console.log(e)
         let id = parseInt(window.location.pathname.split('/')[2]);
-
-        let id_parent = e.parentElement.parentElement.getAttribute('msg-id');
         let content = e.previousElementSibling.value;
-        sendAjaxRequest('post', '/api/event/reply/create', {id:id, id_parent:id_parent, content:content} ,replyMessageHandler);
+        sendAjaxRequest('post', '/api/event/comment/create', {id:id, content:content} , addMessageHandler);
     }
     
     )});
@@ -28,12 +26,19 @@ function sendAjaxRequest(method, url, data, handler) {
   request.send(encodeForAjax(data));
 }
 
-function replyMessageHandler() {
-  let reply = currentBtn.parentElement
-  let parent = currentBtn.parentElement.parentElement
-  let newReply = document.createElement('div')
-
-  newReply.innerHTML = JSON.parse(this.responseText)
-  parent.insertBefore(newReply, reply)
+function addMessageHandler() {
+  
+  let msg = document.querySelectorAll(".message")[0]
+  let newMessage = document.createElement('div')
+  newMessage.innerHTML = JSON.parse(this.responseText)
+  if(msg){
+    msg.parentNode.insertBefore(newMessage,  msg)
+  }
+  else{
+    let post = document.getElementById('postMessage')
+    post.parentElement.appendChild(newMessage)
+  }
+  
+  
     
 }

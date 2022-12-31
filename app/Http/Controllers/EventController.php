@@ -32,8 +32,19 @@ class EventController extends Controller
      *
      * @return Response
      */
-    public function showOneEvent($id)
+    public function showOneEventInfo($id)
     {
+      $event = Event::find($id);
+
+      $showModal = false;
+
+      $attendee = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$id)->exists();
+
+      $event_organizer=Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+
+      return view('pages.eventInfo', ['event' => $event, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
+    }
+    public function showOneEventForum($id){
       $setMessage = [];
       $event = Event::find($id);
       $messages = $event->messages;
@@ -48,7 +59,7 @@ class EventController extends Controller
 
       $event_organizer=Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
 
-      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
+      return view('pages.eventForum', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
     }
 
     public function showMyEvents()
