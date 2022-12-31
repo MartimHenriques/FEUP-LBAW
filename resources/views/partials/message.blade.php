@@ -26,7 +26,7 @@
                     @endif
                     @if($message->id_user == Auth::id())
                     <a id="editBtn" href="/editMessage/{{$message->id}}"><i class="bi bi-pencil-fill"></i></a>
-                    <a id="deleteBtn" href="/deleteMessage/{{$message->id}}"><i class="bi bi-trash-fill"></i></a>
+                    <a id="deleteBtn" href="/api/event/comment/delete/{{$message->id}}"><i class="bi bi-trash-fill"></i></a>
                     @endif
                 </div>
             </div>

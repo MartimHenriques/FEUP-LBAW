@@ -71,6 +71,7 @@ Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 //messages
 Route::post('/api/event/comment/create', [MessageController::class,'createComment']);
 Route::post('/api/event/reply/create', [MessageController::class,'createReply']);
+Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteComment']);
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
 Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);

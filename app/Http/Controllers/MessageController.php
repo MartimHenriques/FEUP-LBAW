@@ -16,10 +16,10 @@ class MessageController extends Controller
 
     public function createComment(Request $request){
         $msg = new Message();
-        $msg->content =  $request->get('content');
-        $msg->date =  now();
-        $msg->id_user =  Auth::id();
-        $msg->id_event =  $request->get('id');
+        $msg->content = $request->get('content');
+        $msg->date = now();
+        $msg->id_user = Auth::id();
+        $msg->id_event = $request->get('id');
         $msg->save();
         
         $user=Auth::user();
@@ -64,4 +64,10 @@ class MessageController extends Controller
         $vote->delete();
         return redirect()->back();
       }
+
+    public function deleteComment($id){
+    $msg = Message::where(['id'=> $id]);
+    $msg->delete();
+    return redirect()->back();
+    }
 }
