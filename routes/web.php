@@ -68,3 +68,5 @@ Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
+//contact us
+Route::get('contactUs', 'StaticPagesController@showContactUs');
