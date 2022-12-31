@@ -600,6 +600,8 @@ INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa noite, é po
 INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 7, 3);
 INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 5, 11, 1);
 INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 5, 8, 1);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('BBLAA', '2022-10-30 21:00:00', 5, 8);
+
 
 INSERT INTO message_File (file, id_message) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);
 

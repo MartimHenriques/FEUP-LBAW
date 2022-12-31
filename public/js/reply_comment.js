@@ -1,10 +1,12 @@
+let currentBtn
 document.querySelectorAll("#submitReply").forEach((e) => {
     e.addEventListener("click", () => {
-        let url = window.location.href;
-        let id = url.substring(url.lastIndexOf('/') + 1);
+      currentBtn = e
+        let id = parseInt(window.location.pathname.split('/')[2]);
+
         let id_parent = e.parentElement.parentElement.getAttribute('msg-id');
         let content = e.previousElementSibling.value;
-        sendAjaxRequest('post', '/api/event/reply/create', {id:id, id_parent:id_parent, content:content} ,replyMessageHandler(e));
+        sendAjaxRequest('post', '/api/event/reply/create', {id:id, id_parent:id_parent, content:content} ,replyMessageHandler);
     }
     
     )});
@@ -26,10 +28,12 @@ function sendAjaxRequest(method, url, data, handler) {
   request.send(encodeForAjax(data));
 }
 
-function replyMessageHandler(e) {
-  let parentMessage = e.parentElement.parentElement;
-  let newMessage = document.createElement('div')
-  newMessage.innerHTML = JSON.parse(this.responseText) 
-  parentMessage.appendChild(newMessage);
+function replyMessageHandler() {
+  let reply = currentBtn.parentElement
+  let parent = currentBtn.parentElement.parentElement
+  let newReply = document.createElement('div')
+
+  newReply.innerHTML = JSON.parse(this.responseText)
+  parent.insertBefore(newReply, reply)
     
 }

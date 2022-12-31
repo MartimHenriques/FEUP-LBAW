@@ -9,31 +9,36 @@ use Carbon\Carbon;
 
 use App\Models\Message;
 use App\Models\Vote;
+use App\Models\User;
 
 class MessageController extends Controller
 {
 
-    public function create(Request $request, $id){
+    public function createComment(Request $request){
         $msg = new Message();
-        $msg->content = $request->input('content');
-        $msg->date = now();
-        $msg->id_event = $id;
-        $msg->id_user = Auth::id();
+        $msg->content =  $request->get('content');
+        $msg->date =  now();
+        $msg->id_user =  Auth::id();
+        $msg->id_event =  $request->get('id');
         $msg->save();
+        
+        $user=Auth::user();
+        $setMessage[$msg->id]=$user;
 
-        return redirect()->back();
+        return json_encode(view('partials.message', ['message' => $msg, 'setMessage' => $setMessage])->render());
     }
     public function createReply(Request $request){
         $msg = new Message();
         $msg->content =  $request->get('content');
         $msg->date =  now();
         $msg->id_user =  Auth::id();
-        $msg->id_event =  $request->get('id_event');
+        $msg->id_event =  $request->get('id');
         $msg->parent =  $request->get('id_parent');
         $msg->save();
         
-        $user=User::find(Auth::id());
+        $user=Auth::user();
         $setMessage[$msg->id]=$user;
+
         return json_encode(view('partials.message', ['message' => $msg, 'setMessage' => $setMessage])->render());
     }
 

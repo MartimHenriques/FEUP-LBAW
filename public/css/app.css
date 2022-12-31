@@ -213,22 +213,23 @@ a:hover {
   border: 1px solid #a1b4e36f;
   border-radius: 1em;
   padding: 1.5em;
+  margin-bottom: 1em;
 }
-#message{
+.message{
   background-color: #a1b4e36f;
   border-radius: 1em;
   padding: 1.5em;
   margin-bottom: 1em;
 }
-#message > * {
+.message > * {
   margin-bottom: 1em;
 }
 
-#message p{
+.message p{
   margin: 0;
   padding: 0 1.3em;
 }
-#message #son{
+.message #son{
   padding-left: 1.5em;
   padding-right: 0.5em;
 }
