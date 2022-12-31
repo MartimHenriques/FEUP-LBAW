@@ -3,7 +3,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */ 
-
 
 // Authentications
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -54,7 +58,6 @@ Route::post('eventsCreate', [EventController::class, 'createEvent']);
 Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 
-Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
@@ -64,9 +67,23 @@ Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 
 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 
+//messages
+Route::get('/api/event/reply/create', [MessageController::class,'createReply']);
+Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
+Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
+Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);
+
 //my events
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
 //contact us
 Route::get('contactUs', 'StaticPagesController@showContactUs');
+//static pages
+Route::get('aboutUS', [StaticPagesController::class, 'showAbout']);
+Route::get('userHelp', [StaticPagesController::class, 'showUserHelp']);
+
+Route::get('forgot_password', 'ForgotPassword@show')->middleware('guest')->name('password.request');
+Route::post('forgot_password', 'ForgotPassword@request')->middleware('guest')->name('password.email');
+Route::get('recover_password', 'ForgotPassword@showRecover')->middleware('guest')->name('password.reset');;
+Route::post('recover_password', 'ForgotPassword@recover')->middleware('guest')->name('password.update');;

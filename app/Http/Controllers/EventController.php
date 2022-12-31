@@ -13,7 +13,7 @@ use App\Models\Message;
 use App\Models\Event_Organizer;
 use App\Models\User;
 use App\Models\Attendee;
-
+use App\Models\Tag;
 class EventController extends Controller
 {
 
@@ -37,7 +37,7 @@ class EventController extends Controller
       $setMessage = [];
       $event = Event::find($id);
       $messages = $event->messages;
-      foreach($messages as $message) {
+      foreach($event->messages as $message) {
         $user=User::find($message->id_user);
         $setMessage[$message->id]=$user;
       }
@@ -65,8 +65,7 @@ class EventController extends Controller
       return view('pages.myevents', ['myevents' => $myevents]);
     }
     
-    public function showEventsAttend()
-    {
+    public function showEventsAttend(){
       $user = Auth::user()->id;
       /*
       $myeventsid = Event_Organizer::where('id_user','=',$user)->get(['id_event']);
@@ -88,9 +87,10 @@ class EventController extends Controller
     }
 
 
-    public function showEvents(){
+    public function showEvents(){ 
+      $tags = Tag::all();
       if(Auth::check()){
-        $events = DB::table('event')->orderBy('id')->get();
+        $events = DB::table('event')->orderBy('id')->paginate(6);
         $event_organizer = [];
         foreach ($events as $event) {
           $event_organizer[$event->id] = Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
@@ -261,4 +261,16 @@ class EventController extends Controller
       $attendee->delete();
       return redirect()->back();
     }
+         /**
+     * An attendee is removed from an event.
+     *
+     * @return Redirect back to the page
+     */
+    public function removeFromEvent($id_attendee,$id_event) {
+
+      $attendee = Attendee::where(['id_user' => $id_attendee,'id_event' => $id_event]);
+      $attendee->delete();
+      return redirect()->back();
+    }
+
 }

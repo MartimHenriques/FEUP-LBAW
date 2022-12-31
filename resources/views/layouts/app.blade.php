@@ -23,8 +23,9 @@
         // Fix for Firefox autofocus CSS bug
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
-    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer>
-</script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/reply_comment.js') }}" defer></script>
 
   </head>
   <body>
@@ -48,7 +49,7 @@
         </a>
         @else
         <a class="button" href="{{ route('login') }}"> Login </a> 
-        <a class="button" href="{{ route('register') }}"> Register </a> 
+        <a id="registerbtn" class="button register" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
 
@@ -58,19 +59,24 @@
         @yield('sidebar');
       @endif
       
-
+      @if (!Request::is('login', 'register', '/'))
       <section id="content">
         @yield('content')
       </section>
-      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top">
-          <p class="col-md-4 mb-0 text-muted">© 2022 WeMeet, Inc</p>
+      @else
+      <section id="content2">
+        @yield('content2')
+      </section>
+      @endif
+      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top" @if (!Request::is('login', 'register', '/')) style="padding-left: 14em;" @endif>
+          <p class="col-md-4 mb-0">© 2022 WeMeet, Inc</p>
       
           <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2">User help</a></li>
-            <li class="nav-item"><a href="/contactUs" class="nav-link px-2">Contact us</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2">About us</a></li>
+            <li class="nav-item"><a href="/userHelp" class="nav-link px-2">User help</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2">Contact us</a></li>
+            <li class="nav-item"><a href="/aboutUS" class="nav-link px-2">About us</a></li>
           </ul>
-        </footer>
+      </footer>
 
     </main>
     @yield('script')

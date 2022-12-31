@@ -6,7 +6,7 @@
 <div class="formbg-outer">
   <div class="formbg">
     <div class="formbg-inner" style="padding: 48px">
-      <span style="padding-bottom: 15px">New Event</span>
+      <h5 style="padding-bottom: 0.5em">New Event</h5>
       <form id="stripe-login" action="eventsCreate" method="POST">
         @csrf
 
@@ -84,7 +84,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <input type="submit" name="submit" value="Create Event">
+          <input id="submit" type="submit" name="submit" value="create event">
         </div>
       </form>
     </div>

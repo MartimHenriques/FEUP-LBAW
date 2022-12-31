@@ -2,6 +2,7 @@ create schema if not exists public;
 
 SET search_path TO public;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS password_resets CASCADE;
 DROP TABLE IF EXISTS event CASCADE;
 DROP TABLE IF EXISTS poll CASCADE;
 DROP TABLE IF EXISTS report CASCADE;
@@ -34,6 +35,12 @@ CREATE TABLE users (
     is_blocked TEXT,
     is_admin   BOOLEAN DEFAULT (False),
     remember_token VARCHAR
+);
+
+CREATE TABLE password_resets (
+    email      VARCHAR NOT NULL,
+    token      VARCHAR NOT NULL,
+    created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
 );
 
 -- Table: event
@@ -161,7 +168,6 @@ CREATE TABLE message (
     id SERIAL PRIMARY KEY,
     content      TEXT,
     date      DATE NOT NULL,
-    like_count INTEGER NOT NULL DEFAULT (0),
     id_event   INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_user	   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     parent    INTEGER REFERENCES message (id) ON DELETE CASCADE
@@ -209,6 +215,16 @@ CREATE TABLE vote (
     )
 );
 
+
+-----------------------------------------
+-- LARAVEL INDEXES
+-----------------------------------------
+
+DROP INDEX IF EXISTS password_resets_email_index;
+DROP INDEX IF EXISTS password_resets_token_index;
+
+CREATE INDEX password_resets_email_index ON password_resets (email);
+CREATE INDEX password_resets_token_index ON password_resets (token);
 
 -----------------------------------------
 -- INDEXES
@@ -442,7 +458,14 @@ Alma At Porto Marca Nacional Registada*
 Empresa Licenciada pelo Turismo de Portugal
 Rnaat 428/2016
 Rnavt 7882', TRUE, 'aveiro.jpg' , 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Arraial', 'Festival de Engenharia', TRUE, 'Exponor' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Carnaval 23 - Orquestra Bamba Social - Festa de lançamento do álbum "Mundo Novo"', 'Na comemoração da celebração de 10 anos da Orquestra Bamba Social, nada melhor que uma festa de Carnaval, lançamento do novo álbum "Mundo Novo" e uma atuação dupla da Orquestra Bamba Social no Super Bock Arena.
+Será uma atuação no formato orquestra no palco e depois roda de samba no meio da plateia e com o público em redor da banda.
+Para continuar a celebração carnavalesca Farofa (Dj set)
+Bilhetes já à venda com o 1° lote a um preço promocional de 10€
+Pontos de venda:
+- Ticketline.pt
+- FNAC
+- Worten', TRUE, 'orquestra.jpg', 'Super Bock Arena' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Chikipark', 'Festa de piscina de bolas e trampolins', TRUE, 'Coimbra' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
@@ -590,10 +613,10 @@ INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (10,8,1
 INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,5,11, TRUE);
 INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,8,11, TRUE);
 -----
-INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 1, 5, 8);
-INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 0, 7, 3);
-INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 1, 5, 11, 1);
-INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 2, 5, 8, 1);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 5, 8);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 7, 3);
+INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 5, 11, 1);
+INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 5, 8, 1);
 
 INSERT INTO message_File (file, id_message) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);
 
@@ -605,4 +628,5 @@ INSERT INTO notification (content, date, read, id_user, type, id_report, id_even
 INSERT INTO vote (id_user, id_message) VALUES (11, 1);
 INSERT INTO vote (id_user, id_message) VALUES (8, 3);
 INSERT INTO vote (id_user, id_message) VALUES (11, 4);
+INSERT INTO vote (id_user, id_message) VALUES (6, 4);
 INSERT INTO vote (id_user, id_message) VALUES (5, 4);
