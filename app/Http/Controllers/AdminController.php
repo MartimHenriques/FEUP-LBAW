@@ -55,8 +55,10 @@ class AdminController extends Controller
      * @return Redirect back to the page
      */
     public function deleteUser($id){
-        DB::table('users')->where(['id'=>$id])->update(['picture'=>'', 'username'=>'User Deleted']);
-        return redirect()->back();
+      $count = User::where('username','like','Anonymous%')->count();
+      $username = "Anonymous" . strval($count);
+      DB::table('users')->where(['id'=>$id])->update(['picture'=>'', 'username'=>$username]);
+      return redirect()->back();
       }
 
       /**

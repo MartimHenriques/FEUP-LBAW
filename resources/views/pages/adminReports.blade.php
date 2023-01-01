@@ -4,7 +4,6 @@
 
 @section('content')
 
-<h1>Admin Page</h1>
 <h3>Reports</h3>
 
 <table class="table table-striped">
@@ -24,7 +23,7 @@
                         {{'Rejected'}}
                         @break
                     @default
-                        {{'Not working'}} 
+                        {{''}} 
                 @endswitch
             </td>
         </tr>

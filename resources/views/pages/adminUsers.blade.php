@@ -4,9 +4,7 @@
 
 @section('content')
 
-<h1>Admin Page</h1>
 <h3>Users</h3>
-
 
 <table class="table table-striped">
     @foreach($users as $user)

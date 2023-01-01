@@ -4,7 +4,6 @@
 
 @section('content')
 
-<h1>Admin Page</h1>
 <h3>Events</h3>
 
 <table class="table table-striped">
