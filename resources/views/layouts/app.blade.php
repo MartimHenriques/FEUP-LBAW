@@ -53,13 +53,13 @@
         @endif
       </header>
 
-      @if (!Request::is('login', 'register', '/'))
+      @if (!Request::is('login', 'register', '/', 'forgot_password' , 'recover_password'))
         
         @include('partials.sidebar');
         @yield('sidebar');
       @endif
       
-      @if (!Request::is('login', 'register', '/'))
+      @if (!Request::is('login', 'register', '/', 'forgot_password' , 'recover_password'))
       <section id="content">
         @yield('content')
       </section>

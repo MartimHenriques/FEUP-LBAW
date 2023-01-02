@@ -6,9 +6,6 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
