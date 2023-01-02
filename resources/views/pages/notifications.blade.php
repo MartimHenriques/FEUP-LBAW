@@ -6,28 +6,30 @@
 
 <div class="formbg-outer">
   <div class="formbg">
-    <div class="formbg-inner" id="not-list" style="padding: 48px">
-      <span style="padding-bottom: 15px">Notifications</span>
-        <?php
-        $count = 0;
-        foreach ($notifications as $notification) {
-            $count++;
-            if($notification->type == "Invite") {
-                echo '<div class="card border-0">';
-                echo  '<div class="card-header" id="headingTwo">';
-                echo   '<a href="/invites/'.$notification->id.'" class="my-1 w-100 btn btn-outline-secondary">'.$notification->content.'</a>';
-                echo     '</div>';
-                echo   '</div>';
-            }
-            else {
-                echo '<div class="card border-0">';
-                echo  '<div class="card-header" id="headingTwo">';
-                echo   '<h6>'.$notification->content.'</h6>';
-                echo     '</div>';
-                echo   '</div>';
-            }
-        } 
-        ?>
+    <div class="formbg-inner" style="padding: 48px">
+    <h5 style="padding-bottom: 15px">Notifications</h5>
+        <div id="not-list">
+            <?php
+            $count = 0;
+            foreach ($notifications as $notification) {
+                $count++;
+                if($notification->type == "Invite") {
+                    echo '<div class="card border-0">';
+                    echo  '<div class="card-header" id="headingTwo">';
+                    echo   '<a href="/invites/'.$notification->id.'" class="my-1 w-100 btn btn-outline-secondary">'.$notification->content.'</a>';
+                    echo     '</div>';
+                    echo   '</div>';
+                }
+                else {
+                    echo '<div class="card border-0">';
+                    echo  '<div class="card-header" id="headingTwo">';
+                    echo   '<h6>'.$notification->content.'</h6>';
+                    echo     '</div>';
+                    echo   '</div>';
+                }
+            } 
+            ?>
+        </div>
         <form id="clear-full" action="/notifications/{{\Illuminate\Support\Facades\Auth::id()}}/clear" method="POST" class="text-center">
             @csrf
             <button type="submit" class="my-1 w-50 btn btn-outline-danger">Clear All</button>

@@ -71,6 +71,7 @@ class InvitesController extends Controller
             $invite->id_event = $event_id;
             $invite->accepted = false;
             $invite->id_organizer = $id;
+            $invite->to_attend = ($request->user_role == 'ATTENDEE');
             $invite->save();
 
             $notification = Notification::where('type', '=', 'Invite')
@@ -82,7 +83,7 @@ class InvitesController extends Controller
 
         }
 
-        return redirect('/events/'.$event->id);
+        return redirect('/events/'.$event->id.'/info');
     }
 
 
@@ -109,7 +110,7 @@ class InvitesController extends Controller
                 $invite->save();
                 $not->read = true;
                 $not->save();
-                return redirect('/events/'. $not->id_event);
+                return redirect('/events/'. $not->id_event.'/info');
             }
             else {
                 $not->read = true;

@@ -51,8 +51,7 @@ Route::get('unblockUser/{id}', 'AdminController@unblockUser');
 Route::get('events', 'EventController@showEvents');
 
 //event
-Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
-Route::get('events/{id}/info', 'EventController@showOneEventInfo');
+Route::get('events/{id}/info', 'EventController@showOneEventInfo')->name('event');
 Route::get('events/{id}/forum', 'EventController@showOneEventForum');
 
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');

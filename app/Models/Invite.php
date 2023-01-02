@@ -35,12 +35,14 @@ class Invite extends Model
 		'id_event' => 'int',
 		'id_invitee' => 'int',
 		'id_organizer' => 'int',
-		'accepted' => 'bool'
+		'accepted' => 'bool',
+		'to_attend' => 'bool'
 	];
 
 	protected $fillable = [
 		'id_organizer',
-		'accepted'
+		'accepted',
+		'to_attend'
 	];
 
 	public function event()

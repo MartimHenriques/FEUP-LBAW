@@ -154,7 +154,8 @@ CREATE TABLE invite (
     id_event     INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_invitee   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     id_organizer INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    accepted    BOOLEAN,
+    accepted     BOOLEAN,
+    to_attend    BOOLEAN NOT NULL DEFAULT(True),
     PRIMARY KEY (
         id_event,
         id_invitee
@@ -382,9 +383,12 @@ EXECUTE PROCEDURE create_event_organizer();
 CREATE OR REPLACE FUNCTION accept_invite() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF OLD.accepted != TRUE AND NEW.accepted = TRUE
+    IF OLD.accepted != TRUE AND NEW.accepted = TRUE AND NEW.to_attend = TRUE
     THEN
         INSERT INTO attendee (id_user, id_event) SELECT NEW.id_invitee, NEW.id_event;
+    ELSEIF OLD.accepted != TRUE AND NEW.accepted = TRUE AND NEW.to_attend = FALSE
+    THEN
+        INSERT INTO event_organizer (id_user, id_event) SELECT NEW.id_invitee, NEW.id_event;
     END IF;
     RETURN NEW;
 END;

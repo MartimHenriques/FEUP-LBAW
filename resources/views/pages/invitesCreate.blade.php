@@ -20,9 +20,9 @@
         @endif
         <div class="field" style="padding-bottom: 24px">
           <label for="user_role">Role</label>
-          <select name="user_role" class="form-select" required>
-              <option value='ORGANIZER'>Organizer</option>
-              <option value='ATTENDEE'>Attendee</option>
+          <select name="user_role" required autofocus>
+            <option value='ATTENDEE' selected>Attendee</option>
+            <option value='ORGANIZER'>Organizer</option>
           </select>
         </div>
         @if ($errors->has('user_role'))
