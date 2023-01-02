@@ -63,6 +63,7 @@ Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
+Route::get('eventOrganizer/{id_user}/{id_event}', [Event_OrganizerController::class, 'makeAnOrganizer'])->name('makeAnOrganizer');
 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 

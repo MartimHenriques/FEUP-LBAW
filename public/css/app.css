@@ -662,6 +662,10 @@ hr {
   text-align: center;
 }
 
+#attendeeInfo:nth-child(2){
+  float: right;
+}
+
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;

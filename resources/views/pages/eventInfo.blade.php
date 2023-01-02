@@ -47,13 +47,17 @@
                 @if( !($event->event_organizers()->get()->contains($attendee)))
                 <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                     <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-                    <div class="d-flex gap-2 w-100 justify-content-between">
+                    <div id="attendeeInfo" class="d-flex gap-2 w-100 justify-content-between">
                         <div>
                             <h6 class="mb-0">{{$attendee->username}}</h6>
                             <p class="mb-0 opacity-75">Attendee</p>
                         </div>
                         @if($event->event_organizers()->get()->contains(Auth::user()))
-                            <a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a>
+                            <div>
+                                <a href="{{route('makeAnOrganizer',['id_user'=>$attendee->id,'id_event'=>$event->id])}}" style="margin-right: 1em">Turn in an organizer</a>
+                                <a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a>
+                            </div>
+                            
                         @endif
                     </div>
                     </span>
