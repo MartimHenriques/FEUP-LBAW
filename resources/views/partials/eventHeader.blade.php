@@ -48,10 +48,12 @@
                 </div>
             </div>
         </div>
-    
-    @endif
+    @endif    
     @if (Auth::check())
         @if ($event_organizer)
+            @if(!$event->visibility)
+                <a type='button' class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
+            @endif
             <a type='button' class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
     @endif
