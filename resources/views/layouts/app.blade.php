@@ -26,6 +26,7 @@
     </script>
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/add_comment.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/reply_comment.js') }}" defer></script>
 
   </head>
@@ -56,8 +57,8 @@
 
       @if (!Request::is('login', 'register', '/'))
         
-        @include('partials.sidebar');
-        @yield('sidebar');
+        @include('partials.sidebar')
+        @yield('sidebar')
       @endif
       
       @if (!Request::is('login', 'register', '/'))

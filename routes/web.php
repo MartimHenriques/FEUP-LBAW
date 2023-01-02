@@ -52,6 +52,8 @@ Route::get('events', 'EventController@showEvents');
 
 //event
 Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
+Route::get('events/{id}/info', 'EventController@showOneEventInfo');
+Route::get('events/{id}/forum', 'EventController@showOneEventForum');
 
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
@@ -66,7 +68,9 @@ Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 
 //messages
-Route::get('/api/event/reply/create', [MessageController::class,'createReply']);
+Route::post('/api/event/comment/create', [MessageController::class,'createComment']);
+Route::post('/api/event/reply/create', [MessageController::class,'createReply']);
+Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteComment']);
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
 Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);
