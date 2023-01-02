@@ -10,6 +10,7 @@ use App\Models\Poll;
 use App\Models\Attendee;
 use App\Models\ChooseOption;
 use App\Models\Event;
+use App\Models\Event_Organizer;
 use App\Models\Notification;
 use App\Models\Report;
 use App\Models\User;
@@ -55,9 +56,24 @@ class AdminController extends Controller
      * @return Redirect back to the page
      */
     public function deleteUser($id){
-      $count = User::where('username','like','Anonymous%')->count();
-      $username = "Anonymous" . strval($count);
+
+      $count = User::where('username','like','Anonymous_%')->count();
+      $username = "Anonymous_" . strval($count);
       DB::table('users')->where(['id'=>$id])->update(['picture'=>'', 'username'=>$username]);
+
+      $events = Event_Organizer::where(['id_user'=>$id])->pluck('id_event');
+
+      if (!empty($events)) {
+        foreach ($events as $event){
+          $count = DB::table('event_organizer')->where(['id_event'=>$event])->count();
+          if ($count == 1) {
+            DB::table('event_organizer')->insert(['id_user' => Auth::id(), 'id_event' => $event]);            
+          }
+        }
+        DB::table('event_organizer')->where(['id_user' => $id])->delete();
+        DB::table('attendee')->where(['id_user' => $id])->delete();
+      }
+
       return redirect()->back();
       }
 
@@ -82,13 +98,16 @@ class AdminController extends Controller
     }
 
     /**
-     * The user is deleted.
+     * The event is deleted.
      *
      * @return Redirect back to the page
      */
     public function deleteEvent($id){
-      $event = Event::where(['id'=>$id]);
-      $event->delete();
+      Attendee::where(['id_event' => $id])
+          ->whereNotIn('id_user',Event_Organizer::where(['id_event'=>$id])->pluck('id_user'))
+          ->delete();
+      Event::where(['id'=>$id])->delete();
+      
       return redirect()->back();
     }
 }
