@@ -5,7 +5,7 @@
 @section('content')
 
 <h1>My events</h1>
-@if(count($myevents)<1)
+@if(count($myevents) < 1)
     <p>You haven't created any events yet.</p>
 @endif
 <div class="myevents">

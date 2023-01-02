@@ -48,7 +48,8 @@ Route::get('unblockUser/{id}', 'AdminController@unblockUser');
 Route::get('events', 'EventController@showEvents');
 
 //event
-Route::get('events/{id}', 'EventController@showOneEvent');
+Route::get('events/{id}/info', 'EventController@showOneEventInfo');
+Route::get('events/{id}/forum', 'EventController@showOneEventForum');
 
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
@@ -61,11 +62,14 @@ Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
 Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
+Route::get('eventOrganizer/{id_user}/{id_event}', [Event_OrganizerController::class, 'makeAnOrganizer'])->name('makeAnOrganizer');
 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 
 //messages
-Route::get('/api/event/reply/create', [MessageController::class,'createReply']);
+Route::post('/api/event/comment/create', [MessageController::class,'createComment']);
+Route::post('/api/event/reply/create', [MessageController::class,'createReply']);
+Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteComment']);
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
 Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);
@@ -74,6 +78,9 @@ Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
+//contact us
+Route::get('contactUs', 'StaticPagesController@showContactUs')->name('contactus');
+Route::post('contactUs', [StaticPagesController::class, 'sendEmail']);
 //static pages
 Route::get('aboutUS', [StaticPagesController::class, 'showAbout']);
 Route::get('userHelp', [StaticPagesController::class, 'showUserHelp']);
