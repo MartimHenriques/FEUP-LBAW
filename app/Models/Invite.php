@@ -28,6 +28,8 @@ class Invite extends Model
 	protected $table = 'invite';
 	public $incrementing = false;
 	public $timestamps = false;
+	use HasCompositePrimaryKey;
+	protected $primaryKey = ['id_invitee', 'id_event'];
 
 	protected $casts = [
 		'id_event' => 'int',

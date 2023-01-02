@@ -55,11 +55,12 @@
                 </div>
             </div>
         </div>
-    
+    @else
+    <a type='button' class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
     @endif
     @if (Auth::check())
         @if ($event_organizer)
-            <a type='button' class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
+            <a type='button' class="button" style="float:right;" href="/editEvent/{{$event->id}}/invite"><i class="bi bi-pencil fs-3"></i></a>
         @endif
     @endif
     

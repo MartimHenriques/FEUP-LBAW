@@ -51,7 +51,7 @@ Route::get('unblockUser/{id}', 'AdminController@unblockUser');
 Route::get('events', 'EventController@showEvents');
 
 //event
-Route::get('events/{id}', 'EventController@showOneEvent');
+Route::get('events/{id}', 'EventController@showOneEvent')->name('event');
 
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
@@ -61,8 +61,6 @@ Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
-Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
-Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
@@ -72,6 +70,15 @@ Route::get('/api/event/reply/create', [MessageController::class,'createReply']);
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
 Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);
+
+//invites
+Route::get('/invites/{id}', [InvitesController::class,'showInvite']);
+Route::post('/invites/{id}/deal', [InvitesController::class,'dealWithInvite']);
+Route::get('/event/{id}/invite', [InvitesController::class,'showInviteForm']);
+Route::post('/event/{id}/invite', [InvitesController::class,'create']);
+
+//notifications
+Route::get('/notifications', [NotificationsController::class, 'showNotifications']);
 
 //my events
 Route::get('myevents', 'EventController@showMyEvents');
