@@ -38,7 +38,7 @@
             <span></span>
           </div>
         </div>
-        <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
+        <a @if (Auth::check()) href="{{ url('events') }}" @else href="{{ url('/') }}" @endif><img id="logo" src="/../logo.png" alt="logo"></a>
   
         @if (Auth::check())
         <a href="{{ url('/profile') }}">

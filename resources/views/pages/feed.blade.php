@@ -45,10 +45,11 @@
         @endif
     @endforeach 
 </div>
-
+@if (Auth::check())
 <div class="text-center">
     {!! $events->links() !!}
 </div>
+@endif
 @endsection
 
 @section('script')

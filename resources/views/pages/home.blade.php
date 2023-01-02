@@ -5,7 +5,7 @@
 
   <div>
     <h3>Search for new experiences and meet new people</h3>
-    <a class="button" style="background-color:#6b8febce; max-width: 15em; display: block;">Get Started<i style="margin-left: 1em;" class="bi bi-arrow-right"></i></a>
+    <a class="button" href="{{ url('events') }}" style="background-color:#6b8febce; max-width: 15em; display: block;">Get Started<i style="margin-left: 1em;" class="bi bi-arrow-right"></i></a>
     
   </div>
   
