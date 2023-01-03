@@ -22,10 +22,8 @@ class MessageController extends Controller
         $msg->id_event = $request->get('id');
         $msg->save();
         
-        $user=Auth::user();
-        $setMessage[$msg->id]=$user;
 
-        return json_encode(view('partials.message', ['message' => $msg, 'setMessage' => $setMessage])->render());
+        return json_encode(view('partials.message', ['message' => $msg])->render());
     }
     public function createReply(Request $request){
         $msg = new Message();
@@ -35,11 +33,9 @@ class MessageController extends Controller
         $msg->id_event =  $request->get('id');
         $msg->parent =  $request->get('id_parent');
         $msg->save();
-        
-        $user=Auth::user();
-        $setMessage[$msg->id]=$user;
+    
 
-        return json_encode(view('partials.message', ['message' => $msg, 'setMessage' => $setMessage])->render());
+        return json_encode(view('partials.message', ['message' => $msg])->render());
     }
 
 
