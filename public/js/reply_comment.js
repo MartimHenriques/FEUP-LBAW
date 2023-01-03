@@ -4,7 +4,7 @@ document.querySelectorAll("#submitReply").forEach((e) => {
       currentBtn = e
         let id = parseInt(window.location.pathname.split('/')[2]);
 
-        let id_parent = e.parentElement.parentElement.getAttribute('msg-id');
+        let id_parent = e.parentElement.previousElementSibling.getAttribute('msg-id');
         let content = e.previousElementSibling.value;
         sendAjaxRequest('post', '/api/event/reply/create', {id:id, id_parent:id_parent, content:content} ,replyMessageHandler);
     }

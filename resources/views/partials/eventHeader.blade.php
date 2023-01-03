@@ -22,6 +22,31 @@
     <a id="info" href="/events/{{$event->id}}/info" style="">Info</a>
     <a id="forum" href="/events/{{$event->id}}/forum" style="">Forum</a>
     @if(!$event->is_canceled)
+         <!-- Button trigger modal -->
+        <button style="float:right;" type="button" data-toggle="modal" data-target="#exampleModalCenter">
+            Report
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-body">
+                            <p style="color: red">Report event</p>
+                            <form action="/create/report/{{$event->id}}" method="POST" style="margin-bottom: 0">
+                                @csrf
+                                <input type="text" name="motive" placeholder="Motive" required>
+                                <button type="submit">
+                                    Send
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
     <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
         @if($attendee)
             Attending

@@ -4,15 +4,7 @@
 
 @section('content')
 
-<div class="input-group rounded w-50">
-    <form action="api/eventsSearch" method="POST">
-        @csrf
-        <input type="search" name="search" id="eventSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="searcon" style="font-size:17px;" />
-        <button type='submit' name="button" value="searchEvent" style="display:none;" disabled>
-            <i class="bi bi-search"></i>
-    </button>
-    </form>
-</div>
+
 <div class="event-feed" id="eventFeed">
     @foreach($events as $event)
         @if ( ($event->visibility || $attendee[$event->id]) && !$event->is_canceled)
@@ -56,21 +48,6 @@
 
 @section('script')
 <script>
-function copyLinkFeed(id){
-    var btn = document.getElementById(id);
-    console.log("btn: ", btn);
-    btn.innerHTML = 'link copied';
-    btn.style.backgroundColor = "green"
-    
-    navigator.clipboard.writeText(window.location.href + "/" + id + "/info");
-
-    setTimeout(function(){
-        btn = document.getElementById(id);
-        btn.innerHTML = 'Share';
-        btn.style.backgroundColor = "#9bb6fcf6";
-    }, 1000);
-}
-
     const eventsearch = document.getElementById("eventSearch");
     eventsearch.addEventListener("keyup", searchEvent);
     function searchEvent() {
@@ -147,7 +124,6 @@ function copyLinkFeed(id){
             body.appendChild(div_eventCard);
         }
     }
-
 </script>
 @endsection
 

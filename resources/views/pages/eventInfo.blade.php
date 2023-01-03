@@ -19,10 +19,10 @@
         @endif
         <span style="display:block;"><i class="bi bi-geo-alt-fill"></i><p style="display:inline;">  {{ $event->local }}</p></span>
         @if($event->start_date != $event->final_date )
-            <p>Data de início: {{ $event->start_date }}</p>
-            <p>Data de fim: {{ $event->final_date }}</p>
+            <p>Data de início: {{ $event->start_date->format('d/m/Y - H:i') }}</p>
+            <p>Data de fim: {{ $event->final_date->format('d/m/Y - H:i') }}</p>
         @else
-            <p>Data: {{ $event->start_date }}</p>
+            <p>Data: {{ $event->start_date->format('d/m/y - H:m') }}</p>
         @endif
             
     </div>
@@ -54,7 +54,7 @@
                         </div>
                         @if($event->event_organizers()->get()->contains(Auth::user()))
                             <div>
-                                <a href="{{route('makeAnOrganizer',['id_user'=>$attendee->id,'id_event'=>$event->id])}}" style="margin-right: 1em">Turn in an organizer</a>
+                                <a href="{{route('makeAnOrganizer',['id_user'=>$attendee->id,'id_event'=>$event->id])}}" style="margin-right: 1em">Turn into an organizer</a>
                                 <a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a>
                             </div>
                             

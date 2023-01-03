@@ -25,6 +25,7 @@
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/show_sidebar.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/add_comment.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/reply_comment.js') }}" defer></script>
@@ -71,7 +72,7 @@
         @yield('content2')
       </section>
       @endif
-      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top" @if (!Request::is('login', 'register', '/')) style="padding-left: 14em;" @endif>
+      <footer  @if (!Request::is('login', 'register', '/')) id="footer" @else id="footer2" @endif class="d-flex flex-wrap justify-content-between align-items-center border-top">
           <p class="col-md-4 mb-0">© 2022 WeMeet, Inc</p>
       
           <ul class="nav col-md-4 justify-content-end">
@@ -83,15 +84,5 @@
 
     </main>
     @yield('script')
-    <script>
-      const menu_toggle = document.querySelector('.menu-toggle');
-      const sidebar = document.querySelector('.sidebar');
-
-      menu_toggle.addEventListener('click', () => {
-        menu_toggle.classList.toggle('is-active');
-        sidebar.classList.toggle('is-active');
-
-      });
-    </script>
   </body>
 </html>

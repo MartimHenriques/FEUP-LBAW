@@ -70,7 +70,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="start_date">Start date</label>
-          <input id="start_date" type="date" name="start_date" value="{{ date('Y-m-d',strtotime($event->start_date)) }}" required autofocus>
+          <input id="start_date" type="datetime-local" name="start_date" value="{{ date('Y-m-d',strtotime($event->start_date)) }}" required autofocus>
         </div>
         @if ($errors->has('start_date'))
         <span class="error">
@@ -80,7 +80,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="final_date">Final date</label>
-          <input id="final_date" type="date" name="final_date" value="{{ date('Y-m-d',strtotime($event->final_date)) }}" required autofocus>
+          <input id="final_date" type="datetime-local" name="final_date" value="{{ date('Y-m-d',strtotime($event->final_date)) }}" required autofocus>
         </div>
         @if ($errors->has('final_date'))
         <span class="error">
