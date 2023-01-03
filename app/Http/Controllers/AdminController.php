@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\NottificationsController;
+
 use Illuminate\Support\Facades\Gate;
 use App\Models\Poll;
 use App\Models\Attendee;
@@ -49,7 +52,8 @@ class AdminController extends Controller
     {
       Gate::authorize('admin', Auth::user());
       $reports = Report::paginate(5);
-      return view('pages.adminReports',['reports'=>$reports]);
+      $admin_notifications = NotificationsController::getNotifications(Auth::id());
+      return view('pages.adminReports',['reports'=>$reports, 'notifications'=>$admin_notifications]);
     }
 
     /**
