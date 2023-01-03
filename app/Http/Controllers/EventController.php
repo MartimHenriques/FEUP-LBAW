@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
-
+use Illuminate\Support\Str;
 use App\Models\Event;
 use App\Models\Message;
 use App\Models\Event_Organizer;
 use App\Models\User;
 use App\Models\Attendee;
 use App\Models\Tag;
+
+
 class EventController extends Controller
 {
 
@@ -169,7 +171,28 @@ class EventController extends Controller
       $event->title = $request->input('title');
       $event->description = $request->input('description');
       $event->visibility = $request->input('visibility');
-      $event->picture = $request->input('picture');
+      $request->validate([
+        'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
+
+      if($request->picture != null){
+        $img = $request->picture; 
+
+        $uuid = Str::uuid()->toString();
+        $mytime = now()->toDateTimeString();
+
+        $file = public_path('img_events/').$event->picture;
+
+        if($img != null){
+          if(file_exists($file) && $event->picture != null) {
+            unlink($file);
+          }
+          $imageName =  $mytime. $uuid . '.' . $img->extension();
+          $img -> move(public_path('img_events/'), $imageName);
+          $event->picture = $imageName;
+        }   
+    } 
+
       $event->local = $request->input('local');
       $event->publish_date = $current_date;
       $event->start_date = $start_date;
@@ -217,7 +240,28 @@ class EventController extends Controller
       $event->title = $request->input('title');
       $event->description = $request->input('description');
       $event->visibility = $request->input('visibility');
-      $event->picture = $request->input('picture');
+      $request->validate([
+        'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
+
+      if($request->picture != null){
+          $img = $request->picture; 
+
+          $uuid = Str::uuid()->toString();
+          $mytime = now()->toDateTimeString();
+
+          $file = public_path('img_events/').$event->picture;
+
+          if($img != null){
+            if(file_exists($file) && $event->picture != null) {
+              unlink($file);
+            }
+            $imageName =  $mytime. $uuid . '.' . $img->extension();
+            $img -> move(public_path('img_events/'), $imageName);
+            $event->picture = $imageName;
+          }   
+      }
+
       $event->local = $request->input('local');
       $event->start_date = $start_date;
       $event->final_date = $final_date;
@@ -268,8 +312,18 @@ class EventController extends Controller
     public function abstainEvent($id) {
       //SEE LATER > dont delete everything related to this -> keep info
 
+      
+      $event_organizer = Event_Organizer::where(['id_event' => $id]) -> count();
+
+      if($event_organizer == 1){
+        Event::where('id', $id)->update(['is_canceled' => 1]);
+      }
+
+
       $attendee = Attendee::where(['id_user' => Auth::id(),'id_event' => $id]);
       $attendee->delete();
+
+
       return redirect()->back();
     }
          /**
@@ -284,4 +338,15 @@ class EventController extends Controller
       return redirect()->back();
     }
 
+    public function cancelEvent($id){
+      $event = Event::find($id);
+      $user = Auth::user();
+
+      $this->authorize('cancelEvent', [$user, $event]);
+      $event->is_canceled = 1;
+
+      $event->save();
+
+      return redirect()->back();
+    }
 }

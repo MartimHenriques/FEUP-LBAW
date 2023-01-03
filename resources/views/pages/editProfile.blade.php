@@ -17,7 +17,7 @@
                 <h4><b>{{$users->username}}</b></h4>
                 <div class ="change_picture">
                     <div class="card-header"><h4><b>{{ __('Change Picture') }}</b></h4></div>
-                    <input id="picture" type="file" name="picture" accept="image/png, image/gif, image/jpeg" >
+                    <input id="picture" type="file" name="picture" accept="image/png, image/gif, image/jpeg ,image/jpg,gif" >
                 </div>
             </div>
     </div>

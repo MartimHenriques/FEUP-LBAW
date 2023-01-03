@@ -34,7 +34,7 @@
     @foreach ($message->messages as $son)
         @include('partials.message', ['message' => $son])
     @endforeach
-    @if($message->parent == NULL)
+    @if($message->parent == NULL && !$event->is_canceled)
     <div id="reply">
         <input id="replyInput" type="text" name="reply" placeholder="Write reply">
         <button id="submitReply" type="submit">

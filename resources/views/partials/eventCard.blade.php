@@ -6,22 +6,31 @@
     <p id="title">{{ $event->title }}</p>
     <p id="local">{{$event->local}}</p>
     <p>{{$event->start_date}}</p>
+    @if($event->is_canceled)
+    <h3>Event canceled</h3>
+    @endif
     </div>
   </a>
 
 
-@if ($event->visibility)
+@if ($event->visibility && !$event->is_canceled)
   <!-- Button trigger modal -->
-    <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
+    <button id="{{$event->id}}" onclick="copyLinkFeed({{$event->id}});">Share</button>
 @endif
-
 
 </div>
 <script>
   function copyLinkFeed(id){
-    var dummy = document.getElementById("input");
-    navigator.clipboard.writeText(window.location.href + "/" + id);
+    var btn = document.getElementById(id);
+    btn.innerHTML = 'link copied';
+    btn.style.backgroundColor = "green";
 
-    alert("Link Copied ✔️");
+    navigator.clipboard.writeText(window.location.href + "/" + id + "/info");
+
+    setTimeout(function(){
+        btn = document.getElementById(id);
+        btn.innerHTML = 'Share';
+        btn.style.backgroundColor = "#9bb6fcf6";
+    }, 1000);
   }
 </script>

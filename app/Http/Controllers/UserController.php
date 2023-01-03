@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Models\Event_Organizer;
+use App\Models\Event;
 use App\Models\Attendee;
 use App\Models\User;
 
@@ -37,7 +38,7 @@ class UserController extends Controller
     }
 
   public function deleteProfile(){
-    $user= Auth::user();
+    $user = Auth::user();
     $this->authorize('delete', $user);
 
     $count = User::where('username','like','Anonymous_%')->count();
@@ -56,7 +57,7 @@ class UserController extends Controller
       foreach ($events as $event){
         $count = Event_Organizer::where(['id_event'=>$event])->count();
         if ($count == 1) {
-          Event_Organizer::insert(['id_user' => 1, 'id_event' => $event]);
+          Event::where(['id' => $event])->update(['is_canceled' => 1]);
         }
       }
 

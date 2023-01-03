@@ -19,6 +19,9 @@ function editComment() {
     let newContent = div.children[0].value
     sendAjaxRequest('post', '/editComment', {id:id, newContent:newContent} , editCommentHandler);
 }
+function cancelEditComment() {
+
+}
 
 
 function editCommentHandler() {

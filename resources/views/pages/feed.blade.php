@@ -15,7 +15,8 @@
 </div>
 <div class="event-feed" id="eventFeed">
     @foreach($events as $event)
-        @if ($event->visibility || $attendee[$event->id])
+        @if ( ($event->visibility || $attendee[$event->id]) && !$event->is_canceled)
+
         <div class="eventCard" data-id="{{ $event->id }}">
 
             <a href="/events/{{ $event->id}}/info">
@@ -38,7 +39,11 @@
                     </a>
                 @endif
             </div>
+
+            <p>{{$event->is_canceled}}</p>
         </div>
+
+
         @endif
     @endforeach 
 </div>
@@ -63,7 +68,7 @@ function copyLinkFeed(id){
         btn = document.getElementById(id);
         btn.innerHTML = 'Share';
         btn.style.backgroundColor = "#9bb6fcf6";
-    }, 2000);
+    }, 1000);
 }
 
     const eventsearch = document.getElementById("eventSearch");
