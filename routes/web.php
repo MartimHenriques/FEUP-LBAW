@@ -85,6 +85,7 @@ Route::get('/report/{id}', [ReportsController::class,'showReportForm']);
 
 //notifications
 Route::get('/notifications', [NotificationsController::class, 'showNotifications']);
+Route::post('/notifications/{id}/clear', [NotificationsController::class, 'clearAll']);
 
 //my events
 Route::get('my_events', 'EventController@showMyEvents');

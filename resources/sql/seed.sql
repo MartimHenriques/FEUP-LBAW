@@ -429,7 +429,10 @@ INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VAL
 INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VALUES ('manel142', '$2a$06$ARWKUty/arov5m7rDSnonOQHwu.cXcZg5TvtJhefx2A7kk3hwzGLq', 'manel142@gmail.com', 'manel142.jpg', NULL, FALSE);
 
 
-
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('David Bowie Tributo', 'É do conhecimento de todos os clientes que frequentam o Griffons, que não há uma noite em que as musicas do Bowie fiquem esquecidas e por isso todos os anos realizamos esta festa em memória de david Bowie. Em janeiro de 2023, faz 7 anos que o nosso ídolo musical nos deixou. A saudade ficou e as suas obras infinitas também. Por esta razão, no próximo Sábado, dia 14 de Janeiro de 2023 a noite será dedicada a David Bowie.
+Neste tributo ao Bowie pretende-se passar grande parte dos temas realizados entre 1966 a 2016 num ambiente repleto de Fãs Bowie.
+Nota: entrando no evento e clicando no botão discussão, partilhem as vossas músicas favoritas do Bowie para que no evento sejam ouvidas.', TRUE, 'bowie.jpg', '
+Rua Conde de Vizela 95, 4050-640 Porto, Portugal' , '2022-10-01 10:00:00', '2022-10-05 10:00:00', '2022-10-05 16:00:00');
 INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Festas de São Gonçalinho - Aveiro', 'Neste dia, visitaremos Aveiro, terra dos Moliceiros, das salinas e Ovos moles, para assistirmos a uma das mais remotas festividades portuguesas, as festas de São Gonçalinho..
 Todos os anos, no fim de semana mais próximo de 10 de Janeiro, dia dedicado a São Gonçalinho, o mais típico bairro aveirense, o belo bairro da Beira-Mar, acolhe as tradicionais estas em honra ao Santo, promovidas pela Mordomia de São Gonçalinho..
 Celebração muito peculiar, que desde há séculos diverte novos e menos novos, a festividade é marcada pelo pagamento de promessas ao Santo, agradecendo o seu poder de cura para as doenças, particularmente as ósseas, bem como a sua imensa capacidade de resolver problemas conjugais e amorosos, e de arranjar namoro para os encalhados..
@@ -469,11 +472,8 @@ A Psicogenealogia baseia-se no estudo do inconsciente colectivo familiar, percep
 Vem descobrir mais...', TRUE, 'filosofia.jpg', 'Lisboa - Clínica Essência da Alma Terapias' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('DEVIR no Iberanime Porto 2022', 'O Iberanime está de regresso à Exponor, em Matosinhos, e a DEVIR vai lá estar, com muitos jogos de tabuleiro e trading card games para experimentares, como não podia deixar de ser...
 Além das mais recentes novidades do nosso catálogo, como The Red Cathedral Contractors e Get on Board, poderás jogar também Magic The Gathering e Yu-Gi-Oh!, tanto no formato tradicional, como Speed Duel, mais simples e mais rápido, para começares a jogar em instantes. Visita-nos! ', TRUE,'iberanime.jpg',  'Porto' , '2021-10-05 01:00:00', '2022-10-22 15:00:00', '2022-10-23 22:00:00');
-INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('David Bowie Tributo', 'É do conhecimento de todos os clientes que frequentam o Griffons, que não há uma noite em que as musicas do Bowie fiquem esquecidas e por isso todos os anos realizamos esta festa em memória de david Bowie. Em janeiro de 2023, faz 7 anos que o nosso ídolo musical nos deixou. A saudade ficou e as suas obras infinitas também. Por esta razão, no próximo Sábado, dia 14 de Janeiro de 2023 a noite será dedicada a David Bowie.
-Neste tributo ao Bowie pretende-se passar grande parte dos temas realizados entre 1966 a 2016 num ambiente repleto de Fãs Bowie.
-Nota: entrando no evento e clicando no botão discussão, partilhem as vossas músicas favoritas do Bowie para que no evento sejam ouvidas.', TRUE, 'bowie.jpg', '
-Rua Conde de Vizela 95, 4050-640 Porto, Portugal' , '2022-10-01 10:00:00', '2022-10-05 10:00:00', '2022-10-05 16:00:00');
 INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Pedro Abrunhosa - Porto', 'Pedro Abrunhosa ao vivo na Casa da Música no Porto pela celebração dos 125 Anos da Delegação do Porto da Cruz Vermelha Portuguesa.', TRUE, 'pedro.jpg', 'Casa da Música' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+
 
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Piruka?', 'Querem o Piruka a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Rui Veloso?', 'Querem o Rui Veloso a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);

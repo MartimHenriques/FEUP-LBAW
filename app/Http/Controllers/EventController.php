@@ -312,12 +312,13 @@ class EventController extends Controller
      * @return Redirect back to the page
      */
     public function abstainEvent($id) {
-      //SEE LATER > dont delete everything related to this -> keep info
-      $event_organizer = Event_Organizer::where(['id_event' => $id, 'id_user' => Auth::id()]);
+
+      $event_organizer_count = Event_Organizer::where(['id_event' => $id, 'id_user' => Auth::id()])->count();
       $attendee = Attendee::where(['id_user' => Auth::id(),'id_event' => $id]);
 
-      if($event_organizer){
+      if($event_organizer_count > 0){
         $count = Event_Organizer::where(['id_event' => $id])->count();
+        $event_organizer = Event_Organizer::where(['id_event' => $id, 'id_user' => Auth::id()]);
         $event_organizer->delete();
         if($count == 1){
           Event::where('id', $id)->update(['is_canceled' => 1]);

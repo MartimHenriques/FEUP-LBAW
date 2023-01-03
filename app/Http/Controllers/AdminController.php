@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\NottificationsController;
-
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Poll;
 use App\Models\Attendee;
@@ -64,6 +64,8 @@ class AdminController extends Controller
      */
     public function deleteUser($id){ 
 
+      $user = User::find($id);
+
       $count = User::where('username','like','Anonymous_%')->count();
       $username = "Anonymous_" . strval($count);
 
@@ -73,7 +75,7 @@ class AdminController extends Controller
       $user->password = Hash::make(Str::random(10));
       $user->save();
       
-      DB::table('users')->where(['id'=>$id])->update(['picture'=>'', 'username'=>$username]);
+      DB::table('users')->where(['id'=>$id])->update(['picture'=>'', 'username'=>$username], );
 
       $events = Event_Organizer::where(['id_user'=>$id])->pluck('id_event');
 
