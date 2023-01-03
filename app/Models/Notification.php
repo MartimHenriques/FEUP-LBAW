@@ -38,7 +38,6 @@ class Notification extends Model
 	protected $casts = [
 		'read' => 'bool',
 		'id_user' => 'int',
-		'type' => 'USER-DEFINED',
 		'id_report' => 'int',
 		'id_event' => 'int',
 		'id_invitee' => 'int',
