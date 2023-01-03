@@ -28,17 +28,21 @@ class Invite extends Model
 	protected $table = 'invite';
 	public $incrementing = false;
 	public $timestamps = false;
+	use HasCompositePrimaryKey;
+	protected $primaryKey = ['id_invitee', 'id_event'];
 
 	protected $casts = [
 		'id_event' => 'int',
 		'id_invitee' => 'int',
 		'id_organizer' => 'int',
-		'accepted' => 'bool'
+		'accepted' => 'bool',
+		'to_attend' => 'bool'
 	];
 
 	protected $fillable = [
 		'id_organizer',
-		'accepted'
+		'accepted',
+		'to_attend'
 	];
 
 	public function event()

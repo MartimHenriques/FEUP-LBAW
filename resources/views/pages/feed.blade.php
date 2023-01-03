@@ -28,8 +28,7 @@
             </a>
             <div>
                 @if ($event->visibility)
-                <!-- Button trigger modal -->
-                    <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
+                    <button id="{{$event->id}}" onclick="copyLinkFeed({{$event->id}});">Share</button>
                     <a id="join" type='button' class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
                     @if($attendee[$event->id])
                         Attending
@@ -39,8 +38,6 @@
                     </a>
                 @endif
             </div>
-            
-        
         </div>
         @endif
     @endforeach 
@@ -54,18 +51,20 @@
 
 @section('script')
 <script>
-  function copyLinkFeed(id){
-    var dummy = document.createElement('input'),
-    text = window.location.href + "/" + id;
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.execCommand('copy');
-    document.body.removeChild(dummy);
+function copyLinkFeed(id){
+    var btn = document.getElementById(id);
+    console.log("btn: ", btn);
+    btn.innerHTML = 'link copied';
+    btn.style.backgroundColor = "green"
+    
+    navigator.clipboard.writeText(window.location.href + "/" + id + "/info");
 
-    // Alert the copied text
-    alert("Copied the text: " + dummy.value); 
-  }
+    setTimeout(function(){
+        btn = document.getElementById(id);
+        btn.innerHTML = 'Share';
+        btn.style.backgroundColor = "#9bb6fcf6";
+    }, 2000);
+}
 
     const eventsearch = document.getElementById("eventSearch");
     eventsearch.addEventListener("keyup", searchEvent);

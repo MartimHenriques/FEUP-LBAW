@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
+use App\Models\Event_Organizer;
+use App\Models\Attendee;
 use App\Models\User;
 
 
@@ -34,6 +35,42 @@ class UserController extends Controller
       $users= User::find(Auth::user()->id);
       return view('pages.editProfile', ['users' => $users]);
     }
+
+  public function deleteProfile(){
+    $user= Auth::user();
+    $this->authorize('delete', $user);
+
+    $count = User::where('username','like','Anonymous_%')->count();
+    $username = "Anonymous_" . strval($count);
+      
+    $user->username = $username;
+    $user->picture = "default.png";
+    $user->email = $username . "@anonymous.com";
+    $user->password = Hash::make(Str::random(10));
+    $user->save();
+
+    $id = $user->id;
+    $events = Event_Organizer::where(['id_user' => $id])->pluck('id_event');
+
+    if (!empty($events)) {
+      foreach ($events as $event){
+        $count = Event_Organizer::where(['id_event'=>$event])->count();
+        if ($count == 1) {
+          Event_Organizer::insert(['id_user' => 1, 'id_event' => $event]);
+        }
+      }
+
+      Event_Organizer::where(['id_user' => $id])->delete();
+      Attendee::where(['id_user' => $id])->delete();
+    }
+
+    Auth::logout();
+
+    return redirect("/")->with([
+      'message' => 'Deleted Account',
+      'message-type' => 'Success'
+    ]);
+  }
 
     public function savePicture(Request $request, User $users){
       $request->validate([

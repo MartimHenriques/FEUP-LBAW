@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content2')
   <div class="container d-flex flex-column justify-content-center my-5">
     <div class="row justify-content-center">
       <a href="/" style="width: auto;">

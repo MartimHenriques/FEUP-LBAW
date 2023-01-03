@@ -208,7 +208,7 @@ paths:
             '400':
               description: Bad Request
 
- /events/{id}:
+ /events/{id}/info:
   get:
       operationId: R202
       summary: "R202: Show Event Card"
