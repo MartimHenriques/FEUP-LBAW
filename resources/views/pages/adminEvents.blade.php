@@ -11,12 +11,12 @@
             <tr>
                 <td><a href="/events/{{ $event->id}}">{{$event->title}}</a></td> 
                 <td>
-                    <button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Delete Event" style="float:middle;">
+                    <button data-bs-toggle="modal" data-bs-target="#myModel_<?php echo $event['id']; ?>" id="shareBtn" data-bs-placement="top" title="Delete Event" style="float:middle;">
                         Delete
                     </button>
                             
                     <!-- Modal -->
-                    <div class="modal fade" id="myModel" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
+                    <div class="modal fade" id="myModel_<?php echo $event['id']; ?>" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
