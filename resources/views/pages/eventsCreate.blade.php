@@ -54,7 +54,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="local">Local *</label>
+          <label for="local">Location *</label>
           <input id="local" type="text" name="local" value="{{ old('local') }}" required autofocus>
         </div>
         @if ($errors->has('local'))
