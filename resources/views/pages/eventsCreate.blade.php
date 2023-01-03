@@ -11,7 +11,7 @@
         @csrf
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="title">Title</label>
+          <label for="title">Title *</label>
           <input id="title" type="text" name="title" value="{{ old('title') }}" required autofocus>
         </div>
         @if ($errors->has('title'))
@@ -31,7 +31,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px;">
-          <label for="visibility">Visibility</label>
+          <label for="visibility">Visibility *</label>
           <select name="visibility" required>
               <option value="1">Public</option>
               <option value="0">Private</option>
@@ -54,7 +54,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="local">Local</label>
+          <label for="local">Local *</label>
           <input id="local" type="text" name="local" value="{{ old('local') }}" required autofocus>
         </div>
         @if ($errors->has('local'))
@@ -64,7 +64,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="start_date">Start date</label>
+          <label for="start_date">Start date *</label>
           <input id="start_date" type="datetime-local" name="start_date" value="{{ old('start_date') }}" required autofocus>
         </div>
         @if ($errors->has('start_date'))
@@ -74,7 +74,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="final_date">Final date</label>
+          <label for="final_date">Final date *</label>
           <input id="final_date" type="datetime-local" name="final_date" value="{{ old('final_date') }}" required autofocus>
         </div>
         @if ($errors->has('final_date'))
