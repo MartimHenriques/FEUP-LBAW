@@ -6,9 +6,7 @@ document.querySelectorAll("#like").forEach((e) => {
     }else if(e.classList == 'bi bi-hand-thumbs-up-fill'){
       sendAjaxRequest('post', '/api/comment/vote/delete', {id:id} , removeLikeMessageHandler(e));
     }
-    
   }
-  
   )});
 
 function encodeForAjax(data) {

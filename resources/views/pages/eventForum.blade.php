@@ -22,8 +22,9 @@
                         </div>
                         @foreach($messages as $message)
                         @if($message->parent == NULL)
+                            <div class="message" msg-id="{{ $message->id }}">
                             @include('partials.message', ['message' => $message])
-                        
+                            </div>
                         @endif
                         
                         @endforeach

@@ -348,21 +348,6 @@ AFTER INSERT ON report
 FOR EACH ROW
 EXECUTE PROCEDURE add_report_admin_notification();
 
---- TRIGGER05 
-CREATE OR REPLACE FUNCTION edit_message() RETURNS trigger AS
-$BODY$
-    BEGIN
-    UPDATE message SET text = NEW.text WHERE id = OLD.id;
-RETURN NEW;
-END;
-$BODY$
-    LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS edit_message on message CASCADE;
-CREATE TRIGGER edit_message
-    AFTER UPDATE ON message
-    FOR EACH ROW
-EXECUTE PROCEDURE edit_message();
 
 --- TRIGGER06 
 CREATE OR REPLACE FUNCTION create_event_organizer() RETURNS TRIGGER AS

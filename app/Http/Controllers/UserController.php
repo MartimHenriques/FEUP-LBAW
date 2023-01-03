@@ -115,7 +115,7 @@ class UserController extends Controller
 
     public function saveChanges(Request $request){
 
-      $users = User::find(Auth::user()->id);
+      $users = Auth::user();
 
       if($request->has('picture') && is_null($request->input('new_password'))){
         $this->savePicture($request, $users);
