@@ -31,14 +31,13 @@ class NotificationsController extends Controller
         return view('pages.notifications', ['notifications' => $my_notifications]);
     }
 
-    /*
-    public function clearNotifications($id) {
-        $notifications = Notification::where('user_id','=',$id)->get();
+    
+    public function clearAll($id) {
+        $notifications = Notification::where('id_user','=',$id)->get();
         foreach ($notifications as $notification) {
-            $notification->seen = true;
-            $notification->save();
+            $notification->delete();
         }
         return redirect()->back();
     }
-    */
+    
 }
