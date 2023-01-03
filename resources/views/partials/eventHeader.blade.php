@@ -47,14 +47,31 @@
                 </div>
             </div>
         </div>
-    <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        @if (Auth::check())
+        <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        @else 
+        <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#myModalLog" id="attend1" data-bs-placement="top" title="Log In Needed"  class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        @endif
         @if($attendee)
             Attending
         @else
             Attend
         @endif
-    </a>
+        </a>
     
+        <div class="modal fade" id="myModalLog" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body">
+                You need to login first.
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>        </div>
+            </div>
+    </div>
+
         @if ($event->visibility)
         
         <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
