@@ -28,27 +28,8 @@
     
     @if ($event->visibility)
     
-    <!-- Button trigger modal -->
-    <button data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn" data-bs-placement="top" title="Share event!" style="float:right;">
-            Share
-        </button>
-      
-      <!-- Modal -->
-        <div class="modal fade" id="myModel" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="myModelLabel">Share Event</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>  
-                        <div class="field d-flex align-items-center justify-content-between">
-                            <button onclick="copyLink()" id="copyButton">Copy Link</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
+    <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
+
     @endif
     @if (Auth::check())
         @if ($event_organizer)
@@ -69,11 +50,16 @@
 
     function copyLink(){
         var btn = document.getElementById("copyButton");
-        btn.innerHTML = 'copied';
+        btn.innerHTML = 'link copied';
         btn.style.backgroundColor = "green"
     
         var copyText = document.getElementById("copyText");
         navigator.clipboard.writeText(window.location.href); 
+
+        setTimeout(function(){
+            btn.innerHTML = 'share';
+            btn.style.backgroundColor = "CornflowerBlue"
+        }, 2000);
     }
     
     const queryString = window.location.search;

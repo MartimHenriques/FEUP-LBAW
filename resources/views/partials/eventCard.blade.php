@@ -19,15 +19,9 @@
 </div>
 <script>
   function copyLinkFeed(id){
-    var dummy = document.createElement('input'),
-    text = window.location.href + "/" + id;
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.execCommand('copy');
-    document.body.removeChild(dummy);
+    var dummy = document.getElementById("input");
+    navigator.clipboard.writeText(window.location.href + "/" + id);
 
-    // Alert the copied text
-    alert("Copied the text: " + dummy.value); 
+    alert("Link Copied ✔️");
   }
 </script>

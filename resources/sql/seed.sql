@@ -54,7 +54,8 @@ CREATE TABLE event (
     local       TEXT NOT NULL,
   	publish_date DATE NOT NULL,
     start_date DATE NOT NULL,
-    final_date DATE NOT NULL
+    final_date DATE NOT NULL,
+    is_canceled BOOLEAN NOT NULL DEFAULT (False)
 );
 
 
@@ -440,7 +441,7 @@ INSERT INTO users (username, password, email, picture, is_blocked, is_admin) VAL
 
 
 
-INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Pedro Abrunhosa - Porto', 'Pedro Abrunhosa ao vivo na Casa da Música no Porto pela celebração dos 125 Anos da Delegação do Porto da Cruz Vermelha Portuguesa.', TRUE, 'pedro.jpg', 'Casa da Música' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date, is_canceled) VALUES ('Pedro Abrunhosa - Porto', 'Pedro Abrunhosa ao vivo na Casa da Música no Porto pela celebração dos 125 Anos da Delegação do Porto da Cruz Vermelha Portuguesa.', TRUE, 'pedro.jpg', 'Casa da Música' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
 INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Festas de São Gonçalinho - Aveiro', 'Neste dia, visitaremos Aveiro, terra dos Moliceiros, das salinas e Ovos moles, para assistirmos a uma das mais remotas festividades portuguesas, as festas de São Gonçalinho..
 Todos os anos, no fim de semana mais próximo de 10 de Janeiro, dia dedicado a São Gonçalinho, o mais típico bairro aveirense, o belo bairro da Beira-Mar, acolhe as tradicionais estas em honra ao Santo, promovidas pela Mordomia de São Gonçalinho..
 Celebração muito peculiar, que desde há séculos diverte novos e menos novos, a festividade é marcada pelo pagamento de promessas ao Santo, agradecendo o seu poder de cura para as doenças, particularmente as ósseas, bem como a sua imensa capacidade de resolver problemas conjugais e amorosos, e de arranjar namoro para os encalhados..
@@ -457,8 +458,8 @@ Alma At Porto Marca Nacional Registada*
 ** A actividade poderá ser adiada no caso de condições meteorológicas adversas.
 Empresa Licenciada pelo Turismo de Portugal
 Rnaat 428/2016
-Rnavt 7882', TRUE, 'aveiro.jpg' , 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
-INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Carnaval 23 - Orquestra Bamba Social - Festa de lançamento do álbum "Mundo Novo"', 'Na comemoração da celebração de 10 anos da Orquestra Bamba Social, nada melhor que uma festa de Carnaval, lançamento do novo álbum "Mundo Novo" e uma atuação dupla da Orquestra Bamba Social no Super Bock Arena.
+Rnavt 7882', TRUE, 'aveiro.jpg' , 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00', FALSE);
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date, is_canceled) VALUES ('Carnaval 23 - Orquestra Bamba Social - Festa de lançamento do álbum "Mundo Novo"', 'Na comemoração da celebração de 10 anos da Orquestra Bamba Social, nada melhor que uma festa de Carnaval, lançamento do novo álbum "Mundo Novo" e uma atuação dupla da Orquestra Bamba Social no Super Bock Arena.
 Será uma atuação no formato orquestra no palco e depois roda de samba no meio da plateia e com o público em redor da banda.
 Para continuar a celebração carnavalesca Farofa (Dj set)
 Bilhetes já à venda com o 1° lote a um preço promocional de 10€
@@ -466,13 +467,13 @@ Pontos de venda:
 - Ticketline.pt
 - FNAC
 - Worten', TRUE, 'orquestra.jpg', 'Super Bock Arena' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Chikipark', 'Festa de piscina de bolas e trampolins', TRUE, 'Coimbra' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Abertura do AquaSlide', 'Parque aquático para familias', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Comicon', 'Festival de Cultura japonesa', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Iberanime', 'Festival de Animes', TRUE, 'Porto' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Maratona a favor da luta contra o cancro da mama', 'Maratona a favor da luta contra o cancro da mama', TRUE, 'Aveiro' , '2021-10-05 11:00:00', '2022-10-30 11:00:00', '2022-10-31 14:00:00');
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date, is_canceled) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00', FALSE);
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date, is_canceled) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00', FALSE);
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date, is_canceled) VALUES ('Chikipark', 'Festa de piscina de bolas e trampolins', TRUE, 'Coimbra' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00', FALSE);
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date, is_canceled) VALUES ('Abertura do AquaSlide', 'Parque aquático para familias', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00', FALSE);
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date, is_canceled) VALUES ('Comicon', 'Festival de Cultura japonesa', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00', FALSE);
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date, is_canceled) VALUES ('Iberanime', 'Festival de Animes', TRUE, 'Porto' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00', FALSE);
+INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date, is_canceled) VALUES ('Maratona a favor da luta contra o cancro da mama', 'Maratona a favor da luta contra o cancro da mama', TRUE, 'Aveiro' , '2021-10-05 11:00:00', '2022-10-30 11:00:00', '2022-10-31 14:00:00', FALSE);
 
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Piruka?', 'Querem o Piruka a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Rui Veloso?', 'Querem o Rui Veloso a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);

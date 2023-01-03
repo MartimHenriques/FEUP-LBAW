@@ -30,6 +30,7 @@ Route::post('profile/editProfile', 'UserController@saveChanges') -> name('saveCh
 
 // Profile
 Route::get('profile', 'UserController@showProfile');
+Route::get('profile/delete', [UserController::class, 'deleteProfile']) -> name('deleteProfile');
 
 //home
 Route::get('/', 'HomeController@show');
@@ -55,7 +56,6 @@ Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCr
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
 Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
-
 
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
