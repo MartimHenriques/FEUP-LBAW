@@ -52,9 +52,9 @@ CREATE TABLE event (
     visibility  BOOLEAN NOT NULL,
     picture     TEXT,
     local       TEXT NOT NULL,
-  	publish_date DATE NOT NULL,
-    start_date DATE NOT NULL,
-    final_date DATE NOT NULL,
+  	publish_date TIMESTAMP NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    final_date TIMESTAMP NOT NULL,
     is_canceled BOOLEAN
 );
 
