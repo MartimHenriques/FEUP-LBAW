@@ -161,8 +161,8 @@ class EventController extends Controller
       $start_date = $request->input('start_date');
       $final_date = $request->input('final_date');
 
-      if (($start_date > $final_date)) {
-        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      if (($start_date >= $final_date) || ($start_date < $current_date) || ($final_date < $current_date)) {
+        return redirect()->back(); 
       }
 
       $event = new Event();
@@ -232,8 +232,8 @@ class EventController extends Controller
       $start_date = $request->input('start_date');
       $final_date = $request->input('final_date');
 
-      if (($start_date > $final_date)) {
-        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      if (($start_date >= $final_date) || ($start_date < $current_date) || ($final_date < $current_date)) {
+        return redirect()->back(); 
       }
 
       //$this->authorize('createEvent', $event);
