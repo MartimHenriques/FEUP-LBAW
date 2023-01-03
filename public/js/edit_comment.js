@@ -4,6 +4,7 @@ let div
 
 document.querySelectorAll("#editBtn").forEach((e) => {
     e.addEventListener("click", () => {
+        
         msg = e.parentElement.parentElement.parentElement.parentElement
         div = e.parentElement.parentElement.parentElement.previousElementSibling.getElementsByTagName('div')[2]
         content = div.textContent
@@ -15,9 +16,10 @@ document.querySelectorAll("#editBtn").forEach((e) => {
     )});
 
 function editComment() {
+    let id_event = parseInt(window.location.pathname.split('/')[2]);
     let id = msg.getAttribute('msg-id')
     let newContent = div.children[0].value
-    sendAjaxRequest('post', '/editComment', {id:id, newContent:newContent} , editCommentHandler);
+    sendAjaxRequest('post', '/editComment', {id:id, newContent:newContent, id_event:id_event} , editCommentHandler);
 }
 function cancelEditComment() {
 

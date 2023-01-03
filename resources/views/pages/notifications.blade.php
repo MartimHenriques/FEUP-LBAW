@@ -4,9 +4,9 @@
 
 @section('content')
 
-<div class="formbg-outer">
-  <div class="formbg">
-    <div class="formbg-inner" style="padding: 48px">
+<div class="formbg-outer" style="border-radius: 1em;">
+  <div class="formbg" >
+    <div class="formbg-inner" style="padding: 48px;">
     <h5 style="padding-bottom: 15px">Notifications</h5>
         <div id="not-list">
             <?php

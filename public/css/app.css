@@ -581,7 +581,7 @@ input[type=password]:focus {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 1;
+  z-index: 10;
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
@@ -591,7 +591,7 @@ input[type=password]:focus {
 }
 
 .sidebar h4 {
-  margin-top: 4em;
+
   margin-bottom: 0;
   font-weight: bold;
 }
@@ -621,17 +621,20 @@ hr {
 .sidebar i {
   margin-right: 1em;
 }
-#footer {
+#footer{
+  padding-left: 14em;
+}
+#footer,  #footer2{
   bottom: 0;
   width: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
   background-color: #becff9eb;
 }
-#footer * {
+#footer *,  #footer2 *{
   color: white;
 }
-#footer a:hover {
+#footer a:hover, #footer2 a:hover{
   border-radius: 1em;
   background-color: white;
   color: #a2baf8;
@@ -670,14 +673,15 @@ hr {
   .menu-toggle {
     display: block;
   }
-
+  #footer{
+    padding-left: 0;
+  }
   #content {
     padding-left: 0;
   }
 
   .sidebar {
     position: fixed;
-    top: 4.3em;
     left: -300px;
     height: 100vh;
     width: 15em;

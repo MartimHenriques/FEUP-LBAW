@@ -54,7 +54,7 @@
                         </div>
                         @if($event->event_organizers()->get()->contains(Auth::user()))
                             <div>
-                                <a href="{{route('makeAnOrganizer',['id_user'=>$attendee->id,'id_event'=>$event->id])}}" style="margin-right: 1em">Turn in an organizer</a>
+                                <a href="{{route('makeAnOrganizer',['id_user'=>$attendee->id,'id_event'=>$event->id])}}" style="margin-right: 1em">Turn into an organizer</a>
                                 <a href="{{route('removeFromEvent',['id_attendee'=>$attendee->id,'id_event'=>$event->id])}}">Remove</a>
                             </div>
                             
