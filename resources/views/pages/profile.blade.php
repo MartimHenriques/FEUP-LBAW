@@ -1,9 +1,7 @@
 @extends ('layouts.app')
 
 @section('content')
-<section style="background-color: #eee;
-                padding: 20px;
-                margin: 20px;">
+<section style="background-color: #eee; padding: 20px; margin: 20px;">
 
     <div class="card-edit">
         @if (empty($users->picture)) 
@@ -31,7 +29,7 @@
                 <div class="col-sm-3">
                     <a class="button" href="/profile/{{$users->id}}/edit"> Edit Profile </a> 
                 </div>
-            </div>
+            </div> 
         </div>  
         
     </div> 
@@ -43,7 +41,7 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -59,6 +57,6 @@
     </div>
     </div>
     
- </section>
+</section>
 @endsection
 

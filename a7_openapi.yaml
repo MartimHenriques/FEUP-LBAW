@@ -525,10 +525,91 @@ paths:
         '200':
          description: 'Ok. Show [UI02]'
 
+  /manageEvents:
+      get:
+        operationId: R403
+        summary: "R403: View Events Management Page"
+        description: "View events management page . Access: ADM"
+        tags:
+          - 'M04: User Administration'
+
+        responses:
+          '200':
+          description: 'Ok. Show [UI03]'
+  
+  /manageReports:
+    get:
+      operationId: R404
+      summary: "R404: View Reports Management Page"
+      description: "View report management page . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI04]'
+
+ /deleteEvent/{id}: 
+    get:
+      operationId: R405
+      summary: "R405: Delete Event"
+      description: "Delete Event . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI03]'
+  
+ /blockUser/{id}: 
+    get:
+      operationId: R406
+      summary: "R406: Block User"
+      description: "Block User . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI02]'
+
+ /unblockUser/{id}: 
+    get:
+      operationId: R407
+      summary: "R407: Unblock User"
+      description: "Unblock User . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI02]'
+
  /removeFromEvent/{id_attendee}/{id_event}: 
     get:
-      operationId: R403
-      summary: "R403: Manage Attendees"
+      operationId: R210
+      summary: "R210: Manage Attendees"
       description: "Manages Attendees . Access: OWN"
       tags:
         - 'M04: User Administration'
@@ -547,8 +628,99 @@ paths:
 
       responses:
         '200':
-         description: 'Ok. Show [UI03]'
+         description: 'Ok. Show [UI15]'
 
+ /events/{id}/forum:
+  get:
+      operationId: R211
+      summary: "R211: Show Event Forum"
+      description: "Shows Event's forum. Access: USR"
+      tags:
+        - 'M02: Events'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+            '200':
+              description: Ok. Show [UI16]
+            '400':
+              description: Bad Request
+  
+  /editEvent{id}:
+  get:
+      operationId: R212
+      summary: "R212: Edit Event Form"
+      description: "Provide edit event's form. Access: USR"
+      tags:
+        - 'M02: Events'
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+       '200':
+         description: 'Ok'
+
+  post:
+      operationId: R213
+      summary: "R213: Edit Event Action"
+      description: "Processes the edit event's form submission. Access: USR"
+      tags:
+        - 'M02: Events'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:    
+                  type: string
+                description:          
+                  type: string
+                visibility:
+                  type: integer
+                picture:
+                  type: string
+                  format: byte
+                local:
+                  type: string
+                start_date:
+                  type: string
+                final_date:
+                  type: string
+              required:
+                    - title 
+                    - visibility
+                    - local
+                    - start_date 
+                    - final_date 
+
+      responses:
+        '302':
+          description: 'Redirect after processing the event form.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful edit. Redirect to the event edited page.'
+                  value: '/events/{id}/info'
+                302Error:
+                  description: "Edit failed. Redirect to edit event's form."
+                  value: '/editEvent{id}'
+                  
  /joinEvent/{id}: 
     get:
       operationId: R207

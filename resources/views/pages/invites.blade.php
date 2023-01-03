@@ -8,7 +8,7 @@
             <form action="/invites/{{$not->id}}/deal" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="field">
-                    <label for="title">Title:</label>
+                    <label>Title:</label>
                     <input name="title" type="text" placeholder="Title" value="{{$event->title}}" disabled>
                 </div>
                 <div class="field">
@@ -16,7 +16,7 @@
                     <input name="description" type="text" placeholder="No description provided" value="{{$event->description}}" disabled>
                 </div>
                 <div class="field">
-                    <label for="local">Local:</label>
+                    <label>Local:</label>
                     <input name="local" type="text" placeholder="Local" value="{{$event->local}}" disabled>
                 </div>
                 <div class="field">

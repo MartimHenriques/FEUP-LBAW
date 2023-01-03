@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -14,7 +14,7 @@
 
 
 <section id="eventHeader">
-    <img src="/../img_events/{{$event->picture}}" alt="event picture" id="eventPicture" style="width: 40%; aligns-items: center;">
+    <img src="/../img_events/{{$event->picture}}" alt="event picture" id="eventPicture" style="width: 40%;">
     <h3>{{ $event->title }}</h3>
     @if($event->is_canceled)
         <h2 style="text-align:center; color: red; font-weight:bold">Event canceled</h2>
@@ -28,7 +28,7 @@
         </button>
         
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -36,6 +36,7 @@
                             <p style="color: red">Report event</p>
                             <form action="/create/report/{{$event->id}}" method="POST" style="margin-bottom: 0">
                                 @csrf
+                                <label>Why are you reporting this event?</label>
                                 <input type="text" name="motive" placeholder="Motive" required>
                                 <button type="submit">
                                     Send
@@ -47,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -66,33 +67,48 @@
                 </div>
             </div>
         </div>
-        <a data-toggle="modal" data-target="#cancelModal" id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" >
-            @if($attendee)
-                Leave Event
-            @else
-                Attend
-            @endif
-        </a>
-    
-        @if ($event->visibility)
-        
-        <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
-
+        @if (Auth::check())
+        <a @if($attendee) data-toggle="modal" data-target="#cancelModal" @else href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}" @endif id="join" class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" >
+        @else 
+        <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#myModalLog" id="attend1" data-bs-placement="top" title="Log In Needed"  class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
         @endif
+        @if($attendee)
+            Leave Event
+        @else
+            Attend
+        @endif
+        </a>
 
-    @if (Auth::check())
-        @if ($event_organizer)
-            @if(!$event->visibility)
-                <a type='button' class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
+        @if ($event->visibility)
+            <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
+        @endif
+        @if (Auth::check())
+            @if ($event_organizer)
+                @if(!$event->visibility)
+                    <a class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
+                @endif
+                <a class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
             @endif
             <a type='button' class="button" style="float:right;" href="/edit/event/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
-    @endif
-    
-    @endif
 
+        <div class="modal fade" id="myModalLog" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body">
+                You need to login first.
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>        </div>
+            </div>
+        </div>
     
+    @endif  
 </section>
+
+
 <script>
 
     if(window.location.href.indexOf("info")>-1){

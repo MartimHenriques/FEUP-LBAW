@@ -7,6 +7,12 @@
 <h3>Users</h3>
 
 <table class="table table-striped">
+    <tr>
+        <th>User</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+      </tr>
     @foreach($users as $user)
         <tr>
             <td>
@@ -23,7 +29,7 @@
                 </button>
                         
                 <!-- Modal -->
-                <div class="modal fade" id="myModel_<?php echo $user['id']; ?>" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
+                <div class="modal fade" id="myModel_<?php echo $user['id']; ?>" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -31,8 +37,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                                 <div>
-                                    <h5>Atenção</h5>
-                                    <p>Todos as interações de '<?php echo $user['username']; ?>' vão ser eliminadas. Os seus eventos serão cancelados.</p>
+                                    <h5>Warning</h5>
+                                    <p>All interections of '<?php echo $user['username']; ?>' will be eliminated. The user's events will be canceled.</p>
                                 </div>
                                 <div class="field d-flex align-items-center justify-content-between">
                                     <button onclick="window.location='{{route('deleteUser',['id'=>$user->id])}}'" id="deleteUserButton">Delete</button>
@@ -42,7 +48,7 @@
                     </div>
                 </div>
             </td>
-            <td><a id="block" type='button' class='button' style="{{ ($user->is_blocked) ? 'background-color: CornflowerBlue' : '' }}" href="/{{(!$user->is_blocked) ? 'block/user' : 'unblock/user'}}/{{$user->id}}">
+            <td><a id="block" class='button' style="{{ ($user->is_blocked) ? 'background-color: CornflowerBlue' : '' }}" href="/{{(!$user->is_blocked) ? 'block/user' : 'unblock/user'}}/{{$user->id}}">
                     @if(!$user->is_blocked)
                         Block
                     @else

@@ -9,17 +9,18 @@
 
 <form action="/profile/{{$users->id}}/edit" method="POST" enctype="multipart/form-data">
     <div class="container-pic-editProfile">
-                    @if (empty($users->picture)) 
-                    <img class="profile-picture" src="/../avatars/default.png" alt="Avatar">
-                    @else
-                    <img class="profile-picture" src="/../avatars/{{$users->picture}}" alt="Avatar">
-                    @endif
-                <h4><b>{{$users->username}}</b></h4>
-                <div class ="change_picture">
-                    <div class="card-header"><h4><b>{{ __('Change Picture') }}</b></h4></div>
-                    <input id="picture" type="file" name="picture" accept="image/png, image/gif, image/jpeg ,image/jpg,gif" >
-                </div>
+        @if (empty($users->picture)) 
+        <img class="profile-picture" src="/../avatars/default.png" alt="Avatar">
+        @else
+        <img class="profile-picture" src="/../avatars/{{$users->picture}}" alt="Avatar">
+        @endif
+        <h4><b>{{$users->username}}</b></h4>
+        <div class ="change_picture">
+            <div class="card-header">
+                <h4><b>{{ __('Change Picture') }}</b></h4>
             </div>
+                <input id="picture" type="file" name="picture" accept="image/png, image/gif, image/jpeg ,image/jpg" >
+        </div>
     </div>
 
     <div class="container-password-editProfile">  

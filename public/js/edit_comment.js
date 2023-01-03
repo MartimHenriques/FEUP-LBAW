@@ -8,7 +8,7 @@ document.querySelectorAll("#editBtn").forEach((e) => {
         msg = e.parentElement.parentElement.parentElement.parentElement
         div = e.parentElement.parentElement.parentElement.previousElementSibling.getElementsByTagName('div')[2]
         div.innerHTML = "<input id='messageInput' type='text' name='content' placeholder='Write a comment'>";
-        e.parentElement.innerHTML = "<a id='cancelEdit' onclick='cancelEditComment()'>Cancel</a> <a id='saveEdit' type='button' class='button' onclick='editComment()'>Save</a>"
+        e.parentElement.innerHTML = "<a id='cancelEdit' onclick='cancelEditComment()'>Cancel</a> <a id='saveEdit' class='button' onclick='editComment()'>Save</a>"
       
     }
     )});

@@ -33,7 +33,7 @@
                         </div>
                     @endif
                     <div class="field" style="padding-bottom: 24px">
-                        <label for="message">Message</label>
+                        <label>Message</label>
                         <textarea class="form-control" rows="3" name="message" id="message" required>{{ old('message') }}</textarea>
                     </div>
                     @if ($errors->has('message'))

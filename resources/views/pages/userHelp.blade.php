@@ -25,7 +25,7 @@
                         <div class="card-header" id="headingOne">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">How can I create an in-person Event?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseOne" data-parent="#faqAccordion">
                             <div class="card-body">
                                 <h6>To create an in-person event:</h6>
                                 <ol>
@@ -42,7 +42,7 @@
                         <div class="card-header" id="headingTwo">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">Can I publish messages in my event?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseTwo" data-parent="#faqAccordion">
                             <div class="card-body">
                             <h6>To publish messages in your event:</h6>
                             <ol>
@@ -59,7 +59,7 @@
                         <div class="card-header" id="headingThree">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">How can I invite people to other events?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseThree" data-parent="#faqAccordion">
                             <div class="card-body">
                                 <p>To share an event with your friends:</p>
                                 <ol>
@@ -76,7 +76,7 @@
                         <div class="card-header" id="headingFour">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">How can I manage who can access and attend my event?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseFour" aria-labelledby="headingFour" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseFour" data-parent="#faqAccordion">
                             <div class="card-body">
                                 <p>By being an event organizer you have the power when it comes to your events:</p>
                                 <ol>
@@ -92,7 +92,7 @@
                         <div class="card-header" id="headingFive">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">How can I see my invitations?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseFive" aria-labelledby="headingFive" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseFive" data-parent="#faqAccordion">
                             <div class="card-body">
                              <p>To see your invitations:</p>
                                 <ol>
@@ -107,7 +107,7 @@
                         <div class="card-header" id="headingSix">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">How can I see previous and future events?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseSix" aria-labelledby="headingSix" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseSix" data-parent="#faqAccordion">
                             <div class="card-body">
                                 <p>To see your previous and future events:</p>
                                 <ol>
@@ -124,7 +124,7 @@
                         <div class="card-header" id="headingSeven">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">How can I find events of my interest?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseSeven" aria-labelledby="headingSeven" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseSeven" data-parent="#faqAccordion">
                             <div class="card-body">
                                 <p>To find events of your interest:</p>
                                 <ol>
@@ -140,7 +140,7 @@
                         <div class="card-header" id="headingEight">
                             <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">Contact form is not working?<span class="lni-chevron-up"></span></h6>
                         </div>
-                        <div class="collapse" id="collapseEight" aria-labelledby="headingEight" data-parent="#faqAccordion">
+                        <div class="collapse" id="collapseEight" data-parent="#faqAccordion">
                             <div class="card-body">
                                 <p>Contact forms is not working?</p>
                                 <p>Make sure you have filled all the fields correctly.</p>
