@@ -7,7 +7,12 @@
 <h3>Events</h3>
 
 <table class="table table-striped">
+    <tr>
+        <th>Event</th>
+        <th> </th>
+      </tr>
     @foreach($events as $event)
+    
             <tr>
                 <td><a href="/events/{{ $event->id}}">{{$event->title}}</a></td> 
                 <td>
@@ -16,7 +21,7 @@
                     </button>
                             
                     <!-- Modal -->
-                    <div class="modal fade" id="myModel_<?php echo $event['id']; ?>" tabindex="-1" aria-labelledby="myModelLabel" aria-hidden="true">
+                    <div class="modal fade" id="myModel_<?php echo $event['id']; ?>" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content2')
+
 <form method="POST" action="/forgot_password">
     <div class="fs-2">Recover Password</div>
     <div class="text-muted fs-5">Please provide us your email so we can send you a recovery link!</div>

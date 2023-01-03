@@ -11,8 +11,8 @@
         @csrf
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="title">Title</label>
-          <input id="title" type="text" name="title" value="{{ $event->title }}" placeholder="{{ $event->title }}" required autofocus>
+          <label>Title</label>
+          <input class="title" type="text" name="title" value="{{ $event->title }}" placeholder="{{ $event->title }}" required autofocus>
         </div>
         @if ($errors->has('title'))
         <span class="error">
@@ -31,7 +31,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="visibility">Visibility</label>
+          <label>Visibility</label>
           <select name="visibility" required>
               @if ($event->visibility == "1")
               <option value="1" selected> Public </option>
@@ -59,8 +59,8 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="local">Local</label>
-          <input id="local" type="text" name="local" value="{{ $event->local }}" placeholder="{{ $event->local }}" required autofocus>
+          <label>Local</label>
+          <input class="local" type="text" name="local" value="{{ $event->local }}" placeholder="{{ $event->local }}" required autofocus>
         </div>
         @if ($errors->has('local'))
         <span class="error">

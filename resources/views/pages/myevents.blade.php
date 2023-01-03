@@ -14,5 +14,4 @@
         @each('partials.eventCard', $myevents, 'event')
     </div>
 
-</div>
 @endsection

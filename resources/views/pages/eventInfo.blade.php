@@ -12,12 +12,13 @@
     <div id="details" >
         <h4>Details</h4>
         <p>{{ $event->description }}</p>
+        
         @if ($event->visibility)
-            <span style="display:block;"><i class="bi bi-globe-asia-australia"></i><p style="display:inline;">  Public</p></span>
+            <span style="display:block;"><i class="bi bi-globe-asia-australia" style="display:inline;"></i>  Public</span>
         @else
-            <i class="bi bi-lock-fill"></i><p style="display:inline;">  Private</p>
+            <span><i class="bi bi-lock-fill" style="display:inline;"></i>  Private</span>
         @endif
-        <span style="display:block;"><i class="bi bi-geo-alt-fill"></i><p style="display:inline;">  {{ $event->local }}</p></span>
+        <span style="display:block;"><i class="bi bi-geo-alt-fill" style="display:inline;"></i> {{ $event->local }}</span>
         @if($event->start_date != $event->final_date )
             <p>Data de início: {{ $event->start_date->format('d/m/Y - H:i') }}</p>
             <p>Data de fim: {{ $event->final_date->format('d/m/Y - H:i') }}</p>
@@ -32,7 +33,7 @@
         <div class="list-group w-auto">
             @foreach($event->attendees()->get() as $attendee)
                 @if( $event->event_organizers()->get()->contains($attendee))
-                <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                 <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
                 <div class="d-flex gap-2 w-100 justify-content-between">
                     <div>
@@ -40,14 +41,14 @@
                         <p class="mb-0 opacity-75">Organizer</p>
                     </div>
                 </div>
-                </span>
+                </div>
                 @endif
             @endforeach
             @foreach($event->attendees()->get() as $attendee)
                 @if( !($event->event_organizers()->get()->contains($attendee)))
-                <span class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                     <img src="/../avatars/{{$attendee->picture}}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-                    <div id="attendeeInfo" class="d-flex gap-2 w-100 justify-content-between">
+                    <div class="d-flex gap-2 w-100 justify-content-between attendeeInfo">
                         <div>
                             <h6 class="mb-0">{{$attendee->username}}</h6>
                             <p class="mb-0 opacity-75">Attendee</p>
@@ -60,7 +61,7 @@
                             
                         @endif
                     </div>
-                    </span>
+                </div>
                 @endif
             @endforeach
     

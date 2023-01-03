@@ -5,7 +5,8 @@
     <div class="input-group rounded" style="margin-top: 7em">
         <form action="api/eventsSearch" method="POST">
             @csrf
-            <input type="search" name="search" id="eventSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="searcon" style="font-size:17px;" />
+            <label style="font-size: 1.3em">Search events</label>
+            <input type="search" name="search" id="eventSearch" class="form-control rounded" placeholder="Search" aria-label="Search" style="font-size:17px;" />
             <button type='submit' name="button" value="searchEvent" style="display:none;" disabled>
                 <i class="bi bi-search"></i>
             </button>
@@ -30,8 +31,5 @@
 
 </nav>
 <hr>
-<h5>Categories</h5>
-<ul>
 
-</ul>
 </aside>
