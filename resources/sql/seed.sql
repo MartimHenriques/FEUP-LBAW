@@ -52,9 +52,9 @@ CREATE TABLE event (
     visibility  BOOLEAN NOT NULL,
     picture     TEXT,
     local       TEXT NOT NULL,
-  	publish_date DATE NOT NULL,
-    start_date DATE NOT NULL,
-    final_date DATE NOT NULL,
+  	publish_date TIMESTAMP NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    final_date TIMESTAMP NOT NULL,
     is_canceled BOOLEAN
 );
 
@@ -65,7 +65,7 @@ CREATE TABLE poll (
     id      SERIAL PRIMARY KEY,
     title       TEXT NOT NULL,
     description TEXT,
-    date        DATE NOT NULL,
+    date        TIMESTAMP NOT NULL,
     is_open      BOOLEAN NOT NULL DEFAULT (True),
     id_event     INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_user          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE       
@@ -79,7 +79,7 @@ CREATE TABLE report (
     id_event  	INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_manager   	INTEGER REFERENCES users (id) ON DELETE CASCADE,
     id_reporter  	INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    date     	DATE NOT NULL,
+    date     	TIMESTAMP NOT NULL,
     motive   	TEXT NOT NULL,
   	STATE    	reportState NOT NULL DEFAULT ('Pending')
 );
@@ -169,7 +169,7 @@ CREATE TABLE invite (
 CREATE TABLE message (
     id SERIAL PRIMARY KEY,
     content      TEXT,
-    date      DATE NOT NULL,
+    date      TIMESTAMP NOT NULL,
     id_event   INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_user	   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     parent    INTEGER REFERENCES message (id) ON DELETE CASCADE
@@ -190,12 +190,12 @@ CREATE TABLE message_file (
 CREATE TABLE notification (
     id        SERIAL PRIMARY KEY,
     content   TEXT NOT NULL,
-    date      DATE NOT NULL,
+    date      TIMESTAMP NOT NULL,
     read      BOOLEAN NOT NULL DEFAULT (False),
     id_user    INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     type   notificationTypes,
     id_report  INTEGER REFERENCES report (id)  ON DELETE CASCADE CHECK ((id_report = NULL) or (id_report != NULL and type = 'Report')),
-    id_event   INTEGER CHECK ((id_event = NULL) or (id_event != NULL and type = 'Invite')),
+    id_event   INTEGER CHECK ((id_event = NULL) or (id_event != NULL and (type = 'Invite' OR type = 'Message'))),
     id_invitee INTEGER CHECK ((id_invitee = NULL) or (id_invitee != NULL and type = 'Invite')),
     id_message INTEGER REFERENCES message (id)  ON DELETE CASCADE CHECK ((id_message = NULL) or (id_message != NULL and type = 'Message')),
     FOREIGN KEY (
@@ -316,9 +316,9 @@ EXECUTE PROCEDURE add_invite_notification();
 CREATE OR REPLACE FUNCTION add_message_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO notification(content, date, id_user, type, id_message)
+    INSERT INTO notification(content, date, id_user, type, id_message, id_event)
     VALUES (concat('New notification: ', NEW.content), NEW.date, 
-            (SELECT event_organizer.id_user FROM event_organizer WHERE event_organizer.id_event = NEW.id_event), 'Message', NEW.id);
+            (SELECT event_organizer.id_user FROM event_organizer WHERE event_organizer.id_event = NEW.id_event), 'Message', NEW.id, (SELECT event_organizer.id_event FROM event_organizer WHERE event_organizer.id_event = NEW.id_event));
     RETURN NEW;
 END;
 $BODY$
@@ -612,10 +612,6 @@ INSERT INTO message (content, date, id_event, id_user) VALUES ('BBLAA', '2022-10
 
 INSERT INTO message_File (file, id_message) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);
 
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 3, 'Message', NULL, NULL, NULL, 1);
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 9, 'Message', NULL, NULL, NULL, 1);
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 2, 'Message', NULL, NULL, NULL, 2);
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 9, 'Message', NULL, NULL, NULL, 2);
 
 INSERT INTO vote (id_user, id_message) VALUES (11, 1);
 INSERT INTO vote (id_user, id_message) VALUES (8, 3);

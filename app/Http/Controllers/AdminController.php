@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\NottificationsController;
+
 use App\Models\Poll;
 use App\Models\Attendee;
 use App\Models\ChooseOption;
@@ -46,7 +48,8 @@ class AdminController extends Controller
     public function showReports()
     {
       $reports = Report::paginate(5);
-      return view('pages.adminReports',['reports'=>$reports]);
+      $admin_notifications = NotificationsController::getNotifications(Auth::id());
+      return view('pages.adminReports',['reports'=>$reports, 'notifications'=>$admin_notifications]);
     }
 
     /**

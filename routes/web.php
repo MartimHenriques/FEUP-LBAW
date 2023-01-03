@@ -78,6 +78,10 @@ Route::post('/invites/{id}/deal', [InvitesController::class,'dealWithInvite']);
 Route::get('/event/{id}/invite', [InvitesController::class,'showInviteForm']);
 Route::post('/event/{id}/invite', [InvitesController::class,'create']);
 
+//reports
+Route::post('/report/{id}/deal', [ReportsController::class,'dealWithReport']);
+Route::get('/report/{id}', [ReportsController::class,'showReportForm']);
+
 //notifications
 Route::get('/notifications', [NotificationsController::class, 'showNotifications']);
 
