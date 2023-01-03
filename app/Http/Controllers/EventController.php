@@ -14,6 +14,7 @@ use App\Models\Event_Organizer;
 use App\Models\User;
 use App\Models\Attendee;
 use App\Models\Tag;
+use App\Models\Report;
 
 
 class EventController extends Controller
@@ -347,6 +348,15 @@ class EventController extends Controller
 
       $event->save();
 
+      return redirect()->back();
+    }
+    public function reportEvent(Request $request, $id){
+      $report = new Report();
+      $report->id_reporter = Auth::id();
+      $report->id_event = $id;
+      $report->motive = $request->get('motive');
+      $report->date = now();
+      $report->save();
       return redirect()->back();
     }
 }

@@ -16,25 +16,28 @@
             <div class="d-flex flex-row fs-12">
                 
                 <div class="like p-2 cursor">
-                    <span>{{ count($message->votes) }}</span>
-                    @if($message->voted(Auth::user()))
-                        <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up-fill" style="margin: 0;"></span>
+                    @if(Auth::check())
+                        <span>{{ count($message->votes) }}</span>
+                        @if($message->voted(Auth::user()))
+                            <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up-fill" style="margin: 0;"></span>
 
-                    @else
-                        <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up" style="margin: 0;"></span>
-                    @endif
-                    @if($message->id_user == Auth::id())
-                    <a id="editBtn" ><i class="bi bi-pencil-fill"></i></a>
-                    <a id="deleteBtn" href="/api/event/comment/delete/{{$message->id}}"><i class="bi bi-trash-fill"></i></a>
+                        @else
+                            <span id="like" data-id="{{ $message->id }}" class="bi bi-hand-thumbs-up" style="margin: 0;"></span>
+                        @endif
+                        @if($message->id_user == Auth::id())
+                        <a id="editBtn" ><i class="bi bi-pencil-fill"></i></a>
+                        <a id="deleteBtn" href="/api/event/comment/delete/{{$message->id}}"><i class="bi bi-trash-fill"></i></a>
+                        @endif
                     @endif
                 </div>
+                
             </div>
         </div>
     </div>
     @foreach ($message->messages as $son)
         @include('partials.message', ['message' => $son])
     @endforeach
-    @if($message->parent == NULL && !$event->is_canceled)
+    @if($message->parent == NULL && !$event->is_canceled && Auth::check())
     <div id="reply">
         <input id="replyInput" type="text" name="reply" placeholder="Write a reply">
         <button id="submitReply" type="submit">

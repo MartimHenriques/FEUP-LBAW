@@ -94,10 +94,5 @@
     }
 </script>
 
-<?php
-//  if (Auth::check()) {
-//     echo '<script type="text/javascript"> red_dot('.$count.') </script>';
-//  }
-?>
 
 
