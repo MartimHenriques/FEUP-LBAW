@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-
+use App\Models\Event;
 use App\Models\Message;
 use App\Models\Vote;
 use App\Models\User;
@@ -21,11 +21,10 @@ class MessageController extends Controller
         $msg->id_user = Auth::id();
         $msg->id_event = $request->get('id');
         $msg->save();
-        
-        $user=Auth::user();
-        $setMessage[$msg->id]=$user;
 
-        return json_encode(view('partials.message', ['message' => $msg, 'setMessage' => $setMessage])->render());
+        $event = Event::find($request->get('id'));
+        
+        return json_encode(view('partials.message', ['message' => $msg, 'event' => $event])->render());
     }
     public function createReply(Request $request){
         $msg = new Message();
@@ -36,10 +35,9 @@ class MessageController extends Controller
         $msg->parent =  $request->get('id_parent');
         $msg->save();
         
-        $user=Auth::user();
-        $setMessage[$msg->id]=$user;
+        $event = Event::find($request->get('id'));
 
-        return json_encode(view('partials.message', ['message' => $msg, 'setMessage' => $setMessage])->render());
+        return json_encode(view('partials.message',['message' => $msg, 'event' => $event])->render());
     }
 
 

@@ -21,6 +21,7 @@
     @endif
     <a id="info" href="/events/{{$event->id}}/info" style="">Info</a>
     <a id="forum" href="/events/{{$event->id}}/forum" style="">Forum</a>
+    @if(!$event->is_canceled)
     <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
         @if($attendee)
             Attending
@@ -29,11 +30,12 @@
         @endif
     </a>
     
-    @if ($event->visibility && !$event->is_canceled)
-    
-    <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
+        @if ($event->visibility)
+        
+        <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
 
-    @endif
+        @endif
+
     @if (Auth::check())
         @if ($event_organizer)
             @if(!$event->visibility)
@@ -42,6 +44,9 @@
             <a type='button' class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
     @endif
+    
+    @endif
+
     
 </section>
 <script>

@@ -14,12 +14,14 @@
             <div class="container mt-5">
                 <div class="d-flex justify-content-center row" style="margin: 0;">
                     <div class="col-md-8">
+                        @if(!$event->is_canceled)
                         <div id="postMessage">
                             <input id="messageInput" type="text" name="content" placeholder="Write a comment">
                             <button id="submitComment" type="submit">
                                 post
                             </button>
                         </div>
+                        @endif
                         @foreach($messages as $message)
                         @if($message->parent == NULL)
                             <div class="message" msg-id="{{ $message->id }}">

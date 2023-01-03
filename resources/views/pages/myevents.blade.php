@@ -10,14 +10,9 @@
     <p>You haven't created any events yet.</p>
 @endif
 
-@foreach($myevents as $event)
-    @if($event->is_canceled)
-        <p>You haven't created any events yet.</p>
-    @endif
     <div class="myevents">
         @each('partials.eventCard', $myevents, 'event')
     </div>
-@endforeach
 
 </div>
 @endsection
