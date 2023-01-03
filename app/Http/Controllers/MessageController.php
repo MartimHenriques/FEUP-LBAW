@@ -66,8 +66,24 @@ class MessageController extends Controller
       }
 
     public function deleteComment($id){
-    $msg = Message::where(['id'=> $id]);
-    $msg->delete();
-    return redirect()->back();
+        $msg = Message::where(['id'=> $id]);
+        $msg->delete();
+        return redirect()->back();
+    }
+    public function editComment(Request $request){
+    
+        $msg = Message::find($request->get('id'));
+        $msg->content = $request->get('newContent');
+        $msg->save();
+
+        $parent = Message::find($msg->parent);
+        if($parent){
+            $message = $parent;
+        }
+        else{
+            $message = $msg;
+        }
+   
+        return json_encode(view('partials.message', ['message' => $message])->render());
     }
 }

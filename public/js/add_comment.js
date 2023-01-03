@@ -1,4 +1,4 @@
-let currentBtn
+
 document.querySelectorAll("#submitComment").forEach((e) => {
     e.addEventListener("click", () => {
       console.log(e)

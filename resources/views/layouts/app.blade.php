@@ -27,6 +27,7 @@
   <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/add_comment.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/reply_comment.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/edit_comment.js') }}" defer></script>
 
   </head>
   <body>

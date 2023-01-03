@@ -75,7 +75,7 @@ Route::post('/api/event/reply/create', [MessageController::class,'createReply'])
 Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteComment']);
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
-Route::post('/editMessage/{id}', [MessageController::class,'editMessage']);
+Route::post('/editComment', [MessageController::class,'editComment']);
 
 //my events
 Route::get('myevents', 'EventController@showMyEvents');

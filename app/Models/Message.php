@@ -65,8 +65,7 @@ class Message extends Model
 
 	public function user()
 	{
-		return $this->belongsTo('App\Models\User')
-					->where('users.id', '=', 'message.id_user');	
+		return $this->belongsTo('App\Models\User', 'id_user');
         }
 
 	public function message()
