@@ -38,7 +38,7 @@
     <a class="button" href="{{ url('/logout') }}"> Logout </a>
 
         <!-- Button trigger modal -->
-    <button type="button" data-toggle="modal" data-target="#exampleModalCenter">
+    <button type="button" data-toggle="modal" data-target="#exampleModalCenter" style="background-color: #DC143C">
     Delete
     </button>
 
@@ -53,7 +53,7 @@
         </div>
         <div class="modal-footer">
             <a class="button" data-dismiss="modal">Close</a>
-            <a class="button" href="{{ url('/profile/delete') }}" style="background-color:red;"> Delete</a>
+            <a class="button" href="{{ url('/profile/delete') }}" style="background-color:#DC143C;"> Delete</a>
         </div>
         </div>
     </div>

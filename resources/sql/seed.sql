@@ -452,17 +452,28 @@ INSERT INTO event (title, description, visibility, picture, local, publish_date,
 Será uma atuação no formato orquestra no palco e depois roda de samba no meio da plateia e com o público em redor da banda.
 Para continuar a celebração carnavalesca Farofa (Dj set)
 Bilhetes já à venda com o 1° lote a um preço promocional de 10€
-Pontos de venda:
+Pontos de venda:workshop
 - Ticketline.pt
 - FNAC
 - Worten', TRUE, 'orquestra.jpg', 'Super Bock Arena' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Chikipark', 'Festa de piscina de bolas e trampolins', TRUE, 'Coimbra' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Abertura do AquaSlide', 'Parque aquático para familias', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Comicon', 'Festival de Cultura japonesa', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Iberanime', 'Festival de Animes', TRUE, 'Porto' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Maratona a favor da luta contra o cancro da mama', 'Maratona a favor da luta contra o cancro da mama', TRUE, 'Aveiro' , '2021-10-05 11:00:00', '2022-10-30 11:00:00', '2022-10-31 14:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Carolina Deslandes - Porto', 'Carolina Deslandes ao vivo no Porto. Concerto do ano!', TRUE, 'carolina.jpg', 'Super Bock Arena' , '2022-12-30 22:30:00',  '2023-12-07 21:30:00', '2023-12-08 01:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'animal.jpeg', 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Mellow Mood - Mañana Tour', 'Mellow Mood lançam o seu sexto álbum, Mañana. Escrito e gravado entre 2020 e o início de 2022, é composto por 12 faixas, incluindo 7 colaborações internacionais. Aparece a este espetáculo musical!!', TRUE, 'mellow_mood.jpg', 'CAA Centro de Artes de Águeda' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Primavera Sound - Porto', 'Primavera Sound Porto 2023
+7th June - 10th June.
+Line-Up:
+Shellac, Le Tigre, Karate
+Primavera Sound Fan Page!', TRUE, 'primavera.jpg', 'Porto' , '2022-12-05 01:00:00', '2023-07-30 21:00:00', '2023-08-5 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Workshop Consciência & Filosofia Sistémica', 'Workshop de Consciência e Filosofia Sistémica
+✔️ Sabias que as nossas origens poderão influenciar e interferir com o nosso destino?
+A Psicogenealogia baseia-se no estudo do inconsciente colectivo familiar, percepcionar a influência da vida dos nossos familiares sobre a nossa a vida. 
+Vem descobrir mais...', TRUE, 'filosofia.jpg', 'Lisboa - Clínica Essência da Alma Terapias' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('DEVIR no Iberanime Porto 2022', 'O Iberanime está de regresso à Exponor, em Matosinhos, e a DEVIR vai lá estar, com muitos jogos de tabuleiro e trading card games para experimentares, como não podia deixar de ser...
+Além das mais recentes novidades do nosso catálogo, como The Red Cathedral Contractors e Get on Board, poderás jogar também Magic The Gathering e Yu-Gi-Oh!, tanto no formato tradicional, como Speed Duel, mais simples e mais rápido, para começares a jogar em instantes. Visita-nos! ', TRUE,'iberanime.jpg',  'Porto' , '2021-10-05 01:00:00', '2022-10-22 15:00:00', '2022-10-23 22:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('David Bowie Tributo', 'É do conhecimento de todos os clientes que frequentam o Griffons, que não há uma noite em que as musicas do Bowie fiquem esquecidas e por isso todos os anos realizamos esta festa em memória de david Bowie. Em janeiro de 2023, faz 7 anos que o nosso ídolo musical nos deixou. A saudade ficou e as suas obras infinitas também. Por esta razão, no próximo Sábado, dia 14 de Janeiro de 2023 a noite será dedicada a David Bowie.
+Neste tributo ao Bowie pretende-se passar grande parte dos temas realizados entre 1966 a 2016 num ambiente repleto de Fãs Bowie.
+Nota: entrando no evento e clicando no botão discussão, partilhem as vossas músicas favoritas do Bowie para que no evento sejam ouvidas.', TRUE, 'bowie.jpg', '
+Rua Conde de Vizela 95, 4050-640 Porto, Portugal' , '2022-10-01 10:00:00', '2022-10-05 10:00:00', '2022-10-05 16:00:00');
 
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Piruka?', 'Querem o Piruka a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Rui Veloso?', 'Querem o Rui Veloso a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);
@@ -606,8 +617,8 @@ INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,8,11
 INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 5, 8);
 INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 7, 3);
 INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 5, 11, 1);
-INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 5, 8, 1);
-INSERT INTO message (content, date, id_event, id_user) VALUES ('BBLAA', '2022-10-30 21:00:00', 5, 8);
+INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Levo biscoitos!', '2022-10-30 23:00:00', 5, 8, 1);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Posso levar o meu cão?', '2022-10-30 21:00:00', 5, 8);
 
 
 INSERT INTO message_File (file, id_message) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);

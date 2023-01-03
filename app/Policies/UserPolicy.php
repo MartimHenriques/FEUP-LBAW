@@ -18,7 +18,6 @@ class UserPolicy
     return $user -> id == $model -> id;
   }
 
-
   public function update(User $user, User $model)
   {
     return $user->id == $model -> id;
@@ -30,4 +29,7 @@ class UserPolicy
     return $user->id == $model->id || $user->is_admin;
   }
 
+  public function admin(User $user) {
+    return $user->is_admin;
+  }
 }
