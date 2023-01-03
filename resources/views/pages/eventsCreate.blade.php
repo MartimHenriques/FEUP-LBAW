@@ -11,13 +11,8 @@
         @csrf
 
         <div class="field" style="padding-bottom: 24px">
-<<<<<<< HEAD
-          <label>Title</label>
-          <input class="title" type="text" name="title" value="{{ old('title') }}" required>
-=======
           <label for="title">Title *</label>
           <input id="title" type="text" name="title" value="{{ old('title') }}" required autofocus>
->>>>>>> 8915c6878e4232df24129db4718aa436ae834e9e
         </div>
         @if ($errors->has('title'))
         <span class="error">
@@ -35,14 +30,9 @@
         </span>
         @endif
 
-        <div class="field" style="padding-bottom: 24px;">
-<<<<<<< HEAD
-          <label>Visibility</label>
-          <select name="visibility">
-=======
+        <div class="field" style="padding-bottom: 25px;">
           <label for="visibility">Visibility *</label>
           <select name="visibility" required>
->>>>>>> 8915c6878e4232df24129db4718aa436ae834e9e
               <option value="1">Public</option>
               <option value="0">Private</option>
           </select>
@@ -64,13 +54,8 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-<<<<<<< HEAD
-          <label>Local</label>
-          <input class="local" type="text" name="local" value="{{ old('local') }}" required>
-=======
           <label for="local">Location *</label>
           <input id="local" type="text" name="local" value="{{ old('local') }}" required autofocus>
->>>>>>> 8915c6878e4232df24129db4718aa436ae834e9e
         </div>
         @if ($errors->has('local'))
         <span class="error">
@@ -79,13 +64,8 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-<<<<<<< HEAD
-          <label for="start_date">Start date</label>
-          <input id="start_date" type="datetime-local" name="start_date" value="{{ old('start_date') }}" required>
-=======
           <label for="start_date">Start date *</label>
           <input id="start_date" type="datetime-local" name="start_date" value="{{ old('start_date') }}" required autofocus>
->>>>>>> 8915c6878e4232df24129db4718aa436ae834e9e
         </div>
         @if ($errors->has('start_date'))
         <span class="error">
@@ -94,13 +74,8 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-<<<<<<< HEAD
-          <label for="final_date">Final date</label>
-          <input id="final_date" type="datetime-local" name="final_date" value="{{ old('final_date') }}" required>
-=======
           <label for="final_date">Final date *</label>
           <input id="final_date" type="datetime-local" name="final_date" value="{{ old('final_date') }}" required autofocus>
->>>>>>> 8915c6878e4232df24129db4718aa436ae834e9e
         </div>
         @if ($errors->has('final_date'))
         <span class="error">
@@ -109,8 +84,10 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <input id="submit" type="submit" name="submit" value="create event">
+          <input id="submit" type="submit" name="submit" value="create event" >
+
         </div>
+
       </form>
     </div>
   </div>
