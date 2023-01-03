@@ -67,12 +67,16 @@
                 </div>
             </div>
         </div>
+        @if (Auth::check())
         <a @if($attendee) data-toggle="modal" data-target="#cancelModal" @else href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}" @endif id="join" class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" >
-            @if($attendee)
-                Leave Event
-            @else
-                Attend
-            @endif
+        @else 
+        <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#myModalLog" id="attend1" data-bs-placement="top" title="Log In Needed"  class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        @endif
+        @if($attendee)
+            Leave Event
+        @else
+            Attend
+        @endif
         </a>
 
         @if ($event->visibility)
