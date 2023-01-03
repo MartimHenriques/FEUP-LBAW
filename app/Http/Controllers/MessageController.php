@@ -88,4 +88,9 @@ class MessageController extends Controller
    
         return json_encode(view('partials.message', ['message' => $message, 'event' => $event])->render());
     }
+    public function cancelEditComment(Request $request){
+        $msg = Message::find($request->get('id'));
+        $event = Event::find($request->get('id_event'));
+        return json_encode(view('partials.message', ['message' => $msg, 'event' => $event])->render());
+    }
 }

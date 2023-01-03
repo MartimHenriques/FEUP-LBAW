@@ -17,7 +17,7 @@
     <img src="/../img_events/{{$event->picture}}" alt="event picture" id="eventPicture" style="width: 40%; aligns-items: center;">
     <h3>{{ $event->title }}</h3>
     @if($event->is_canceled)
-        <p>Event canceled</p>
+        <h2 style="text-align:center; color: red; font-weight:bold">Event canceled</h2>
     @endif
     <a id="info" href="/events/{{$event->id}}/info" style="">Info</a>
     <a id="forum" href="/events/{{$event->id}}/forum" style="">Forum</a>
@@ -47,13 +47,32 @@
                 </div>
             </div>
         </div>
-    <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
-        @if($attendee)
-            Attending
-        @else
-            Attend
-        @endif
-    </a>
+        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-body">
+                            
+                            @if(count($event->event_organizers) == 1 && $event_organizer)
+                            <p>You are the only event organizer. If you leave, the event will be canceled!</p>
+                            @endif
+                            Are you sure you want to leave?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a type='button' class='button' href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">Leave event</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <a data-toggle="modal" data-target="#cancelModal" id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" >
+            @if($attendee)
+                Leave Event
+            @else
+                Attend
+            @endif
+        </a>
     
         @if ($event->visibility)
         
