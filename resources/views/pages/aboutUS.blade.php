@@ -9,7 +9,7 @@
         <h1 class="font-weight-light">Meet WeMeet</h1>
         <p class="font-italic text-muted mb-4">WeMeet is a website that specializes in event organizing. It allows users to create and manage events such as conferences, workshops, and meetings. With WeMeet, users can create an event, manage invitations and communicate with attendees at the click of a button.</p>
       </div>
-      <div class="col-lg-6 d-none d-lg-block"><img src="/../img_static/meet.png" alt="" class="img-fluid"></div>
+      <div class="col-lg-6 d-none d-lg-block"><img src="/../img_static/meet.png" alt="People having fun" class="img-fluid"></div>
     </div>
   </div>
 </div>
@@ -21,10 +21,10 @@
         <h2 class="font-weight-light">Why WeMeet</h2>
         <p class="font-italic text-muted mb-4">WeMeet is a comprehensive platform for organizing and managing events of all sizes and types. It aims to make the process of planning and executing events easier and more efficient for event organizers, while providing attendees with a seamless and engaging experience.</p><a href="/events" class="btn btn-light px-5 rounded-pill shadow-sm">Get Started</a>
       </div>
-      <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://bootstrapious.com/i/snippets/sn-about/img-1.jpg" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+      <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://bootstrapious.com/i/snippets/sn-about/img-1.jpg" alt="person in computer" class="img-fluid mb-4 mb-lg-0"></div>
     </div>
     <div class="row align-items-center">
-      <div class="col-lg-5 px-5 mx-auto"><img src="/../img_static/product.jpg" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+      <div class="col-lg-5 px-5 mx-auto"><img src="/../img_static/product.jpg" alt="ourProduct" class="img-fluid mb-4 mb-lg-0"></div>
       <div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
         <h2 class="font-weight-light">Our Product</h2>
         <p class="font-italic text-muted mb-4">WeMeet offers a range of features to help users plan and execute successful events. These include tools for creating customizable events, managing attendees, scheduling sessions and networking events, and communicating with attendees. It also includes features such as a message board - a forum for each event where attendees can communicate with each other and with the event organizer.</p><a href="/events" class="btn btn-light px-5 rounded-pill shadow-sm">Get Started</a>

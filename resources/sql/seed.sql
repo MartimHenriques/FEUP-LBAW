@@ -169,7 +169,7 @@ CREATE TABLE invite (
 CREATE TABLE message (
     id SERIAL PRIMARY KEY,
     content      TEXT,
-    date      DATE NOT NULL,
+    date      TIMESTAMP NOT NULL,
     id_event   INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_user	   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     parent    INTEGER REFERENCES message (id) ON DELETE CASCADE

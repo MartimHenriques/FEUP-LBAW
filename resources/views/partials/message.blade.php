@@ -5,7 +5,7 @@
                 <img class="profile-picture" src="/../avatars/{{$message->user->picture}}">
                 <div class="d-flex flex-column justify-content-start ml-2">
                     <span class="d-block font-weight-bold" style="margin: 1em 0 0;">{{ $message->user->username }}</span>
-                    <span class="date text-black-50">{{ $message->date }}</span>
+                    <span class="date text-black-50">{{ $message->date->format('d/m/Y - H:i') }}</span>
                 </div>
             </div>
             <div class="mt-2">
