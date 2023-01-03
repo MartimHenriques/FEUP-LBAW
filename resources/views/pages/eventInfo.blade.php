@@ -20,10 +20,10 @@
         @endif
         <span style="display:block;"><i class="bi bi-geo-alt-fill" style="display:inline;"></i> {{ $event->local }}</span>
         @if($event->start_date != $event->final_date )
-            <p>Data de início: {{ $event->start_date->format('d/m/Y - H:i') }}</p>
-            <p>Data de fim: {{ $event->final_date->format('d/m/Y - H:i') }}</p>
+            <p>Start Date: {{ $event->start_date->format('d/m/Y - H:i') }}</p>
+            <p>Final Date: {{ $event->final_date->format('d/m/Y - H:i') }}</p>
         @else
-            <p>Data: {{ $event->start_date->format('d/m/y - H:m') }}</p>
+            <p>Date: {{ $event->start_date->format('d/m/y - H:m') }}</p>
         @endif
             
     </div>
