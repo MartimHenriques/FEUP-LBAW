@@ -2,6 +2,7 @@ create schema if not exists public;
 
 SET search_path TO public;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS password_resets CASCADE;
 DROP TABLE IF EXISTS event CASCADE;
 DROP TABLE IF EXISTS poll CASCADE;
 DROP TABLE IF EXISTS report CASCADE;
@@ -36,6 +37,12 @@ CREATE TABLE users (
     remember_token VARCHAR
 );
 
+CREATE TABLE password_resets (
+    email      VARCHAR NOT NULL,
+    token      VARCHAR NOT NULL,
+    created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
+);
+
 -- Table: event
 
 CREATE TABLE event (
@@ -45,9 +52,10 @@ CREATE TABLE event (
     visibility  BOOLEAN NOT NULL,
     picture     TEXT,
     local       TEXT NOT NULL,
-  	publish_date DATE NOT NULL,
-    start_date DATE NOT NULL,
-    final_date DATE NOT NULL
+  	publish_date TIMESTAMP NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    final_date TIMESTAMP NOT NULL,
+    is_canceled BOOLEAN
 );
 
 
@@ -57,7 +65,7 @@ CREATE TABLE poll (
     id      SERIAL PRIMARY KEY,
     title       TEXT NOT NULL,
     description TEXT,
-    date        DATE NOT NULL,
+    date        TIMESTAMP NOT NULL,
     is_open      BOOLEAN NOT NULL DEFAULT (True),
     id_event     INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_user          INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE       
@@ -71,7 +79,7 @@ CREATE TABLE report (
     id_event  	INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_manager   	INTEGER REFERENCES users (id) ON DELETE CASCADE,
     id_reporter  	INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    date     	DATE NOT NULL,
+    date     	TIMESTAMP NOT NULL,
     motive   	TEXT NOT NULL,
   	STATE    	reportState NOT NULL DEFAULT ('Pending')
 );
@@ -147,7 +155,8 @@ CREATE TABLE invite (
     id_event     INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_invitee   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     id_organizer INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    accepted    BOOLEAN,
+    accepted     BOOLEAN,
+    to_attend    BOOLEAN NOT NULL DEFAULT(True),
     PRIMARY KEY (
         id_event,
         id_invitee
@@ -160,8 +169,7 @@ CREATE TABLE invite (
 CREATE TABLE message (
     id SERIAL PRIMARY KEY,
     content      TEXT,
-    date      DATE NOT NULL,
-    like_count INTEGER NOT NULL DEFAULT (0),
+    date      TIMESTAMP NOT NULL,
     id_event   INTEGER NOT NULL REFERENCES event (id) ON DELETE CASCADE,
     id_user	   INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     parent    INTEGER REFERENCES message (id) ON DELETE CASCADE
@@ -182,12 +190,12 @@ CREATE TABLE message_file (
 CREATE TABLE notification (
     id        SERIAL PRIMARY KEY,
     content   TEXT NOT NULL,
-    date      DATE NOT NULL,
+    date      TIMESTAMP NOT NULL,
     read      BOOLEAN NOT NULL DEFAULT (False),
     id_user    INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     type   notificationTypes,
     id_report  INTEGER REFERENCES report (id)  ON DELETE CASCADE CHECK ((id_report = NULL) or (id_report != NULL and type = 'Report')),
-    id_event   INTEGER CHECK ((id_event = NULL) or (id_event != NULL and type = 'Invite')),
+    id_event   INTEGER CHECK ((id_event = NULL) or (id_event != NULL and (type = 'Invite' OR type = 'Message'))),
     id_invitee INTEGER CHECK ((id_invitee = NULL) or (id_invitee != NULL and type = 'Invite')),
     id_message INTEGER REFERENCES message (id)  ON DELETE CASCADE CHECK ((id_message = NULL) or (id_message != NULL and type = 'Message')),
     FOREIGN KEY (
@@ -209,6 +217,16 @@ CREATE TABLE vote (
     )
 );
 
+
+-----------------------------------------
+-- LARAVEL INDEXES
+-----------------------------------------
+
+DROP INDEX IF EXISTS password_resets_email_index;
+DROP INDEX IF EXISTS password_resets_token_index;
+
+CREATE INDEX password_resets_email_index ON password_resets (email);
+CREATE INDEX password_resets_token_index ON password_resets (token);
 
 -----------------------------------------
 -- INDEXES
@@ -298,9 +316,9 @@ EXECUTE PROCEDURE add_invite_notification();
 CREATE OR REPLACE FUNCTION add_message_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    INSERT INTO notification(content, date, id_user, type, id_message)
+    INSERT INTO notification(content, date, id_user, type, id_message, id_event)
     VALUES (concat('New notification: ', NEW.content), NEW.date, 
-            (SELECT event_organizer.id_user FROM event_organizer WHERE event_organizer.id_event = NEW.id_event), 'Message', NEW.id);
+            (SELECT event_organizer.id_user FROM event_organizer WHERE event_organizer.id_event = NEW.id_event), 'Message', NEW.id, (SELECT event_organizer.id_event FROM event_organizer WHERE event_organizer.id_event = NEW.id_event));
     RETURN NEW;
 END;
 $BODY$
@@ -330,21 +348,6 @@ AFTER INSERT ON report
 FOR EACH ROW
 EXECUTE PROCEDURE add_report_admin_notification();
 
---- TRIGGER05 
-CREATE OR REPLACE FUNCTION edit_message() RETURNS trigger AS
-$BODY$
-    BEGIN
-    UPDATE message SET text = NEW.text WHERE id = OLD.id;
-RETURN NEW;
-END;
-$BODY$
-    LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS edit_message on message CASCADE;
-CREATE TRIGGER edit_message
-    AFTER UPDATE ON message
-    FOR EACH ROW
-EXECUTE PROCEDURE edit_message();
 
 --- TRIGGER06 
 CREATE OR REPLACE FUNCTION create_event_organizer() RETURNS TRIGGER AS
@@ -366,9 +369,12 @@ EXECUTE PROCEDURE create_event_organizer();
 CREATE OR REPLACE FUNCTION accept_invite() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF OLD.accepted != TRUE AND NEW.accepted = TRUE
+    IF OLD.accepted != TRUE AND NEW.accepted = TRUE AND NEW.to_attend = TRUE
     THEN
         INSERT INTO attendee (id_user, id_event) SELECT NEW.id_invitee, NEW.id_event;
+    ELSEIF OLD.accepted != TRUE AND NEW.accepted = TRUE AND NEW.to_attend = FALSE
+    THEN
+        INSERT INTO event_organizer (id_user, id_event) SELECT NEW.id_invitee, NEW.id_event;
     END IF;
     RETURN NEW;
 END;
@@ -442,14 +448,32 @@ Alma At Porto Marca Nacional Registada*
 Empresa Licenciada pelo Turismo de Portugal
 Rnaat 428/2016
 Rnavt 7882', TRUE, 'aveiro.jpg' , 'Aveiro' , '2022-09-29 01:00:00', '2022-11-29 21:00:00', '2022-11-29 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Arraial', 'Festival de Engenharia', TRUE, 'Exponor' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Tutorial de como beber um copo de agua', 'Stand-up Comedy', TRUE, 'Salvaterra de Magos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Chikipark', 'Festa de piscina de bolas e trampolins', TRUE, 'Coimbra' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Abertura do AquaSlide', 'Parque aquático para familias', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Comicon', 'Festival de Cultura japonesa', TRUE, 'Lisboa' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Iberanime', 'Festival de Animes', TRUE, 'Porto' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
-INSERT INTO event (title, description, visibility, local, publish_date, start_date, final_date) VALUES ('Maratona a favor da luta contra o cancro da mama', 'Maratona a favor da luta contra o cancro da mama', TRUE, 'Aveiro' , '2021-10-05 11:00:00', '2022-10-30 11:00:00', '2022-10-31 14:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Carnaval 23 - Orquestra Bamba Social - Festa de lançamento do álbum "Mundo Novo"', 'Na comemoração da celebração de 10 anos da Orquestra Bamba Social, nada melhor que uma festa de Carnaval, lançamento do novo álbum "Mundo Novo" e uma atuação dupla da Orquestra Bamba Social no Super Bock Arena.
+Será uma atuação no formato orquestra no palco e depois roda de samba no meio da plateia e com o público em redor da banda.
+Para continuar a celebração carnavalesca Farofa (Dj set)
+Bilhetes já à venda com o 1° lote a um preço promocional de 10€
+Pontos de venda:workshop
+- Ticketline.pt
+- FNAC
+- Worten', TRUE, 'orquestra.jpg', 'Super Bock Arena' , '2021-10-05 01:00:00', '2022-10-31 22:00:00', '2022-11-03 06:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Carolina Deslandes - Porto', 'Carolina Deslandes ao vivo no Porto. Concerto do ano!', TRUE, 'carolina.jpg', 'Super Bock Arena' , '2022-12-30 22:30:00',  '2023-12-07 21:30:00', '2023-12-08 01:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Dia do Animal', 'Visita de pessoas a abrigos de animais abandonados', FALSE, 'animal.jpeg', 'Camara de Lobos' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Mellow Mood - Mañana Tour', 'Mellow Mood lançam o seu sexto álbum, Mañana. Escrito e gravado entre 2020 e o início de 2022, é composto por 12 faixas, incluindo 7 colaborações internacionais. Aparece a este espetáculo musical!!', TRUE, 'mellow_mood.jpg', 'CAA Centro de Artes de Águeda' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Primavera Sound - Porto', 'Primavera Sound Porto 2023
+7th June - 10th June.
+Line-Up:
+Shellac, Le Tigre, Karate
+Primavera Sound Fan Page!', TRUE, 'primavera.jpg', 'Porto' , '2022-12-05 01:00:00', '2023-07-30 21:00:00', '2023-08-5 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('Workshop Consciência & Filosofia Sistémica', 'Workshop de Consciência e Filosofia Sistémica
+✔️ Sabias que as nossas origens poderão influenciar e interferir com o nosso destino?
+A Psicogenealogia baseia-se no estudo do inconsciente colectivo familiar, percepcionar a influência da vida dos nossos familiares sobre a nossa a vida. 
+Vem descobrir mais...', TRUE, 'filosofia.jpg', 'Lisboa - Clínica Essência da Alma Terapias' , '2021-10-05 01:00:00', '2022-10-30 21:00:00', '2022-10-31 03:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('DEVIR no Iberanime Porto 2022', 'O Iberanime está de regresso à Exponor, em Matosinhos, e a DEVIR vai lá estar, com muitos jogos de tabuleiro e trading card games para experimentares, como não podia deixar de ser...
+Além das mais recentes novidades do nosso catálogo, como The Red Cathedral Contractors e Get on Board, poderás jogar também Magic The Gathering e Yu-Gi-Oh!, tanto no formato tradicional, como Speed Duel, mais simples e mais rápido, para começares a jogar em instantes. Visita-nos! ', TRUE,'iberanime.jpg',  'Porto' , '2021-10-05 01:00:00', '2022-10-22 15:00:00', '2022-10-23 22:00:00');
+INSERT INTO event (title, description, visibility, picture, local, publish_date, start_date, final_date) VALUES ('David Bowie Tributo', 'É do conhecimento de todos os clientes que frequentam o Griffons, que não há uma noite em que as musicas do Bowie fiquem esquecidas e por isso todos os anos realizamos esta festa em memória de david Bowie. Em janeiro de 2023, faz 7 anos que o nosso ídolo musical nos deixou. A saudade ficou e as suas obras infinitas também. Por esta razão, no próximo Sábado, dia 14 de Janeiro de 2023 a noite será dedicada a David Bowie.
+Neste tributo ao Bowie pretende-se passar grande parte dos temas realizados entre 1966 a 2016 num ambiente repleto de Fãs Bowie.
+Nota: entrando no evento e clicando no botão discussão, partilhem as vossas músicas favoritas do Bowie para que no evento sejam ouvidas.', TRUE, 'bowie.jpg', '
+Rua Conde de Vizela 95, 4050-640 Porto, Portugal' , '2022-10-01 10:00:00', '2022-10-05 10:00:00', '2022-10-05 16:00:00');
 
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Piruka?', 'Querem o Piruka a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);
 INSERT INTO poll (title, description, date, is_open, id_event, id_user) VALUES ('MADFest - Rui Veloso?', 'Querem o Rui Veloso a atuar?', '2021-10-05 01:00:00', TRUE, 1, 6);
@@ -590,19 +614,18 @@ INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (10,8,1
 INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,5,11, TRUE);
 INSERT INTO invite (id_event, id_invitee, id_organizer, accepted) VALUES (5,8,11, TRUE);
 -----
-INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 1, 5, 8);
-INSERT INTO message (content, date, like_count, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 0, 7, 3);
-INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 1, 5, 11, 1);
-INSERT INTO message (content, date, like_count, id_event, id_user, parent) VALUES ('Tragam biscoitos', '2022-10-30 23:00:00', 2, 5, 8, 1);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa noite, é possível levar o meu marido na visita? Ele é ex-sócio da associação. Obrigada', '2022-10-30 21:00:00', 5, 8);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Boa tarde, há lugares de refeições dentro do parque? Se sim, quais (o que servem?)', '2021-10-05 13:20:04', 7, 3);
+INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Boa noite, sim venham!' , '2022-10-30 21:10:00', 5, 11, 1);
+INSERT INTO message (content, date, id_event, id_user, parent) VALUES ('Levo biscoitos!', '2022-10-30 23:00:00', 5, 8, 1);
+INSERT INTO message (content, date, id_event, id_user) VALUES ('Posso levar o meu cão?', '2022-10-30 21:00:00', 5, 8);
+
 
 INSERT INTO message_File (file, id_message) VALUES ('https://drive.google.com/file/d/1ew6LkiYFrDw5enUUaU47hNEgxGiPC5M_/view?usp=sharing', 3);
 
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 3, 'Message', NULL, NULL, NULL, 1);
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('You have a new message!', '2022-10-30 21:00:00', FALSE, 9, 'Message', NULL, NULL, NULL, 1);
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 2, 'Message', NULL, NULL, NULL, 2);
-INSERT INTO notification (content, date, read, id_user, type, id_report, id_event, id_invitee, id_message) VALUES ('We have been invited!', '2021-10-05 13:20:04', FALSE, 9, 'Message', NULL, NULL, NULL, 2);
 
 INSERT INTO vote (id_user, id_message) VALUES (11, 1);
 INSERT INTO vote (id_user, id_message) VALUES (8, 3);
 INSERT INTO vote (id_user, id_message) VALUES (11, 4);
+INSERT INTO vote (id_user, id_message) VALUES (6, 4);
 INSERT INTO vote (id_user, id_message) VALUES (5, 4);

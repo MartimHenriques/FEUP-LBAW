@@ -59,6 +59,7 @@ class Event extends Model
 		'publish_date',
 		'start_date',
 		'final_date',
+		'is_cancelled',
 		'tsvectors'
 	];
 	public function scopeSearch($query, $search)

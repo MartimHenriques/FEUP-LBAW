@@ -1,6 +1,16 @@
+
 @section('sidebar')
 
 <aside class="sidebar">
+    <div class="input-group rounded" style="margin-top: 7em">
+        <form action="api/eventsSearch" method="POST">
+            @csrf
+            <input type="search" name="search" id="eventSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="searcon" style="font-size:17px;" />
+            <button type='submit' name="button" value="searchEvent" style="display:none;" disabled>
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
 <h4>Events</h4>
 <nav class="menu">
     <a href="{{ url('/events') }}" class="menu-item"><i class="bi bi-house-door-fill"></i> Home page</a>
@@ -13,7 +23,7 @@
     @else
     <a href="{{ url('/myevents') }}" class="menu-item"><i class="bi bi-person-fill"></i> My events</a>
     <a href="{{ url('/calendar') }}" class="menu-item"><i class="bi bi-calendar-fill"></i> My calendar</a>
-    <a class="menu-item"><i class="bi bi-bell-fill"></i> Notifications</a>
+    <a href="{{ url('/notifications') }}" class="menu-item"><i class="bi bi-bell-fill"></i> Notifications</a>
     @endif
     <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event <i class="bi bi-plus" style="font-size:2em"></i></a>
     @endif
@@ -21,5 +31,7 @@
 </nav>
 <hr>
 <h5>Categories</h5>
+<ul>
 
+</ul>
 </aside>

@@ -36,7 +36,6 @@ class Report extends Model
 		'id_event' => 'int',
 		'id_manager' => 'int',
 		'id_reporter' => 'int',
-		'state' => 'USER-DEFINED'
 	];
 
 	protected $dates = [

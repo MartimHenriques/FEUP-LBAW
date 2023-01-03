@@ -3,7 +3,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */ 
-
 
 // Authentications
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -29,6 +30,7 @@ Route::post('profile/editProfile', 'UserController@saveChanges') -> name('saveCh
 
 // Profile
 Route::get('profile', 'UserController@showProfile');
+Route::get('profile/delete', [UserController::class, 'deleteProfile']) -> name('deleteProfile');
 
 //home
 Route::get('/', 'HomeController@show');
@@ -47,24 +49,55 @@ Route::get('unblockUser/{id}', 'AdminController@unblockUser');
 Route::get('events', 'EventController@showEvents');
 
 //event
-Route::get('events/{id}', 'EventController@showOneEvent');
+Route::get('events/{id}/info', 'EventController@showOneEventInfo')->name('event');
+Route::get('events/{id}/forum', 'EventController@showOneEventForum');
 
 Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
 Route::post('eventsCreate', [EventController::class, 'createEvent']);
 Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
 Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 
-Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
-
 Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
-Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
-Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
+Route::get('eventOrganizer/{id_user}/{id_event}', [Event_OrganizerController::class, 'makeAnOrganizer'])->name('makeAnOrganizer');
+Route::post('/create/report/{id}', [EventController::class, 'reportEvent']);
 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
+
+//messages
+Route::post('/api/event/comment/create', [MessageController::class,'createComment']);
+Route::post('/api/event/reply/create', [MessageController::class,'createReply']);
+Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteComment']);
+Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
+Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
+Route::post('/editComment', [MessageController::class,'editComment']);
+
+//invites
+Route::get('/invites/{id}', [InvitesController::class,'showInvite']);
+Route::post('/invites/{id}/deal', [InvitesController::class,'dealWithInvite']);
+Route::get('/event/{id}/invite', [InvitesController::class,'showInviteForm']);
+Route::post('/event/{id}/invite', [InvitesController::class,'create']);
+
+//reports
+Route::post('/report/{id}/deal', [ReportsController::class,'dealWithReport']);
+Route::get('/report/{id}', [ReportsController::class,'showReportForm']);
+
+//notifications
+Route::get('/notifications', [NotificationsController::class, 'showNotifications']);
 
 //my events
 Route::get('myevents', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
+//contact us
+Route::get('contactUs', 'StaticPagesController@showContactUs')->name('contactus');
+Route::post('contactUs', [StaticPagesController::class, 'sendEmail']);
+//static pages
+Route::get('aboutUS', [StaticPagesController::class, 'showAbout']);
+Route::get('userHelp', [StaticPagesController::class, 'showUserHelp']);
+
+Route::get('forgot_password', 'ForgotPassword@show')->middleware('guest')->name('password.request');
+Route::post('forgot_password', 'ForgotPassword@request')->middleware('guest')->name('password.email');
+Route::get('recover_password', 'ForgotPassword@showRecover')->middleware('guest')->name('password.reset');;
+Route::post('recover_password', 'ForgotPassword@recover')->middleware('guest')->name('password.update');;

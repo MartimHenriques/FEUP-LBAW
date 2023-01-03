@@ -19,12 +19,17 @@
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://js.pusher.com/7.0/pusher.min.js" defer></script>
     <script type="text/javascript">
         // Fix for Firefox autofocus CSS bug
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
-    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer>
-</script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/show_sidebar.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/add_comment.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/reply_comment.js') }}" defer></script>
+  <script type="text/javascript" src="{{ asset('js/edit_comment.js') }}" defer></script>
 
   </head>
   <body>
@@ -36,7 +41,7 @@
             <span></span>
           </div>
         </div>
-        <a href="{{ url('/') }}"><img id="logo" src="/../logo.png" alt="logo"></a>
+        <a @if (Auth::check()) href="{{ url('events') }}" @else href="{{ url('/') }}" @endif><img id="logo" src="/../logo.png" alt="logo"></a>
   
         @if (Auth::check())
         <a href="{{ url('/profile') }}">
@@ -48,41 +53,36 @@
         </a>
         @else
         <a class="button" href="{{ route('login') }}"> Login </a> 
-        <a class="button" href="{{ route('register') }}"> Register </a> 
+        <a id="registerbtn" class="button register" href="{{ route('register') }}"> Register </a> 
         @endif
       </header>
 
-      @if (!Request::is('login', 'register', '/'))
+      @if (!Request::is('login', 'register', '/', 'forgot_password' , 'recover_password'))
         
-        @include('partials.sidebar');
-        @yield('sidebar');
+        @include('partials.sidebar')
+        @yield('sidebar')
       @endif
       
-
+      @if (!Request::is('login', 'register', '/', 'forgot_password' , 'recover_password'))
       <section id="content">
         @yield('content')
       </section>
-      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top">
-          <p class="col-md-4 mb-0 text-muted">© 2022 WeMeet, Inc</p>
+      @else
+      <section id="content2">
+        @yield('content2')
+      </section>
+      @endif
+      <footer  @if (!Request::is('login', 'register', '/')) id="footer" @else id="footer2" @endif class="d-flex flex-wrap justify-content-between align-items-center border-top">
+          <p class="col-md-4 mb-0">© 2022 WeMeet, Inc</p>
       
           <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2">User help</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2">Contact us</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2">About us</a></li>
+            <li class="nav-item"><a href="/userHelp" class="nav-link px-2">User help</a></li>
+            <li class="nav-item"><a href="/contactUs" class="nav-link px-2">Contact us</a></li>
+            <li class="nav-item"><a href="/aboutUS" class="nav-link px-2">About us</a></li>
           </ul>
-        </footer>
+      </footer>
 
     </main>
     @yield('script')
-    <script>
-      const menu_toggle = document.querySelector('.menu-toggle');
-      const sidebar = document.querySelector('.sidebar');
-
-      menu_toggle.addEventListener('click', () => {
-        menu_toggle.classList.toggle('is-active');
-        sidebar.classList.toggle('is-active');
-
-      });
-    </script>
   </body>
 </html>

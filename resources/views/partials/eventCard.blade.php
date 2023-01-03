@@ -1,37 +1,36 @@
 <div class="eventCard" data-id="{{ $event->id }}">
 
-  <a href="/events/{{ $event->id}}">
-      <div class="event-info">
-        <h4>{{ $event->title }}</h4>
-        @if ($event->visibility)
-          <p>Publico</p>
-        @else
-         <p>Privado</p>
-        @endif
-        <p>Local: {{$event->local}}</p>
-        <p>{{$event->start_date}}</p>
-      </div>
+  <a href="/events/{{ $event->id}}/info">
+    <img src="/../img_events/{{ $event->picture}}" alt="event picture" id="eventMiniPicture">
+    <div class="event-info">
+    <p id="title">{{ $event->title }}</p>
+    <p id="local">{{$event->local}}</p>
+    <p>{{$event->start_date}}</p>
+    @if($event->is_canceled)
+    <h3>Event canceled</h3>
+    @endif
+    </div>
   </a>
 
 
-@if ($event->visibility)
+@if ($event->visibility && !$event->is_canceled)
   <!-- Button trigger modal -->
-    <button id="copyButton" onclick="copyLinkFeed({{$event->id}});">Share</button>
+    <button id="{{$event->id}}" onclick="copyLinkFeed({{$event->id}});">Share</button>
 @endif
-
 
 </div>
 <script>
   function copyLinkFeed(id){
-    var dummy = document.createElement('input'),
-    text = window.location.href + "/" + id;
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.execCommand('copy');
-    document.body.removeChild(dummy);
+    var btn = document.getElementById(id);
+    btn.innerHTML = 'link copied';
+    btn.style.backgroundColor = "green";
 
-    // Alert the copied text
-    alert("Copied the text: " + dummy.value); 
+    navigator.clipboard.writeText(window.location.href + "/" + id + "/info");
+
+    setTimeout(function(){
+        btn = document.getElementById(id);
+        btn.innerHTML = 'Share';
+        btn.style.backgroundColor = "#9bb6fcf6";
+    }, 1000);
   }
 </script>

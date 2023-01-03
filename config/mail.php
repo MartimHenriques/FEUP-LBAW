@@ -31,7 +31,7 @@ return [
     | Supported: "smtp", "sendmail", "mailgun", "ses",
     |            "postmark", "log", "array"
     |
-    */
+    */  
 
     'mailers' => [
         'smtp' => [
@@ -84,8 +84,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@wemeet.com'),
+        'name' => env('MAIL_FROM_NAME', 'WeMeet'),
     ],
 
     /*

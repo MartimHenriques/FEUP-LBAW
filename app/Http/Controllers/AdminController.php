@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\NottificationsController;
+
+use Illuminate\Support\Facades\Gate;
 use App\Models\Poll;
 use App\Models\Attendee;
 use App\Models\ChooseOption;
@@ -24,6 +27,7 @@ class AdminController extends Controller
      */
     public function showUsers()
     {
+      Gate::authorize('admin', Auth::user());
       $users = User::where('is_admin', '!=', true)->paginate(5);
       return view('pages.adminUsers',['users'=>$users]);
     }
@@ -35,6 +39,7 @@ class AdminController extends Controller
      */
     public function showEvents()
     {
+      Gate::authorize('admin', Auth::user());
       $events = Event::paginate(5);
       return view('pages.adminEvents',['events'=>$events]);
     }
@@ -46,8 +51,10 @@ class AdminController extends Controller
      */
     public function showReports()
     {
+      Gate::authorize('admin', Auth::user());
       $reports = Report::paginate(5);
-      return view('pages.adminReports',['reports'=>$reports]);
+      $admin_notifications = NotificationsController::getNotifications(Auth::id());
+      return view('pages.adminReports',['reports'=>$reports, 'notifications'=>$admin_notifications]);
     }
 
     /**
@@ -83,6 +90,9 @@ class AdminController extends Controller
      * @return Redirect back to the page
      */
       public function blockUser($id){
+
+        Gate::authorize('admin', Auth::user());
+
         DB::table('users')->where(['id'=>$id])->update(['is_blocked'=>TRUE]);
         return redirect()->back();
       }
@@ -93,6 +103,8 @@ class AdminController extends Controller
      * @return Redirect back to the page
      */
     public function unblockUser($id){
+      Gate::authorize('admin', Auth::user());
+
       DB::table('users')->where(['id'=>$id])->update(['is_blocked'=>FALSE]);
       return redirect()->back();
     }

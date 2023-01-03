@@ -1,8 +1,11 @@
-body {
+html,body {
   background-color: #f6f6f6;
   color: #403f3f;
-  position: relative;
-  min-height: 100vh;
+  min-height: 100%;
+  height: 100%;
+}
+main{
+  height: 88%;
 }
 
 main>header {
@@ -29,18 +32,24 @@ main>header a.button {
   top:50%;
 }
 
-.event-feed,
-.eventsAttended,
-.eventsToAttend {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+#eventSearch:focus{
+  border: 0;
+}
+.event-feed{
   background-color: white;
-  border-radius: 1%;
-  margin: 2em;
-  padding: 1em;
-  margin-top: 1em;
+  border-radius: 1em;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
   border: 1px solid rgba(167, 167, 167, 0.463);
+}
+.event-feed,
+.eventsAttended,
+.eventsToAttend, .myevents {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 1.5em;
+  padding: 1em;
+  margin-top: 1em;
+
 }
 
 .eventCard {
@@ -49,7 +58,7 @@ main>header a.button {
   box-shadow: #0000001a 0px 2px 2px 1px;
   max-width: 20em;
   max-height: 25em;
-  border-radius: 4%;
+  border-radius: 1em;
   background-color: white;
   display: grid;
   grid-template-rows: 1fr auto;
@@ -61,8 +70,8 @@ main>header a.button {
 
 }
 #eventMiniPicture{
-  border-top-left-radius: 4%;
-  border-top-right-radius: 4%;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
   object-fit: cover;
   aspect-ratio: 2/1;
 }
@@ -75,6 +84,10 @@ main>header a.button {
 }
 #local{
   color: #6c757d;
+}
+
+#details *{
+  margin-bottom: 0.8em;
 }
 .eventCard p {
   margin-bottom: 0em;
@@ -148,7 +161,10 @@ main>header a.button {
   resize: none
 }
 
-
+#registerbutton, #registerbtn{
+  background-color: transparent;
+  color: #9bb6fcf6;
+}
 #copyButton {
   justify-self: center;
 }
@@ -190,41 +206,118 @@ a:hover {
 
 #info:hover, #forum:hover{
   background-color: rgba(216, 216, 216, 0.413);
-  border-radius: 10%;
+  border-radius: 0.2em;
 }
+#postMessage{
+  background-color: white;
+  border: 1px solid #a1b4e36f;
+  border-radius: 1em;
+  padding: 1.5em;
+  margin-bottom: 1em;
+}
+.message{
+  background-color: #a1b4e36f;
+  border-radius: 1em;
+  padding: 1.5em;
+  margin-bottom: 1em;
+}
+.message > * {
+  margin-bottom: 1em;
+}
+
+.message p{
+  margin: 0;
+  padding: 0 1.3em;
+}
+.message #son{
+  padding-left: 1.5em;
+  padding-right: 0.5em;
+}
+#reply{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-right: 0.5em;
+  margin-bottom: 0;
+}
+#messageInput{
+  background-color: white;
+  border-radius: 0.7em;
+}
+#replyInput{
+  margin-left: 1.5em;
+  background-color: white;
+  border-radius: 0.7em;
+  width: 92%;
+}
+#replyInput:focus, #messageInput:focus, #content form input:focus, #content form select:focus{
+  border: 1px solid #a1b4e3d2;
+  outline: 1px solid #a1b4e3d2;
+  box-shadow: rgba(180, 180, 180, 0.253) 0px 8px 24px;
+}
+#deleteBtn{
+  right: 0.8em;
+}
+#editBtn{
+  right: 3em
+}
+#deleteBtn, #editBtn{
+  position: absolute;
+  background-color: #c0c0c0c0;
+  border-radius: 1em;
+  padding-right: 0.3em;
+  padding-left: 0.3em;
+}
+
 #eventHeader{
   background-color: white;
+  justify-content: center;
 }
 
 #eventHeader .button, #eventHeader button{
   margin-right: 1em;
 }
 
+#eventHeader img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #details, #attendeeslist{
   background-color: white;
   margin: 2em;
   padding: 1em;
-  border-radius: 2%;
+  border-radius: 1em;
 }
 
 
 #content {
-  padding-left: 14em;
   padding-top: 5em;
+  min-height: 100%;
+  padding-bottom: 2em;
+  padding-left: 14em;
+}
+#content2{
+  padding-top: 5em;
+  min-height: 100%;
+  padding-bottom: 2em;
 }
 
-#content label {
+#content2 label {
   font-weight: normal;
 }
 
-#content>form {
-  margin: 0 auto;
+#content>form, #content2>form {
+  margin: 5em auto;
   padding: 1em;
   max-width: 20em;
   border: 2px solid #a1b4e3c1;
-  border-radius: 5%;
-  margin-left: 17em;
+  border-radius: 1em;
   background-color: white;
+  box-shadow: rgba(122, 122, 122, 0.1) -4px 9px 25px -6px;
+}
+#content2>form input:focus{
+  border: 1px solid #a1b4e3c1; 
 }
 
 #content>form .error {
@@ -232,7 +325,7 @@ a:hover {
   color: #ff3333;
 }
 
-#content>form input {
+#content>form input, #content2>form input {
   background-color: white;
 }
 
@@ -255,8 +348,21 @@ a:hover {
     /* 180 + 40 */
   }
 }
+@media (min-width: 1700px) {
+  .event-feed,
+  .eventsAttended,
+  .eventsToAttend {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1400px) {
 
-@media (max-width: 70em) {
+  .eventCard{
+    max-width: 25em;
+    min-width: 19em;
+  }
+}
+@media (max-width: 75em) {
 
   .event-feed,
   .eventsAttended,
@@ -274,7 +380,7 @@ a:hover {
   }
 }
 
-@media (max-width: 50em) {
+@media (max-width: 63em) {
 
   .event-feed,
   .eventsAttended,
@@ -302,7 +408,7 @@ a:hover {
     margin: 0;
   }
 
-  #content form {
+  #content2 form {
     margin: 0;
     max-width: 25em;
   }
@@ -313,15 +419,16 @@ a:hover {
   }
 }
 
-/**
- * Overide milligram colors
- * Some styles might be missing
- **/
 button,
 a.button {
-  background-color: #a1b4e3;
-  border-color: #a1b4e3;
+  background-color: #9bb6fcf6;
+  border-color: #9bb6fcf6;
   max-width: 13em;
+}
+#submit{
+  background-color: #7a9aebce;
+  border-color: #a1b4e3;
+  
 }
 
 #createButton {
@@ -333,8 +440,9 @@ a.button {
 
 button:hover,
 a.button:hover {
-  background-color: #a1b4e3ce;
+  background-color: #7a9aebce;
   border-color: #a1b4e3;
+  box-shadow: rgba(0, 0, 0, 0.18) 1px 2px 6px;
 }
 
 a {
@@ -384,12 +492,15 @@ input[type=password]:focus {
 }
 
 .profile-picture {
-  width: 8%;
-  min-width: 3em;
-  margin: 1em;
+  width: 5%;
+  min-width: 2.7em;
+  margin: 0.7em 1em;
   border-radius: 50%;
   object-fit: cover; /* Required to prevent the image from stretching, use the object-position property to adjust the visible area */
   aspect-ratio: 1/1;
+}
+.like > *{
+  margin: 0 0 0 1em;
 }
 
 .mini-picture{
@@ -400,6 +511,7 @@ input[type=password]:focus {
   object-fit: cover; /* Required to prevent the image from stretching, use the object-position property to adjust the visible area */
   aspect-ratio: 1/1;
 }
+
 
 #logo {
   max-width: 20%;
@@ -418,7 +530,6 @@ input[type=password]:focus {
   height: 2em;
   cursor: pointer;
   background-color: #fff;
-  border-radius: 10%;
 }
 
 .hamburger {
@@ -470,8 +581,8 @@ input[type=password]:focus {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 1;
-  top: 3.7em;
+  z-index: 10;
+  top: 0;
   overflow-x: hidden;
   overflow-y: auto;
   /* Scrollable contents if viewport is shorter than content. */
@@ -480,7 +591,7 @@ input[type=password]:focus {
 }
 
 .sidebar h4 {
-  margin-top: 1em;
+
   margin-bottom: 0;
   font-weight: bold;
 }
@@ -510,34 +621,77 @@ hr {
 .sidebar i {
   margin-right: 1em;
 }
-#footer {
+#footer{
   padding-left: 14em;
+}
+#footer,  #footer2{
   bottom: 0;
   width: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
+  background-color: #becff9eb;
+}
+#footer *,  #footer2 *{
+  color: white;
+}
+#footer a:hover, #footer2 a:hover{
+  border-radius: 1em;
+  background-color: white;
+  color: #a2baf8;
+  
+  border: 0.5px solid #a1bcffeb;
 }
 
+.formbg-outer{
+  background-color: white;
+  margin: 0 4em;
+  border-radius: 2%;
+  box-shadow: rgba(149, 157, 165, 0.132) 0px 6px 17px;
+}
+
+#landing{
+  background-color: white; 
+  padding: 4em; 
+  display:grid; 
+  grid-template-columns: auto auto;
+}
+#landing img{
+  margin-left: auto;
+  margin-right: 8em;
+}
+#landing > div *{
+  margin: auto auto;
+  margin-top: 3em;
+  text-align: center;
+}
+
+#attendeeInfo:nth-child(2){
+  float: right;
+}
 
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
   }
-
+  #footer{
+    padding-left: 0;
+  }
   #content {
     padding-left: 0;
   }
 
   .sidebar {
     position: fixed;
-    top: 4.3em;
     left: -300px;
     height: 100vh;
     width: 15em;
     transition: 0.2s linear;
   }
+  .eventCard{
+    max-width: 21em;
+  }
 
-  #content>form {
+  #content2>form {
     margin: 0 auto;
   }
 
@@ -547,6 +701,22 @@ hr {
   footer{
     margin-left: 0;
     width: 100%;
+  }
+}
+@media (max-width: 500px) {
+
+  #registerbtn{
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  #landing{
+    display: block;
+    justify-content: center;
+  }
+  #landing .button{
+    margin: 1.4em auto;
+    justify-self: center;
   }
 }
 
@@ -571,4 +741,117 @@ hr {
 
 .w-5{
   display: none;
+}
+
+.circle {
+  height: 50px;
+  width: 50px;
+  background-color: #555;
+  border-radius: 50%;
+}
+
+.social-link {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  border-radius: 50%;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.social-link:hover,
+.social-link:focus {
+  background: #ddd;
+  text-decoration: none;
+  color: #555;
+}
+
+body{margin-top:20px;}
+.section_padding_130 {
+    padding-top: px;
+    padding-bottom: 130px;
+}
+.faq_area {
+    position: relative;
+    z-index: 1;
+    background-color: #f5f5ff;
+}
+
+.faq-accordian {
+    position: relative;
+    z-index: 1;
+}
+.faq-accordian .card {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.5rem;
+}
+.faq-accordian .card:last-child {
+    margin-bottom: 0;
+}
+.faq-accordian .card .card-header {
+    background-color: #ffffff;
+    padding: 0;
+    border-bottom-color: #ebebeb;
+}
+.faq-accordian .card .card-header h6 {
+    cursor: pointer;
+    padding: 1.75rem 2rem;
+    color: #94bee7;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.faq-accordian .card .card-header h6 span {
+    font-size: 1.5rem;
+}
+.faq-accordian .card .card-header h6.collapsed {
+    color: #070a57;
+}
+.faq-accordian .card .card-header h6.collapsed span {
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+}
+.faq-accordian .card .card-body {
+    padding: 1.75rem 2rem;
+}
+.faq-accordian .card .card-body p:last-child {
+    margin-bottom: 0;
+}
+
+@media only screen and (max-width: 575px) {
+    .support-button p {
+        font-size: 14px;
+    }
+}
+
+.support-button i {
+    color: #3f43fd;
+    font-size: 1.25rem;
+}
+@media only screen and (max-width: 575px) {
+    .support-button i {
+        font-size: 1rem;
+    }
+}
+
+.support-button a {
+    text-transform: capitalize;
+    color: #2e5dcc;
+}
+@media only screen and (max-width: 575px) {
+    .support-button a {
+        font-size: 13px;
+    }
 }

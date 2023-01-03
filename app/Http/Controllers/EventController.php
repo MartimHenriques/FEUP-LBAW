@@ -7,12 +7,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
-
+use Illuminate\Support\Str;
 use App\Models\Event;
 use App\Models\Message;
 use App\Models\Event_Organizer;
 use App\Models\User;
 use App\Models\Attendee;
+use App\Models\Tag;
+use App\Models\Report;
+
 
 class EventController extends Controller
 {
@@ -32,12 +35,23 @@ class EventController extends Controller
      *
      * @return Response
      */
-    public function showOneEvent($id)
+    public function showOneEventInfo($id)
     {
+      $event = Event::find($id);
+
+      $showModal = false;
+
+      $attendee = Attendee::where('id_user', '=', Auth::id())->where('id_event','=',$id)->exists();
+
+      $event_organizer=Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
+
+      return view('pages.eventInfo', ['event' => $event, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
+    }
+    public function showOneEventForum($id){
       $setMessage = [];
       $event = Event::find($id);
       $messages = $event->messages;
-      foreach($messages as $message) {
+      foreach($event->messages as $message) {
         $user=User::find($message->id_user);
         $setMessage[$message->id]=$user;
       }
@@ -48,7 +62,7 @@ class EventController extends Controller
 
       $event_organizer=Event_Organizer::where('id_user', '=', Auth::id())->where('id_event','=',$event->id)->exists();
 
-      return view('pages.event', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
+      return view('pages.eventForum', ['event' => $event, 'messages' => $messages, 'setMessage' => $setMessage, 'showModal' => $showModal, 'attendee' => $attendee, 'event_organizer' => $event_organizer]);
     }
 
     public function showMyEvents()
@@ -65,8 +79,7 @@ class EventController extends Controller
       return view('pages.myevents', ['myevents' => $myevents]);
     }
     
-    public function showEventsAttend()
-    {
+    public function showEventsAttend(){
       $user = Auth::user()->id;
       /*
       $myeventsid = Event_Organizer::where('id_user','=',$user)->get(['id_event']);
@@ -88,7 +101,8 @@ class EventController extends Controller
     }
 
 
-    public function showEvents(){
+    public function showEvents(){ 
+      $tags = Tag::all();
       if(Auth::check()){
         $events = DB::table('event')->orderBy('id')->paginate(6);
         $event_organizer = [];
@@ -147,8 +161,8 @@ class EventController extends Controller
       $start_date = $request->input('start_date');
       $final_date = $request->input('final_date');
 
-      if (($start_date > $final_date)) {
-        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      if (($start_date >= $final_date) || ($start_date < $current_date) || ($final_date < $current_date)) {
+        return redirect()->back(); 
       }
 
       $event = new Event();
@@ -158,7 +172,28 @@ class EventController extends Controller
       $event->title = $request->input('title');
       $event->description = $request->input('description');
       $event->visibility = $request->input('visibility');
-      $event->picture = $request->input('picture');
+      $request->validate([
+        'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
+
+      if($request->picture != null){
+        $img = $request->picture; 
+
+        $uuid = Str::uuid()->toString();
+        $mytime = now()->toDateTimeString();
+
+        $file = public_path('img_events/').$event->picture;
+
+        if($img != null){
+          if(file_exists($file) && $event->picture != null) {
+            unlink($file);
+          }
+          $imageName =  $mytime. $uuid . '.' . $img->extension();
+          $img -> move(public_path('img_events/'), $imageName);
+          $event->picture = $imageName;
+        }   
+    } 
+
       $event->local = $request->input('local');
       $event->publish_date = $current_date;
       $event->start_date = $start_date;
@@ -197,8 +232,8 @@ class EventController extends Controller
       $start_date = $request->input('start_date');
       $final_date = $request->input('final_date');
 
-      if (($start_date > $final_date)) {
-        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      if (($start_date >= $final_date) || ($start_date < $current_date) || ($final_date < $current_date)) {
+        return redirect()->back(); 
       }
 
       //$this->authorize('createEvent', $event);
@@ -206,7 +241,28 @@ class EventController extends Controller
       $event->title = $request->input('title');
       $event->description = $request->input('description');
       $event->visibility = $request->input('visibility');
-      $event->picture = $request->input('picture');
+      $request->validate([
+        'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
+
+      if($request->picture != null){
+          $img = $request->picture; 
+
+          $uuid = Str::uuid()->toString();
+          $mytime = now()->toDateTimeString();
+
+          $file = public_path('img_events/').$event->picture;
+
+          if($img != null){
+            if(file_exists($file) && $event->picture != null) {
+              unlink($file);
+            }
+            $imageName =  $mytime. $uuid . '.' . $img->extension();
+            $img -> move(public_path('img_events/'), $imageName);
+            $event->picture = $imageName;
+          }   
+      }
+
       $event->local = $request->input('local');
       $event->start_date = $start_date;
       $event->final_date = $final_date;
@@ -257,8 +313,50 @@ class EventController extends Controller
     public function abstainEvent($id) {
       //SEE LATER > dont delete everything related to this -> keep info
 
+      
+      $event_organizer = Event_Organizer::where(['id_event' => $id]) -> count();
+
+      if($event_organizer == 1){
+        Event::where('id', $id)->update(['is_canceled' => 1]);
+      }
+
+
       $attendee = Attendee::where(['id_user' => Auth::id(),'id_event' => $id]);
       $attendee->delete();
+
+
+      return redirect()->back();
+    }
+         /**
+     * An attendee is removed from an event.
+     *
+     * @return Redirect back to the page
+     */
+    public function removeFromEvent($id_attendee,$id_event) {
+
+      $attendee = Attendee::where(['id_user' => $id_attendee,'id_event' => $id_event]);
+      $attendee->delete();
+      return redirect()->back();
+    }
+
+    public function cancelEvent($id){
+      $event = Event::find($id);
+      $user = Auth::user();
+
+      $this->authorize('cancelEvent', [$user, $event]);
+      $event->is_canceled = 1;
+
+      $event->save();
+
+      return redirect()->back();
+    }
+    public function reportEvent(Request $request, $id){
+      $report = new Report();
+      $report->id_reporter = Auth::id();
+      $report->id_event = $id;
+      $report->motive = $request->get('motive');
+      $report->date = now();
+      $report->save();
       return redirect()->back();
     }
 }

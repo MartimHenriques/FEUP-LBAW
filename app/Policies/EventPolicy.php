@@ -67,15 +67,22 @@ class EventPolicy
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the user can cancel the event.
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Event $event)
+    public function cancelEvent(User $user, Event $event)
     {
-        //
+        //query to check if event start date is in the future
+        $event_start_date = Carbon::parse($event->start_date)->isFuture();
+
+        //query to check if the user is the organizer of the event
+        $event_organizer = Event_Organizer::where('id_user', '=', $user->id)->where('id_event','=',$event->id)->exists();
+
+        return ($event_organizer || $user->is_admin) && $event_start_date;
+        
     }
 
     /**

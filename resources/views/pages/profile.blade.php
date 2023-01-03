@@ -36,6 +36,29 @@
         
     </div> 
     <a class="button" href="{{ url('/logout') }}"> Logout </a>
+
+        <!-- Button trigger modal -->
+    <button type="button" data-toggle="modal" data-target="#exampleModalCenter" style="background-color: #DC143C">
+    Delete
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-body">
+            Careful! You are about to delete your account. Unless other attendees are also organizers, all of your events will be canceled. Are you sure?
+           </div>
+        </div>
+        <div class="modal-footer">
+            <a class="button" data-dismiss="modal">Close</a>
+            <a class="button" href="{{ url('/profile/delete') }}" style="background-color:#DC143C;"> Delete</a>
+        </div>
+        </div>
+    </div>
+    </div>
+    
  </section>
 @endsection
 

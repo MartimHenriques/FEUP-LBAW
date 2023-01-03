@@ -33,14 +33,12 @@ class Vote extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'id_user')
-					->where('users.id', '=', 'vote.id_user')
 					->where('users.id', '=', 'vote.id_user');
 	}
 
 	public function message()
 	{
 		return $this->belongsTo(Message::class, 'id_message')
-					->where('message.id', '=', 'vote.id_message')
 					->where('message.id', '=', 'vote.id_message');
 	}
 }

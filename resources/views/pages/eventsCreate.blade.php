@@ -6,8 +6,8 @@
 <div class="formbg-outer">
   <div class="formbg">
     <div class="formbg-inner" style="padding: 48px">
-      <span style="padding-bottom: 15px">New Event</span>
-      <form id="stripe-login" action="eventsCreate" method="POST">
+      <h5 style="padding-bottom: 0.5em">New Event</h5>
+      <form id="stripe-login" action="eventsCreate" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="field" style="padding-bottom: 24px">
@@ -44,8 +44,8 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="picture">Picture</label>
-          <input id="picture" type="file" name="picture" value="{{ old('picture') }}" autofocus>
+          <label for="picture">Picture</label> 
+          <input id="picture" type="file" name="picture" value="{{ old('picture') }}" accept="image/png, image/gif, image/jpeg ,image/jpg" autofocus>
         </div>
         @if ($errors->has('picture'))
         <span class="error">
@@ -65,7 +65,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="start_date">Start date</label>
-          <input id="start_date" type="date" name="start_date" value="{{ old('start_date') }}" required autofocus>
+          <input id="start_date" type="datetime-local" name="start_date" value="{{ old('start_date') }}" required autofocus>
         </div>
         @if ($errors->has('start_date'))
         <span class="error">
@@ -75,7 +75,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="final_date">Final date</label>
-          <input id="final_date" type="date" name="final_date" value="{{ old('final_date') }}" required autofocus>
+          <input id="final_date" type="datetime-local" name="final_date" value="{{ old('final_date') }}" required autofocus>
         </div>
         @if ($errors->has('final_date'))
         <span class="error">
@@ -84,7 +84,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <input type="submit" name="submit" value="Create Event">
+          <input id="submit" type="submit" name="submit" value="create event">
         </div>
       </form>
     </div>
