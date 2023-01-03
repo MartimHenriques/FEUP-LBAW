@@ -61,16 +61,16 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a type='button' class='button' href="/{{($attendee) ? 'abstain/event' : 'join/event'}}/{{$event->id}}">Leave event</a>
+                        <a class='button' href="/{{($attendee) ? 'abstain/event' : 'join/event'}}/{{$event->id}}">Leave event</a>
                     </div>
                     
                 </div>
             </div>
         </div>
         @if (Auth::check())
-        <a @if($attendee) data-toggle="modal" data-target="#cancelModal" @else href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}" @endif id="join" class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" >
+        <a @if($attendee) data-toggle="modal" data-target="#cancelModal" @else href="/{{($attendee) ? 'abstain/event' : 'join/event'}}/{{$event->id}}" @endif id="join" class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" >
         @else 
-        <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#myModalLog" id="attend1" data-bs-placement="top" title="Log In Needed"  class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        <a id="join" data-bs-toggle="modal" data-bs-target="#myModalLog" id="attend1" data-bs-placement="top" title="Log In Needed"  class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstain/event' : 'join/event'}}/{{$event->id}}">
         @endif
         @if($attendee)
             Leave Event
@@ -89,7 +89,6 @@
                 @endif
                 <a class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
             @endif
-            <a type='button' class="button" style="float:right;" href="/edit/event/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
 
         <div class="modal fade" id="myModalLog" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">

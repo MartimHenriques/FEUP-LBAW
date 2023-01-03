@@ -206,8 +206,8 @@ paths:
 
  /profile/{id}/delete:
     get:
-      operationId: R108
-      summary: 'R108: Delete'
+      operationId: R109
+      summary: 'R109: Delete'
       description: 'Provide Delete Account Option'
       tags:
         - 'M01: Authentication and Individual Profile'
@@ -221,8 +221,8 @@ paths:
 
  /forgot_password:
    get:
-     operationId: R109
-     summary: 'R109: Forgot Password Form'
+     operationId: R110
+     summary: 'R110: Forgot Password Form'
      description: 'Provide user forgot password form. Access: PUB'
      tags:
        - 'M01: Authentication and Individual Profile'
@@ -230,8 +230,8 @@ paths:
        '200':
          description: 'Ok. Show'
    post:
-     operationId: R110
-     summary: 'R110: Forgot Password Action'
+     operationId: R111
+     summary: 'R111: Forgot Password Action'
      description: 'Processes forgot password form submission. Access: USR'
      tags:
        - 'M01: Authentication and Individual Profile'
@@ -264,8 +264,8 @@ paths:
 
  /recover_password:
    get:
-     operationId: R111
-     summary: 'R111: Recover Password Forms'
+     operationId: R112
+     summary: 'R112: Recover Password Forms'
      description: 'Provide user recover password forms. Access: USR'
      tags:
        - 'M01: Authentication and Individual Profile'
@@ -273,8 +273,8 @@ paths:
        '200':
          description: 'Ok. Show'
    post:
-     operationId: R112
-     summary: 'R112: Recover Password Action'
+     operationId: R113
+     summary: 'R113: Recover Password Action'
      description: 'Processes recover password form submission. Access: USR'
      tags:
        - 'M01: Authentication and Individual Profile'
@@ -348,8 +348,8 @@ paths:
 
  /events/{id}/forum:
   get:
-      operationId: R202
-      summary: "R202: Show Event Card"
+      operationId: R203
+      summary: "R203: Show Event Card"
       description: "Shows Event's information. Access: PUB, USR"
       tags:
         - 'M02: Events'
@@ -369,10 +369,10 @@ paths:
 
     
 
- /eventsCreate:
+ /events_create:
   get:
-      operationId: R203
-      summary: "R203: Event Form"
+      operationId: R204
+      summary: "R204: Event Form"
       description: "Provide event form. Access: USR"
       tags:
         - 'M02: Events'
@@ -382,8 +382,8 @@ paths:
          description: 'Ok'
 
   post:
-      operationId: R204
-      summary: "R204: Event Action"
+      operationId: R205
+      summary: "R205: Event Action"
       description: "Processes the event form submission. Access: USR"
       tags:
         - 'M02: Events'
@@ -434,8 +434,8 @@ paths:
 
  /my_events:
   get:
-      operationId: R205
-      summary: "R205: View events created by user"
+      operationId: R206
+      summary: "R206: View events created by user"
       description: "Show events created by user. Access: OWN"
       tags:
         - 'M02: Events'
@@ -447,8 +447,8 @@ paths:
 
  /calendar:
   get:
-      operationId: R206
-      summary: "R206: View attended/to attend events"
+      operationId: R207
+      summary: "R207: View attended/to attend events"
       description: "Show events attened/to attend by user. Access: USR"
       tags:
         - 'M02: Events'
@@ -483,7 +483,7 @@ paths:
  /about_us:
     get:
       operationId: R503
-      summary: 'R502: View About Us Page'
+      summary: 'R503: View About Us Page'
       description: "View About Us Page. Access: PUB"
       tags:
         - 'M05: Static pages'
@@ -494,7 +494,7 @@ paths:
   
 
 
- /deleteUser/{id}: 
+ /delete/user/{id}: 
     get:
       operationId: R401
       summary: "R401: Delete User"
@@ -513,7 +513,7 @@ paths:
         '200':
          description: 'Ok. Show [UI02]'
    
- /manageUsers:
+ /manage/users:
     get:
       operationId: R402
       summary: "R402: View User Management Page"
@@ -525,19 +525,19 @@ paths:
         '200':
          description: 'Ok. Show [UI02]'
 
-  /manageEvents:
-      get:
-        operationId: R403
-        summary: "R403: View Events Management Page"
-        description: "View events management page . Access: ADM"
-        tags:
+ /manage/events:
+    get:
+      operationId: R403
+      summary: "R403: View Events Management Page"
+      description: "View events management page . Access: ADM"
+      tags:
           - 'M04: User Administration'
 
-        responses:
-          '200':
-          description: 'Ok. Show [UI03]'
+      responses:
+        '200': 
+         description: 'Ok. Show [UI03]'
   
-  /manageReports:
+ /manage/reports:
     get:
       operationId: R404
       summary: "R404: View Reports Management Page"
@@ -549,7 +549,7 @@ paths:
         '200':
          description: 'Ok. Show [UI04]'
 
- /deleteEvent/{id}: 
+ /delete/event/{id}: 
     get:
       operationId: R405
       summary: "R405: Delete Event"
@@ -568,7 +568,7 @@ paths:
         '200':
          description: 'Ok. Show [UI03]'
   
- /blockUser/{id}: 
+ /block/user/{id}: 
     get:
       operationId: R406
       summary: "R406: Block User"
@@ -587,7 +587,7 @@ paths:
         '200':
          description: 'Ok. Show [UI02]'
 
- /unblockUser/{id}: 
+ /unblock/user/{id}: 
     get:
       operationId: R407
       summary: "R407: Unblock User"
@@ -606,10 +606,10 @@ paths:
         '200':
          description: 'Ok. Show [UI02]'
 
- /removeFromEvent/{id_attendee}/{id_event}: 
+ /remove_from_event/{id_attendee}/{id_event}: 
     get:
-      operationId: R210
-      summary: "R210: Manage Attendees"
+      operationId: R408
+      summary: "R408: Manage Attendees"
       description: "Manages Attendees . Access: OWN"
       tags:
         - 'M04: User Administration'
@@ -628,33 +628,12 @@ paths:
 
       responses:
         '200':
-         description: 'Ok. Show [UI15]'
+         description: 'Ok. Show [UI15]'  
 
- /events/{id}/forum:
+ /editEvent{id}:
   get:
-      operationId: R211
-      summary: "R211: Show Event Forum"
-      description: "Shows Event's forum. Access: USR"
-      tags:
-        - 'M02: Events'
-
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-
-      responses:
-            '200':
-              description: Ok. Show [UI16]
-            '400':
-              description: Bad Request
-  
-  /editEvent{id}:
-  get:
-      operationId: R212
-      summary: "R212: Edit Event Form"
+      operationId: R209
+      summary: "R209: Edit Event Form"
       description: "Provide edit event's form. Access: USR"
       tags:
         - 'M02: Events'
@@ -671,8 +650,8 @@ paths:
          description: 'Ok'
 
   post:
-      operationId: R213
-      summary: "R213: Edit Event Action"
+      operationId: R210
+      summary: "R210: Edit Event Action"
       description: "Processes the edit event's form submission. Access: USR"
       tags:
         - 'M02: Events'
@@ -721,10 +700,10 @@ paths:
                   description: "Edit failed. Redirect to edit event's form."
                   value: '/editEvent{id}'
                   
- /joinEvent/{id}: 
+ /join/event/{id}: 
     get:
-      operationId: R207
-      summary: "R207: Join Event"
+      operationId: R211
+      summary: "R211: Join Event"
       description: "Join Event . Access: USR"
       tags:
         - 'M02: Events'
@@ -740,10 +719,10 @@ paths:
         '200':
          description: 'Ok'
 
- /abstainEvent/{id}:
+ /abstain/event/{id}:
   get:
-      operationId: R208
-      summary: "R208: Abstain Event"
+      operationId: R212
+      summary: "R212: Abstain Event"
       description: "Abstain Event . Access: USR"
       tags:
         - 'M02: Events'
@@ -759,45 +738,10 @@ paths:
         '200':
          description: 'Ok'
 
-
- /event:
-    get:
-      operationId: R209
-      summary: "R209: Search Events"
-      description: "Searches for events and returns the results as JSON. Access: PUB"
-      tags:
-        - 'M02: Events'
-
-      parameters:
-        - in: query
-          name: query
-          description: String to use for full-text search
-          schema:
-            type: string
-          required: false
-        - in: query
-          name: closed
-          description: Boolean with the closed flag value
-          schema:
-            type: boolean
-          required: false
-
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Event'
-        '400':
-          description: Bad Request
-
  /api/eventsSearch:
   post:
-    operationId: R200
-    summary: "R200: Search for Events"
+    operationId: R213
+    summary: "R213: Search for Events"
     description: "Searches for events in the feed. Access: PUB"
     tags:
       - 'M02: Events'
@@ -845,7 +789,7 @@ paths:
  /api/event/reply/create:
   post:
     operationId: R302
-    summary: "R301: Post Reply"
+    summary: "R302: Post Reply"
     description: "Posts the Reply in the forum. Access: USR"
     tags:
       - 'M03: Messages and Forum'
@@ -972,8 +916,8 @@ paths:
 
  /invites/{id}:
   get:
-    operationId: R210
-    summary: 'R210: Shows Invite'
+    operationId: R214
+    summary: 'R214: Shows Invite'
     description: 'Shows Invite. Access: PUB'
     tags:
        - 'M02: Events'
@@ -983,8 +927,8 @@ paths:
 
  /invites/{id}/deal:
   post: 
-    operationId: R211
-    summary: 'R211: Invite Action'
+    operationId: R215
+    summary: 'R215: Invite Action'
     description: 'Processes the invite decision. Access: PUB'
     tags:
       - 'M02: Events'
@@ -1007,8 +951,8 @@ paths:
 
  /event/{id}/invite: 
   get:
-     operationId: R212
-     summary: 'R212: Invite Form'
+     operationId: R216
+     summary: 'R216: Invite Form'
      description: 'Provide invite form. Access: PUB'
      tags:
        - 'M02: Events'
@@ -1016,8 +960,8 @@ paths:
        '200':
          description: 'Ok. Show.'
   post:
-     operationId: R213
-     summary: 'R213: Invite Action'
+     operationId: R217
+     summary: 'R217: Invite Action'
      description: 'Processes the invite form submission. Access: PUB'
      tags:
        - 'M02: Events'
@@ -1050,22 +994,92 @@ paths:
                  value: '/event/{id}/invite'
 
 
+ 
+
+ /report/{id}:
+  get:
+    operationId: R409
+    summary: 'R409: Show report'
+    description: 'Show report. Access: ADM'
+    tags:
+       - 'M04: User Administration'
+    responses:
+       '200':
+         description: 'Ok. Show.'
+
+ /report/{id}/deal:
+  post:
+    operationId: R410
+    summary: 'R410: Deal with report'
+    description: 'Deal with report. Access: ADM'
+    tags:
+      - 'M04: User Administration'
+
+    responses:
+       '302':
+         description: 'Redirect after processing the login credentials.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful process. Redirect to contact us page.'
+                 value: '/contact_us'
+               302Error:
+                 description: 'Failed process. Redirect to contact form.'
+                 value: '/report/{id}/deal'
+
+
+ /notifications:
+  get:
+    operationId: R114
+    summary: 'R114: Show notifications'
+    description: 'Show notifications. Access: USR, ADM'
+    tags:
+       - 'M01: Authentication and Individual Profile'
+    responses:
+       '200':
+         description: 'Ok. Show.'
+
+ /event_organizer/{id_user}/{id_event}:
+  get:
+    operationId: R218
+    summary: 'R218: Turns into an event organizer'
+    description: 'Turns an attendee into an event organizer. Access: USR, '
+    tags:
+       - 'M02: Events'
+    responses:
+       '200':
+         description: 'Ok. Show.'
+  
+ /create/report/{id}:
+  get:
+    operationId: R219
+    summary: 'R219: Creates report'
+    description: 'Creates a report of a certain event. Access: USR, '
+    tags:
+       - 'M02: Events'
+    responses:
+       '200':
+         description: 'Ok. Show.'
+  
  /contact_us:
    get:
-     operationId: R504
-     summary: 'R504: Contact us Form'
+     operationId: R411
+     summary: 'R411: Contact us Form'
      description: 'Provide contact form. Access: PUB'
      tags:
-       - 'M05: Static Pages'
+       - 'M04: User Administration'
      responses:
        '200':
          description: 'Ok. Show [UI06]'
    post:
-     operationId: R505
-     summary: 'R505: Contact us Action'
+     operationId: R412
+     summary: 'R412: Contact us Action'
      description: 'Processes the contact form submission. Access: PUB'
      tags:
-       - 'M05: Static Pages'
+       - 'M04: User Administration'
 
      requestBody:
        required: true
@@ -1099,74 +1113,3 @@ paths:
                302Error:
                  description: 'Failed process. Redirect to contact form.'
                  value: '/contact_us'
-
- /report/{id}:
-  get:
-    operationId: R404
-    summary: 'R404: Show report'
-    description: 'Show report. Access: ADM'
-    tags:
-       - 'M04: User Administration'
-    responses:
-       '200':
-         description: 'Ok. Show.'
-
- /report/{id}/deal:
-  post:
-    operationId: R405
-    summary: 'R405: Deal with report'
-    description: 'Deal with report. Access: ADM'
-    tags:
-      - 'M04: User Administration'
-
-    responses:
-       '302':
-         description: 'Redirect after processing the login credentials.'
-         headers:
-           Location:
-             schema:
-               type: string
-             examples:
-               302Success:
-                 description: 'Successful process. Redirect to contact us page.'
-                 value: '/contact_us'
-               302Error:
-                 description: 'Failed process. Redirect to contact form.'
-                 value: '/report/{id}/deal'
-
-
- /notifications:
-  get:
-    operationId: R112
-    summary: 'R112: Show notifications'
-    description: 'Show notifications. Access: USR, ADM'
-    tags:
-       - 'M01: Authentication and Individual Profile'
-    responses:
-       '200':
-         description: 'Ok. Show.'
-
-components:
-  schemas:
-    Event:
-        type: object
-        properties:
-          id:
-            type: integer
-          title:
-            type: string
-          description:
-            type: string
-          visibility:
-            type: boolean
-          picture:
-            type: string
-            format: byte
-          publish_date:
-            type: string 
-          start_date:
-            type: string
-          final_sate:
-            type: string
-          is_canceled:
-            type: boolean

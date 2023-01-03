@@ -24,7 +24,7 @@
                     <button id="{{$event->id}}" onclick="copyLinkFeed({{$event->id}});">Share</button>
                     @if (Auth::check())
                     <a id="join" type='button' class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstain/event' : 'join/event'}}/{{$event->id}}">
-                    @else <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#ModalCenter" id="attend1" data-bs-placement="top" title="Log In Needed" class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+                    @else <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#ModalCenter" id="attend1" data-bs-placement="top" title="Log In Needed" class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstain/event' : 'join/event'}}/{{$event->id}}">
                     @endif
                     @if($attendee[$event->id])
                         Attending
@@ -74,7 +74,6 @@
 
     function eventSearchHandler() {
         let events = JSON.parse(this.responseText);
-        //console.log(events);
         let body = document.getElementById("eventFeed");
         body.innerHTML = "";
         for(let event of events) {
@@ -84,7 +83,7 @@
             div_eventCard.setAttribute('data-id', event['id']);
 
             let h = document.createElement('a');
-            h.setAttribute('href', "/events/"+event['id']);
+            h.setAttribute('href', "/events/"+event['id']+"/info");
 
             let picture = document.createElement('img');
             picture.setAttribute('src', "/../img_events/"+event['picture']);
@@ -116,7 +115,7 @@
             if(event['visibility']) {
                 let btn = document.createElement('button');
                 btn.setAttribute('id', "copyButton")
-                btn.setAttribute('onclick', "copyLinkFeed("+event['id']+")");
+                btn.setAttribute('onclick', "copyLinkFeed("+event['id']+"/info)");
                 btn.innerHTML = "Share";
                 div_button.appendChild(btn);
 
@@ -128,7 +127,7 @@
                 
                 if ("{!! $attendee[$event->id] !!}") {
                     a_link.setAttribute('style', "float:right; background: CornflowerBlue");
-                    a_link.setAttribute('href', "/abstainEvent"+$event['id']);
+                    a_link.setAttribute('href', "/abstain/event"+$event['id']);
                     a_link.innerHTML = "Showing up";
                 } else {
                     a_link.setAttribute('style', "float:right;");

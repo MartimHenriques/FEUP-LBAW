@@ -53,8 +53,8 @@ Route::get('events/{id}/forum', 'EventController@showOneEventForum');
 
 Route::get('events_create', [EventController::class, 'showForm'])->name('events_create');
 Route::post('events_create', [EventController::class, 'createEvent']);
-Route::get('edit/event/{id}', [EventController::class, 'showEditEventForm'])->name('edit/event');
-Route::post('edit/event/{id}', [EventController::class, 'editEvent']);
+Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
+Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
 
 Route::get('join/event/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstain/event/{id}', [EventController::class, 'abstainEvent']);
