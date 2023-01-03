@@ -11,7 +11,7 @@
         @csrf
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="title">Title</label>
+          <label for="title">Title *</label>
           <input id="title" type="text" name="title" value="{{ old('title') }}" required autofocus>
         </div>
         @if ($errors->has('title'))
@@ -22,7 +22,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="description">Description</label>
-          <input id="description" type="text" name="description" value="{{ old('description') }}" autofocus>
+          <input id="description" type="text" name="description" value="{{ old('description') }}">
         </div>
         @if ($errors->has('description'))
         <span class="error">
@@ -30,8 +30,8 @@
         </span>
         @endif
 
-        <div class="field" style="padding-bottom: 24px;">
-          <label for="visibility">Visibility</label>
+        <div class="field" style="padding-bottom: 25px;">
+          <label for="visibility">Visibility *</label>
           <select name="visibility" required>
               <option value="1">Public</option>
               <option value="0">Private</option>
@@ -45,7 +45,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="picture">Picture</label> 
-          <input id="picture" type="file" name="picture" value="{{ old('picture') }}" accept="image/png, image/gif, image/jpeg ,image/jpg" autofocus>
+          <input id="picture" type="file" name="picture" accept="image/png, image/gif, image/jpeg ,image/jpg">
         </div>
         @if ($errors->has('picture'))
         <span class="error">
@@ -54,7 +54,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="local">Local</label>
+          <label for="local">Location *</label>
           <input id="local" type="text" name="local" value="{{ old('local') }}" required autofocus>
         </div>
         @if ($errors->has('local'))
@@ -64,7 +64,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="start_date">Start date</label>
+          <label for="start_date">Start date *</label>
           <input id="start_date" type="datetime-local" name="start_date" value="{{ old('start_date') }}" required autofocus>
         </div>
         @if ($errors->has('start_date'))
@@ -74,7 +74,7 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <label for="final_date">Final date</label>
+          <label for="final_date">Final date *</label>
           <input id="final_date" type="datetime-local" name="final_date" value="{{ old('final_date') }}" required autofocus>
         </div>
         @if ($errors->has('final_date'))
@@ -84,8 +84,10 @@
         @endif
 
         <div class="field" style="padding-bottom: 24px">
-          <input id="submit" type="submit" name="submit" value="create event">
+          <input id="submit" type="submit" name="submit" value="create event" >
+
         </div>
+
       </form>
     </div>
   </div>

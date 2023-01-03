@@ -360,10 +360,91 @@ paths:
         '200':
          description: 'Ok. Show [UI02]'
 
+  /manageEvents:
+      get:
+        operationId: R403
+        summary: "R403: View Events Management Page"
+        description: "View events management page . Access: ADM"
+        tags:
+          - 'M04: User Administration'
+
+        responses:
+          '200':
+          description: 'Ok. Show [UI03]'
+  
+  /manageReports:
+    get:
+      operationId: R404
+      summary: "R404: View Reports Management Page"
+      description: "View report management page . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI04]'
+
+ /deleteEvent/{id}: 
+    get:
+      operationId: R405
+      summary: "R405: Delete Event"
+      description: "Delete Event . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI03]'
+  
+ /blockUser/{id}: 
+    get:
+      operationId: R406
+      summary: "R406: Block User"
+      description: "Block User . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI02]'
+
+ /unblockUser/{id}: 
+    get:
+      operationId: R407
+      summary: "R407: Unblock User"
+      description: "Unblock User . Access: ADM"
+      tags:
+        - 'M04: User Administration'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+         description: 'Ok. Show [UI02]'
+
  /removeFromEvent/{id_attendee}/{id_event}: 
     get:
-      operationId: R403
-      summary: "R403: Manage Attendees"
+      operationId: R210
+      summary: "R210: Manage Attendees"
       description: "Manages Attendees . Access: OWN"
       tags:
         - 'M04: User Administration'
@@ -382,7 +463,7 @@ paths:
 
       responses:
         '200':
-         description: 'Ok. Show [UI03]'
+         description: 'Ok. Show [UI15]'
 
  /joinEvent/{id}: 
     get:

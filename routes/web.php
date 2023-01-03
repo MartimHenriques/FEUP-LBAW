@@ -72,6 +72,7 @@ Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteCo
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
 Route::post('/editComment', [MessageController::class,'editComment']);
+Route::post('/editComment/cancel', [MessageController::class,'cancelEditComment']);
 
 //invites
 Route::get('/invites/{id}', [InvitesController::class,'showInvite']);

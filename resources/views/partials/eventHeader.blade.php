@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -14,10 +14,10 @@
 
 
 <section id="eventHeader">
-    <img src="/../img_events/{{$event->picture}}" alt="event picture" id="eventPicture" style="width: 40%; aligns-items: center;">
+    <img src="/../img_events/{{$event->picture}}" alt="event picture" id="eventPicture" style="width: 40%;">
     <h3>{{ $event->title }}</h3>
     @if($event->is_canceled)
-        <p>Event canceled</p>
+        <h2 style="text-align:center; color: red; font-weight:bold">Event canceled</h2>
     @endif
     <a id="info" href="/events/{{$event->id}}/info" style="">Info</a>
     <a id="forum" href="/events/{{$event->id}}/forum" style="">Forum</a>
@@ -28,7 +28,7 @@
         </button>
         
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -36,6 +36,7 @@
                             <p style="color: red">Report event</p>
                             <form action="/create/report/{{$event->id}}" method="POST" style="margin-bottom: 0">
                                 @csrf
+                                <label>Why are you reporting this event?</label>
                                 <input type="text" name="motive" placeholder="Motive" required>
                                 <button type="submit">
                                     Send
@@ -47,13 +48,32 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-body">
+                            
+                            @if(count($event->event_organizers) == 1 && $event_organizer)
+                            <p>You are the only event organizer. If you leave, the event will be canceled!</p>
+                            @endif
+                            Are you sure you want to leave?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class='button' href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">Leave event</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
         @if (Auth::check())
-        <a id="join" type='button' class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+        <a @if($attendee) data-toggle="modal" data-target="#cancelModal" @else href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}" @endif id="join" class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" >
         @else 
         <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#myModalLog" id="attend1" data-bs-placement="top" title="Log In Needed"  class='button' style="float:right; {{ ($attendee) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
         @endif
         @if($attendee)
-            Attending
+            Leave Event
         @else
             Attend
         @endif
@@ -81,9 +101,9 @@
     @if (Auth::check())
         @if ($event_organizer)
             @if(!$event->visibility)
-                <a type='button' class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
+                <a class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
             @endif
-            <a type='button' class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
+            <a class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
     @endif
     

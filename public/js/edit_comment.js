@@ -1,4 +1,4 @@
-let content
+
 let msg
 let div
 
@@ -7,10 +7,8 @@ document.querySelectorAll("#editBtn").forEach((e) => {
         
         msg = e.parentElement.parentElement.parentElement.parentElement
         div = e.parentElement.parentElement.parentElement.previousElementSibling.getElementsByTagName('div')[2]
-        content = div.textContent
-        console.log(content.innerText)
         div.innerHTML = "<input id='messageInput' type='text' name='content' placeholder='Write a comment'>";
-        e.parentElement.innerHTML = "<a id='cancelEdit' onclick='cancelEdit()'>Cancel</a> <a id='saveEdit' type='button' class='button' onclick='editComment()'>Save</a>"
+        e.parentElement.innerHTML = "<a id='cancelEdit' onclick='cancelEditComment()'>Cancel</a> <a id='saveEdit' class='button' onclick='editComment()'>Save</a>"
       
     }
     )});
@@ -21,8 +19,11 @@ function editComment() {
     let newContent = div.children[0].value
     sendAjaxRequest('post', '/editComment', {id:id, newContent:newContent, id_event:id_event} , editCommentHandler);
 }
-function cancelEditComment() {
 
+function cancelEditComment() {
+    let id_event = parseInt(window.location.pathname.split('/')[2]);
+    let id = msg.getAttribute('msg-id')
+    sendAjaxRequest('post', '/editComment/cancel', {id:id, id_event:id_event} , editCommentHandler);
 }
 
 

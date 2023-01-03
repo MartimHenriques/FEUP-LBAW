@@ -69,7 +69,7 @@ main>header a.button {
   cursor: pointer;
 
 }
-#eventMiniPicture{
+.eventMiniPicture{
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   object-fit: cover;
@@ -78,17 +78,18 @@ main>header a.button {
 .event-info{
   margin: 0.4em 1em;
 }
-#title{
+.title{
   color: #000000;
   font-size: large;
 }
-#local{
+.local{
   color: #6c757d;
 }
 
 #details *{
   margin-bottom: 0.8em;
 }
+
 .eventCard p {
   margin-bottom: 0em;
 }
@@ -665,7 +666,7 @@ hr {
   text-align: center;
 }
 
-#attendeeInfo:nth-child(2){
+.attendeeInfo:nth-child(2){
   float: right;
 }
 
@@ -772,7 +773,6 @@ hr {
 
 body{margin-top:20px;}
 .section_padding_130 {
-    padding-top: px;
     padding-bottom: 130px;
 }
 .faq_area {
