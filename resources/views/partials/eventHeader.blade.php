@@ -74,26 +74,36 @@
                 Attend
             @endif
         </a>
-    
+
         @if ($event->visibility)
-        
-        <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
-
+            <a class="button" onclick="copyLink()" id="copyButton" style="float:right;">Share</a>
         @endif
-
-    @if (Auth::check())
-        @if ($event_organizer)
-            @if(!$event->visibility)
-                <a class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
+        @if (Auth::check())
+            @if ($event_organizer)
+                @if(!$event->visibility)
+                    <a class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
+                @endif
+                <a class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
             @endif
-            <a class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
-    @endif
-    
-    @endif
 
+        <div class="modal fade" id="myModalLog" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body">
+                You need to login first.
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>        </div>
+            </div>
+        </div>
     
+    @endif  
 </section>
+
+
 <script>
 
     if(window.location.href.indexOf("info")>-1){
