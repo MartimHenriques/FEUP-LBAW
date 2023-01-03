@@ -7,7 +7,7 @@
   <div class="formbg">
     <div class="formbg-inner" style="padding: 48px">
       <span style="padding-bottom: 15px; font-size: 50px;">Edit Event</span>
-      <form id="stripe-login" action="/editEvent/{{$id}}" method="POST">
+      <form id="stripe-login" action="/editEvent/{{$id}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="field" style="padding-bottom: 24px">
@@ -50,7 +50,7 @@
 
         <div class="field" style="padding-bottom: 24px">
           <label for="picture">Picture</label>
-          <input id="picture" type="file" name="picture" value="{{ $event->picture }}" placeholder="{{ $event->picture }}" autofocus>
+          <input id="picture" type="file" name="picture" value="{{ $event->picture }}" placeholder="{{ $event->picture }}" accept="image/png, image/gif, image/jpeg ,image/jpg,gif" autofocus>
         </div>
         @if ($errors->has('picture'))
         <span class="error">
