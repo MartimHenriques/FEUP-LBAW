@@ -7,7 +7,7 @@
     <p id="local">{{$event->local}}</p>
     <p>{{$event->start_date}}</p>
     @if($event->is_canceled)
-    <h3>Event canceled</h3>
+    <h3 style="text-align:center; color: red; font-weight:600">Event canceled</h3>
     @endif
     </div>
   </a>

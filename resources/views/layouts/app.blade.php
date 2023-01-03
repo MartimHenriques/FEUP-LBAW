@@ -25,6 +25,8 @@
         // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/show_sidebar.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/feed_actions.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/like_comment.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/add_comment.js') }}" defer></script>
   <script type="text/javascript" src="{{ asset('js/reply_comment.js') }}" defer></script>
@@ -83,15 +85,5 @@
 
     </main>
     @yield('script')
-    <script>
-      const menu_toggle = document.querySelector('.menu-toggle');
-      const sidebar = document.querySelector('.sidebar');
-
-      menu_toggle.addEventListener('click', () => {
-        menu_toggle.classList.toggle('is-active');
-        sidebar.classList.toggle('is-active');
-
-      });
-    </script>
   </body>
 </html>

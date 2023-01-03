@@ -61,6 +61,7 @@ Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
 Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
 Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
 Route::get('eventOrganizer/{id_user}/{id_event}', [Event_OrganizerController::class, 'makeAnOrganizer'])->name('makeAnOrganizer');
+Route::post('/create/report/{id}', [EventController::class, 'reportEvent']);
 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
 
@@ -71,12 +72,17 @@ Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteCo
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
 Route::post('/editComment', [MessageController::class,'editComment']);
+Route::post('/editComment/cancel', [MessageController::class,'cancelEditComment']);
 
 //invites
 Route::get('/invites/{id}', [InvitesController::class,'showInvite']);
 Route::post('/invites/{id}/deal', [InvitesController::class,'dealWithInvite']);
 Route::get('/event/{id}/invite', [InvitesController::class,'showInviteForm']);
 Route::post('/event/{id}/invite', [InvitesController::class,'create']);
+
+//reports
+Route::post('/report/{id}/deal', [ReportsController::class,'dealWithReport']);
+Route::get('/report/{id}', [ReportsController::class,'showReportForm']);
 
 //notifications
 Route::get('/notifications', [NotificationsController::class, 'showNotifications']);

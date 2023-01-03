@@ -19,11 +19,10 @@
                     echo   '<a href="/invites/'.$notification->id.'" class="my-1 w-100 btn btn-outline-secondary">'.$notification->content.'</a>';
                     echo     '</div>';
                     echo   '</div>';
-                }
-                else {
+                } else if($notification->type == "Message") {
                     echo '<div class="card border-0">';
                     echo  '<div class="card-header" id="headingTwo">';
-                    echo   '<h6>'.$notification->content.'</h6>';
+                    echo   '<a href="/events/'.$notification->id_event.'/forum" class="my-1 w-100 btn btn-outline-secondary">You have a new messsage!</a>';
                     echo     '</div>';
                     echo   '</div>';
                 }
@@ -47,6 +46,23 @@
         // Pusher.logToConsole = false;
         var pusher = new Pusher('a021cd3183fc29125e01', {
             cluster: 'eu',
+        });
+        var channel2 = pusher.subscribe('notifications-messages');
+        channel2.bind('event-message-{{Auth::id()}}', function(data) {
+            //red_dot(1);
+            let body = document.getElementById("not-list");
+            let div_pop = document.createElement("div");
+            div_pop.class = "card border-0";
+            let button = document.createElement("a");
+            button.setAttribute("href", "/events/" + data.event_id + "/forum");
+            button.classList.add("btn");
+            button.classList.add("btn-outline-secondary");
+            button.classList.add("my-1");
+            button.classList.add("w-100");
+            button.innerText = data.message;
+            button.style.color = "#198754";
+            div_pop.appendChild(button);
+            body.prepend(div_pop);
         });
         var channel3 = pusher.subscribe('notifications-invites');
         channel3.bind('event-invite-{{Auth::id()}}', function(data) {
@@ -94,10 +110,5 @@
     }
 </script>
 
-<?php
-//  if (Auth::check()) {
-//     echo '<script type="text/javascript"> red_dot('.$count.') </script>';
-//  }
-?>
 
 

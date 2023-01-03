@@ -84,7 +84,6 @@ class Event extends Model
 	public function attendees()
 	{
 		return $this->belongsToMany(User::class, 'attendee', 'id_event', 'id_user');
-		//return $this->hasMany(User::class, Attendee::class, 'id_event', 'id', 'id', 'id_user');
 	}
 
 	public function event_organizers()

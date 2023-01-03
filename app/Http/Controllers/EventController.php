@@ -14,6 +14,7 @@ use App\Models\Event_Organizer;
 use App\Models\User;
 use App\Models\Attendee;
 use App\Models\Tag;
+use App\Models\Report;
 
 
 class EventController extends Controller
@@ -160,8 +161,8 @@ class EventController extends Controller
       $start_date = $request->input('start_date');
       $final_date = $request->input('final_date');
 
-      if (($start_date > $final_date)) {
-        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      if (($start_date >= $final_date) || ($start_date < $current_date) || ($final_date < $current_date)) {
+        return redirect()->back(); 
       }
 
       $event = new Event();
@@ -231,8 +232,8 @@ class EventController extends Controller
       $start_date = $request->input('start_date');
       $final_date = $request->input('final_date');
 
-      if (($start_date > $final_date)) {
-        return redirect()->back(); //TODO  add hours:min to add condition ($start_date < $current_date) || ($final_date < $current_date)
+      if (($start_date >= $final_date) || ($start_date < $current_date) || ($final_date < $current_date)) {
+        return redirect()->back(); 
       }
 
       //$this->authorize('createEvent', $event);
@@ -311,18 +312,21 @@ class EventController extends Controller
      */
     public function abstainEvent($id) {
       //SEE LATER > dont delete everything related to this -> keep info
-
-      
-      $event_organizer = Event_Organizer::where(['id_event' => $id]) -> count();
-
-      if($event_organizer == 1){
-        Event::where('id', $id)->update(['is_canceled' => 1]);
-      }
-
-
+      $event_organizer = Event_Organizer::where(['id_event' => $id])->where(['id_user' => Auth::id()]);
       $attendee = Attendee::where(['id_user' => Auth::id(),'id_event' => $id]);
-      $attendee->delete();
-
+      if($event_organizer){
+        $count = Event_Organizer::where(['id_event' => $id]) -> count();
+        $event_organizer->delete();
+        if($count == 1){
+          Event::where('id', $id)->update(['is_canceled' => 1]);
+        }
+        else{
+          $attendee->delete();
+        }
+      } 
+      else{
+        $attendee->delete();
+      }
 
       return redirect()->back();
     }
@@ -347,6 +351,15 @@ class EventController extends Controller
 
       $event->save();
 
+      return redirect()->back();
+    }
+    public function reportEvent(Request $request, $id){
+      $report = new Report();
+      $report->id_reporter = Auth::id();
+      $report->id_event = $id;
+      $report->motive = $request->get('motive');
+      $report->date = now();
+      $report->save();
       return redirect()->back();
     }
 }

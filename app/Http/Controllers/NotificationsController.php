@@ -31,13 +31,6 @@ class NotificationsController extends Controller
         return view('pages.notifications', ['notifications' => $my_notifications]);
     }
 
-    public function managerNotification($id) {
-        $notification = Notification::find($id);
-        $notification->read = true;
-        $notification->save();
-        return redirect('/event/'.$notification->invitation_project_id.'/members');
-    }
-
     /*
     public function clearNotifications($id) {
         $notifications = Notification::where('user_id','=',$id)->get();
