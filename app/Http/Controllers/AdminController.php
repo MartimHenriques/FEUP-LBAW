@@ -62,10 +62,17 @@ class AdminController extends Controller
      *
      * @return Redirect back to the page
      */
-    public function deleteUser($id){
+    public function deleteUser($id){ 
 
       $count = User::where('username','like','Anonymous_%')->count();
       $username = "Anonymous_" . strval($count);
+
+      $user->username = $username;
+      $user->picture = "default.png";
+      $user->email = $username . "@anonymous.com";
+      $user->password = Hash::make(Str::random(10));
+      $user->save();
+      
       DB::table('users')->where(['id'=>$id])->update(['picture'=>'', 'username'=>$username]);
 
       $events = Event_Organizer::where(['id_user'=>$id])->pluck('id_event');

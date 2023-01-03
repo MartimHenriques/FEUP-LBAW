@@ -21,7 +21,7 @@
                 </div>
                 <div class="field">
                     <label for="event">Event:</label>
-                    <input name="event" type="text" placeholder="event" value="{{$event->event_name}}" disabled>
+                    <input name="event" type="text" placeholder="event" value="{{$event->title}}" disabled>
                 </div>
                 <div class="field">
                     <label for="state">State:</label>

@@ -46,7 +46,7 @@ class StaticPagesController extends Controller
 
       Mail::to('wemeet33@gmail.com')->send(new ContactUs($request));
          
-      return redirect()->route('contactus');
+      return redirect()->route('contact_us');
   }
 
 

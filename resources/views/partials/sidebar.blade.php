@@ -17,15 +17,15 @@
     @if (Auth::check())
     @if (Auth::user()->is_admin)
     <h4>Administration</h4>
-    <a href="{{url('/manageUsers')}}" class="menu-item"><i class="bi bi-person-fill-gear"></i>Users</a>
-    <a href="{{url('/manageEvents')}}" class="menu-item"><i class="bi bi-calendar-event-fill"></i>Events</a>
-    <a href="{{url('/manageReports')}}" class="menu-item"><i class="bi bi-exclamation-circle-fill"></i>Reports</a>
+    <a href="{{url('/manage/users')}}" class="menu-item"><i class="bi bi-person-fill-gear"></i>Users</a>
+    <a href="{{url('/manage/events')}}" class="menu-item"><i class="bi bi-calendar-event-fill"></i>Events</a>
+    <a href="{{url('/manage/reports')}}" class="menu-item"><i class="bi bi-exclamation-circle-fill"></i>Reports</a>
     @else
-    <a href="{{ url('/myevents') }}" class="menu-item"><i class="bi bi-person-fill"></i> My events</a>
+    <a href="{{ url('/my_events') }}" class="menu-item"><i class="bi bi-person-fill"></i> My events</a>
     <a href="{{ url('/calendar') }}" class="menu-item"><i class="bi bi-calendar-fill"></i> My calendar</a>
     <a href="{{ url('/notifications') }}" class="menu-item"><i class="bi bi-bell-fill"></i> Notifications</a>
     @endif
-    <a id="createButton" class="button" href="{{ route('eventsCreate') }}">Create event <i class="bi bi-plus" style="font-size:2em"></i></a>
+    <a id="createButton" class="button" href="/events_create">Create event <i class="bi bi-plus" style="font-size:2em"></i></a>
     @endif
 
 </nav>

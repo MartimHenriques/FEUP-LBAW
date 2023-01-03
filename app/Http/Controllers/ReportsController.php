@@ -31,7 +31,7 @@ class ReportsController extends Controller
         $report = Report::find($not->id_report);
         $event = Event::find($report->id_event);
         $user = User::find($report->id_reporter);
-        return view('pages.reportForm', ['report' => Report::find($id), 'event' => $event, 'user' => $user, 'not' => $not]);
+        return view('pages.reportForm', ['report' => $report, 'event' => $event, 'user' => $user, 'not' => $not]);
     }
 
     public function dealWithReport(int $id, Request $request)
@@ -45,7 +45,7 @@ class ReportsController extends Controller
             $report->save();
             $not->read = true;
             $not->save();
-            return redirect('/manageReports');
+            return redirect('/manage/reports');
         }
         else {
             $report->state = 'Banned';
@@ -55,7 +55,7 @@ class ReportsController extends Controller
             $not->read = true;
             $not->save();
         }
-        return redirect('/manageReports');
+        return redirect('/manage/reports');
     }
 }
 

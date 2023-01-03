@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a type='button' class='button' href="/{{($attendee) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">Leave event</a>
+                        <a type='button' class='button' href="/{{($attendee) ? 'abstain/event' : 'join/event'}}/{{$event->id}}">Leave event</a>
                     </div>
                     
                 </div>
@@ -85,7 +85,7 @@
             @if(!$event->visibility)
                 <a type='button' class="button" style="float:right;" href="/event/{{$event->id}}/invite">Invite</a>
             @endif
-            <a type='button' class="button" style="float:right;" href="/editEvent/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
+            <a type='button' class="button" style="float:right;" href="/edit/event/{{$event->id}}"><i class="bi bi-pencil fs-3"></i></a>
         @endif
     @endif
     

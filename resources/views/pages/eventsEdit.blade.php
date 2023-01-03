@@ -7,7 +7,7 @@
   <div class="formbg">
     <div class="formbg-inner" style="padding: 48px">
       <span style="padding-bottom: 15px; font-size: 50px;">Edit Event</span>
-      <form id="stripe-login" action="/editEvent/{{$id}}" method="POST" enctype="multipart/form-data">
+      <form id="stripe-login" action="/edit/event/{{$id}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="field" style="padding-bottom: 24px">

@@ -73,12 +73,13 @@ paths:
                  value: '/login'
 
  /logout:
-   post:
+   get:
      operationId: R103
      summary: 'R103: Logout Action'
      description: 'Logout the current authenticated user. Access: USR, ADM'
      tags:
        - 'M01: Authentication and Individual Profile'
+
      responses:
        '302':
          description: 'Redirect after processing logout.'
@@ -101,7 +102,6 @@ paths:
      responses:
        '200':
          description: 'Ok. Show [UI07]'
-
    post:
      operationId: R105
      summary: 'R105: Register Action'
@@ -142,7 +142,7 @@ paths:
                  description: 'Failed authentication. Redirect to login form.'
                  value: '/login'
 
- /profile:
+ /profile/{id}:
     get:
       operationId: R106
       summary: 'R106: View User Profile'
@@ -157,15 +157,25 @@ paths:
           description: 'Not Found.'
 
 
- /profile/editProfile:
-    post:
-      operationId: R107
-      summary: 'R107: Edit Profile'
-
-      description: 'Edit profile information. Access: OWN'
+ /profile/{id}/edit:
+    get:
+      operationId: R107 
+      summary: 'R107: Edit Form'
+      description: 'Provide Edit Registration Form. Access: USR'
       tags:
         - 'M01: Authentication and Individual Profile'
 
+      responses:
+        '200':
+          description: 'Ok. Show'
+        '404':
+          description: 'Not Found.'
+    post:
+      operationId: R108
+      summary: 'R108: Edit Action'
+      description: 'Edit profile information. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
       requestBody:
         required: true
         content:
@@ -189,10 +199,117 @@ paths:
              examples:
                302Success:
                  description: 'Successful update. Redirect to edit user profile.'
-                 value: '/profile/editProfile'
+                 value: '/profile/{id}/edit'
                302Failure:
                  description: 'Update Failed. Redirect to edit profile form.'
-                 value: '/profile/editProfile'
+                 value: '/profile/{id}/edit'
+
+ /profile/{id}/delete:
+    get:
+      operationId: R108
+      summary: 'R108: Delete'
+      description: 'Provide Delete Account Option'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      responses:
+        '200':
+          description: 'Ok. Show'
+        '404':
+          description: 'Not Found.'
+
+
+ /forgot_password:
+   get:
+     operationId: R109
+     summary: 'R109: Forgot Password Form'
+     description: 'Provide user forgot password form. Access: PUB'
+     tags:
+       - 'M01: Authentication and Individual Profile'
+     responses:
+       '200':
+         description: 'Ok. Show'
+   post:
+     operationId: R110
+     summary: 'R110: Forgot Password Action'
+     description: 'Processes forgot password form submission. Access: USR'
+     tags:
+       - 'M01: Authentication and Individual Profile'
+     requestBody:
+       required: true
+       content:
+         application/x-www-form-urlencoded:
+           schema:
+             type: object
+             properties:
+               email:
+                 type: string
+             required:
+                  - email
+
+     responses:
+       '302':
+         description: 'Redirect after processing forgot password information.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful authentication. Redirect to user profile.'
+                 value: '/forgot_password'
+               302Failure:
+                 description: 'Failed authentication. Redirect to recover password form.'
+                 value: '/forgot_password'
+
+ /recover_password:
+   get:
+     operationId: R111
+     summary: 'R111: Recover Password Forms'
+     description: 'Provide user recover password forms. Access: USR'
+     tags:
+       - 'M01: Authentication and Individual Profile'
+     responses:
+       '200':
+         description: 'Ok. Show'
+   post:
+     operationId: R112
+     summary: 'R112: Recover Password Action'
+     description: 'Processes recover password form submission. Access: USR'
+     tags:
+       - 'M01: Authentication and Individual Profile'
+     requestBody:
+       required: true
+       content:
+         application/x-www-form-urlencoded:
+           schema:
+             type: object
+             properties:
+               token:
+                  type: string
+               email:
+                 type: string
+               password: 
+                 type: string
+             required:
+                  - email
+                  - token
+                  - password
+
+     responses:
+       '302':
+         description: 'Redirect after processing recover password information.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful authentication. Redirect to user profile.'
+                 value: '/login'
+               302Failure:
+                 description: 'Failed authentication. Redirect to recover password form.'
+                 value: '/recover_password'
 
  /events:
   get:
@@ -228,6 +345,29 @@ paths:
               description: Ok. Show [UI15]
             '400':
               description: Bad Request
+
+ /events/{id}/forum:
+  get:
+      operationId: R202
+      summary: "R202: Show Event Card"
+      description: "Shows Event's information. Access: PUB, USR"
+      tags:
+        - 'M02: Events'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+            '200':
+              description: Ok. Show [UI15]
+            '400':
+              description: Bad Request
+
+    
 
  /eventsCreate:
   get:
@@ -292,7 +432,7 @@ paths:
                   description: 'Creation failed. Redirect to event form.'
                   value: '/eventsCreate'
 
- /myevents:
+ /my_events:
   get:
       operationId: R205
       summary: "R205: View events created by user"
@@ -328,6 +468,31 @@ paths:
       responses:
         '200':
           description: 'OK. Show [UI01]'
+  
+ /user/help:
+    get:
+      operationId: R502
+      summary: 'R502: View User Help Page'
+      description: "View User Help Page. Access: PUB"
+      tags:
+        - 'M05: Static pages'
+      responses:
+        '200':
+          description: 'OK. Show'     
+
+ /about_us:
+    get:
+      operationId: R503
+      summary: 'R502: View About Us Page'
+      description: "View About Us Page. Access: PUB"
+      tags:
+        - 'M05: Static pages'
+      responses:
+        '200':
+          description: 'OK. Show'    
+
+  
+
 
  /deleteUser/{id}: 
     get:
@@ -457,6 +622,358 @@ paths:
         '400':
           description: Bad Request
 
+ /api/eventsSearch:
+  post:
+    operationId: R200
+    summary: "R200: Search for Events"
+    description: "Searches for events in the feed. Access: PUB"
+    tags:
+      - 'M02: Events'
+
+    responses:
+      '302':
+        description: 'Redirect after processing the post of a comment.'
+        headers:
+          Location:
+            schema:
+              type: string
+            examples:
+              302Success:
+                description: 'Successful search.'
+                value: '/events'
+              302Error:
+                description: 'Search failed.'
+                value: '/events'
+
+
+ /api/event/comment/create:
+   post:
+    operationId: R301
+    summary: "R301: Post Comment"
+    description: "Posts the comment in the forum. Access: USR"
+    tags:
+      - 'M03: Messages and Forum'
+
+    responses:
+      '302':
+        description: 'Redirect after processing the post of a comment.'
+        headers:
+          Location:
+            schema:
+              type: string
+            examples:
+              302Success:
+                description: 'Successful creation. Redirect to forum page.'
+                value: '/events/{id}/forum'
+              302Error:
+                description: 'Creation failed. Redirect to formum page.'
+                value: '/events/{id}/forum'
+
+
+ /api/event/reply/create:
+  post:
+    operationId: R302
+    summary: "R301: Post Reply"
+    description: "Posts the Reply in the forum. Access: USR"
+    tags:
+      - 'M03: Messages and Forum'
+
+    responses:
+      '302':
+        description: 'Redirect after processing the reply of a comment.'
+        headers:
+          Location:
+            schema:
+              type: string
+            examples:
+              302Success:
+                description: 'Successful creation. Redirect to forum page.'
+                value: '/events/{id}/forum'
+              302Error:
+                description: 'Creation failed. Redirect to formum page.'
+                value: '/events/{id}/forum'
+
+ /api/event/comment/delete/{id}: 
+  get:
+    operationId: R303
+    summary: "R303: Delete Message"
+    description: "Deletes Message. Access: USR"
+    tags:
+      - 'M03: Messages and Forum'
+
+    responses:
+      '200':
+       description: 'Ok.'
+
+ /api/comment/vote/create: 
+  post:
+    operationId: R304
+    summary: "R304: Vote in Comment"
+    description: "Votes in comment. Access: USR"
+    tags:
+      - 'M03: Messages and Forum'
+
+    responses:
+      '302':
+        description: 'Redirect after processing the addition of vote in a comment.'
+        headers:
+          Location:
+            schema:
+              type: string
+            examples:
+              302Success:
+                description: 'Successful update. Redirect to forum page.'
+                value: '/events/{id}/forum'
+              302Error:
+                description: 'Update failed. Redirect to formum page.'
+                value: '/events/{id}/forum'
+
+ /api/comment/vote/delete:
+  post:
+    operationId: R305
+    summary: "R305: Delete Vote"
+    description: "Deletes vote in the comment. Access: USR"
+    tags:
+      - 'M03: Messages and Forum'
+
+    responses:
+      '302':
+        description: 'Redirect after processing the deletion of vote of in a comment.'
+        headers:
+          Location:
+            schema:
+              type: string
+            examples:
+              302Success:
+                description: 'Successful update. Redirect to forum page.'
+                value: '/events/{id}/forum'
+              302Error:
+                description: 'Update failed. Redirect to formum page.'
+                value: '/events/{id}/forum'
+
+ /edit_comment:
+  post:
+    operationId: R306
+    summary: "R306: Edit Message"
+    description: "Edits Message in Forum. Access: USR"
+    tags:
+      - 'M03: Messages and Forum'
+
+    responses:
+      '302':
+        description: 'Redirect after processing the edition of a message.'
+        headers:
+          Location:
+            schema:
+              type: string
+            examples:
+              302Success:
+                description: 'Successful update. Redirect to forum page.'
+                value: '/events/{id}/forum'
+              302Error:
+                description: 'Update failed. Redirect to formum page.'
+                value: '/events/{id}/forum'
+
+ /edit_comment/cancel:
+  post:
+    operationId: R307
+    summary: "R307: Cancel Edition"
+    description: "Cancels edition of message. Access: USR"
+    tags:
+      - 'M03: Messages and Forum'
+
+    responses:
+      '302':
+        description: 'Redirect after processing the reply of a comment.'
+        headers:
+          Location:
+            schema:
+              type: string
+            examples:
+              302Success:
+                description: 'Successful action. Redirect to forum page.'
+                value: '/events/{id}/forum'
+              302Error:
+                description: 'Action failed. Redirect to formum page.'
+                value: '/events/{id}/forum'
+
+
+ /invites/{id}:
+  get:
+    operationId: R210
+    summary: 'R210: Shows Invite'
+    description: 'Shows Invite. Access: PUB'
+    tags:
+       - 'M02: Events'
+    responses:
+       '200':
+         description: 'Ok. Show.'
+
+ /invites/{id}/deal:
+  post: 
+    operationId: R211
+    summary: 'R211: Invite Action'
+    description: 'Processes the invite decision. Access: PUB'
+    tags:
+      - 'M02: Events'
+
+    responses:
+       '302':
+         description: 'Redirect after processing the invite decision.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful process. Redirect to event page.'
+                 value: '/event/{id}/info'
+               302Error:
+                 description: 'Failed process. Redirect to invites deal form.'
+                 value: '/invites/{id}/deal'
+
+
+ /event/{id}/invite: 
+  get:
+     operationId: R212
+     summary: 'R212: Invite Form'
+     description: 'Provide invite form. Access: PUB'
+     tags:
+       - 'M02: Events'
+     responses:
+       '200':
+         description: 'Ok. Show.'
+  post:
+     operationId: R213
+     summary: 'R213: Invite Action'
+     description: 'Processes the invite form submission. Access: PUB'
+     tags:
+       - 'M02: Events'
+
+     requestBody:
+       required: true
+       content:
+         application/x-www-form-urlencoded:
+           schema:
+             type: object
+             properties:
+               username:    
+                 type: string
+             required:
+                   - username
+
+     responses:
+       '302':
+         description: 'Redirect after processing the login credentials.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful authentication. Redirect to events page.'
+                 value: '/event/{id}/info'
+               302Error:
+                 description: 'Failed authentication. Redirect to login form.'
+                 value: '/event/{id}/invite'
+
+
+ /contact_us:
+   get:
+     operationId: R504
+     summary: 'R504: Contact us Form'
+     description: 'Provide contact form. Access: PUB'
+     tags:
+       - 'M05: Static Pages'
+     responses:
+       '200':
+         description: 'Ok. Show [UI06]'
+   post:
+     operationId: R505
+     summary: 'R505: Contact us Action'
+     description: 'Processes the contact form submission. Access: PUB'
+     tags:
+       - 'M05: Static Pages'
+
+     requestBody:
+       required: true
+       content:
+         application/x-www-form-urlencoded:
+           schema:
+             type: object
+             properties:
+               name:
+                type: string 
+               message:    
+                 type: string
+               email:          
+                 type: string
+             required:
+                  - name
+                  - message 
+                  - email 
+
+     responses:
+       '302':
+         description: 'Redirect after processing the contact form.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful process. Redirect to contact us page.'
+                 value: '/contact_us'
+               302Error:
+                 description: 'Failed process. Redirect to contact form.'
+                 value: '/contact_us'
+
+ /report/{id}:
+  get:
+    operationId: R404
+    summary: 'R404: Show report'
+    description: 'Show report. Access: ADM'
+    tags:
+       - 'M04: User Administration'
+    responses:
+       '200':
+         description: 'Ok. Show.'
+
+ /report/{id}/deal:
+  post:
+    operationId: R405
+    summary: 'R405: Deal with report'
+    description: 'Deal with report. Access: ADM'
+    tags:
+      - 'M04: User Administration'
+
+    responses:
+       '302':
+         description: 'Redirect after processing the login credentials.'
+         headers:
+           Location:
+             schema:
+               type: string
+             examples:
+               302Success:
+                 description: 'Successful process. Redirect to contact us page.'
+                 value: '/contact_us'
+               302Error:
+                 description: 'Failed process. Redirect to contact form.'
+                 value: '/report/{id}/deal'
+
+
+ /notifications:
+  get:
+    operationId: R112
+    summary: 'R112: Show notifications'
+    description: 'Show notifications. Access: USR, ADM'
+    tags:
+       - 'M01: Authentication and Individual Profile'
+    responses:
+       '200':
+         description: 'Ok. Show.'
+
 components:
   schemas:
     Event:
@@ -479,6 +996,5 @@ components:
             type: string
           final_sate:
             type: string
-
- 
-
+          is_canceled:
+            type: boolean

@@ -228,6 +228,7 @@ class EventController extends Controller
      */
     public function editEvent(Request $request, $id)
     {
+      $current_date = Carbon::now();
       $event = Event::find($id);
       $start_date = $request->input('start_date');
       $final_date = $request->input('final_date');
@@ -312,9 +313,12 @@ class EventController extends Controller
      */
     public function abstainEvent($id) {
       //SEE LATER > dont delete everything related to this -> keep info
-      $event_organizer = Event_Organizer::where(['id_event' => $id])->where(['id_user' => Auth::id()]);
-      $attendee = Attendee::where(['id_user' => Auth::id(),'id_event' => $id]);
+
+      // q: find if user is organizer
+      $event_organizer = Event_Organizer::where(['id_user' => Auth::id(),'id_event' => $id]);
+
       if($event_organizer){
+
         $count = Event_Organizer::where(['id_event' => $id]) -> count();
         $event_organizer->delete();
         if($count == 1){
@@ -327,7 +331,7 @@ class EventController extends Controller
       else{
         $attendee->delete();
       }
-
+ 
       return redirect()->back();
     }
          /**
@@ -358,7 +362,7 @@ class EventController extends Controller
       $report->id_reporter = Auth::id();
       $report->id_event = $id;
       $report->motive = $request->get('motive');
-      $report->date = now();
+      $report->date = Carbon::now();
       $report->save();
       return redirect()->back();
     }

@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </td>
-            <td><a id="block" type='button' class='button' style="{{ ($user->is_blocked) ? 'background-color: CornflowerBlue' : '' }}" href="/{{(!$user->is_blocked) ? 'blockUser' : 'unblockUser'}}/{{$user->id}}">
+            <td><a id="block" type='button' class='button' style="{{ ($user->is_blocked) ? 'background-color: CornflowerBlue' : '' }}" href="/{{(!$user->is_blocked) ? 'block/user' : 'unblock/user'}}/{{$user->id}}">
                     @if(!$user->is_blocked)
                         Block
                     @else

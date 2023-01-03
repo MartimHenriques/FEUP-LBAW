@@ -45,7 +45,7 @@
         <a @if (Auth::check()) href="{{ url('events') }}" @else href="{{ url('/') }}" @endif><img id="logo" src="/../logo.png" alt="logo"></a>
   
         @if (Auth::check())
-        <a href="{{ url('/profile') }}">
+        <a href="/profile/{{Auth::user()->id}}">
           @if (empty(Auth::user()->picture)) 
           <img class="mini-picture" src="/../avatars/default.png" alt="Avatar">
           @else
@@ -77,9 +77,9 @@
           <p class="col-md-4 mb-0">© 2022 WeMeet, Inc</p>
       
           <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="/userHelp" class="nav-link px-2">User help</a></li>
-            <li class="nav-item"><a href="/contactUs" class="nav-link px-2">Contact us</a></li>
-            <li class="nav-item"><a href="/aboutUS" class="nav-link px-2">About us</a></li>
+            <li class="nav-item"><a href="/user/help" class="nav-link px-2">User help</a></li>
+            <li class="nav-item"><a href="/contact_us" class="nav-link px-2">Contact us</a></li>
+            <li class="nav-item"><a href="/about_us" class="nav-link px-2">About us</a></li>
           </ul>
       </footer>
 

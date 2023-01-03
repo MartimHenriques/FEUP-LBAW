@@ -22,18 +22,19 @@ class UserController extends Controller
      *
      * @param  int  $id
      * @return Response
-     */
-    public function showProfile()
+     */ 
+    public function showProfile($id)
     {
 
-      $users= User::find(Auth::user()->id);
+      $users = User::find($id);
       $this -> authorize('show', $users);
+
       return view('pages.profile', ['users' => $users]);
     }
 
-    public function showEditProfile()
+    public function showEditProfile($id)
     {
-      $users= User::find(Auth::user()->id);
+      $users= User::find($id);
       return view('pages.editProfile', ['users' => $users]);
     }
 

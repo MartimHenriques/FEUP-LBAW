@@ -29,7 +29,7 @@
                 </div>
             <div class="editProfile">
                 <div class="col-sm-3">
-                    <a class="button" href="{{ url('/profile/editProfile') }}"> Edit Profile </a> 
+                    <a class="button" href="/profile/{{$users->id}}/edit"> Edit Profile </a> 
                 </div>
             </div>
         </div>  
@@ -53,7 +53,7 @@
         </div>
         <div class="modal-footer">
             <a class="button" data-dismiss="modal">Close</a>
-            <a class="button" href="{{ url('/profile/delete') }}" style="background-color:#DC143C;"> Delete</a>
+            <a class="button" href="/profile/{{$users->id}}/delete" style="background-color:#DC143C;"> Delete</a>
         </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
                 margin: 20px;">
 
 
-<form action="{{ route('saveChanges') }}" method="POST" enctype="multipart/form-data">
+<form action="/profile/{{$users->id}}/edit" method="POST" enctype="multipart/form-data">
     <div class="container-pic-editProfile">
                     @if (empty($users->picture)) 
                     <img class="profile-picture" src="/../avatars/default.png" alt="Avatar">

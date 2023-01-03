@@ -22,7 +22,7 @@
             <div>
                 @if ($event->visibility)
                     <button id="{{$event->id}}" onclick="copyLinkFeed({{$event->id}});">Share</button>
-                    <a id="join" type='button' class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+                    <a id="join" type='button' class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstain/event' : 'join/event'}}/{{$event->id}}">
                     @if($attendee[$event->id])
                         Attending
                     @else
@@ -114,7 +114,7 @@
                     a_link.innerHTML = "Showing up";
                 } else {
                     a_link.setAttribute('style', "float:right;");
-                    a_link.setAttribute('href', "/joinEvent" + event['id']);
+                    a_link.setAttribute('href', "/join/event" + event['id']);
                     a_link.innerHTML = "Show up";   
                 }
                 

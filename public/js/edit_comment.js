@@ -17,13 +17,13 @@ function editComment() {
     let id_event = parseInt(window.location.pathname.split('/')[2]);
     let id = msg.getAttribute('msg-id')
     let newContent = div.children[0].value
-    sendAjaxRequest('post', '/editComment', {id:id, newContent:newContent, id_event:id_event} , editCommentHandler);
+    sendAjaxRequest('post', '/edit/comment', {id:id, newContent:newContent, id_event:id_event} , editCommentHandler);
 }
 
 function cancelEditComment() {
     let id_event = parseInt(window.location.pathname.split('/')[2]);
     let id = msg.getAttribute('msg-id')
-    sendAjaxRequest('post', '/editComment/cancel', {id:id, id_event:id_event} , editCommentHandler);
+    sendAjaxRequest('post', '/edit/comment/cancel', {id:id, id_event:id_event} , editCommentHandler);
 }
 
 

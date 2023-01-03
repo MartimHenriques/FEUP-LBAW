@@ -17,33 +17,32 @@ use Illuminate\Support\Facades\Route;
 |
 */ 
 
-// Authentications
+// Authentications 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
-// edit profile
-Route::get('profile/editProfile', 'UserController@showEditProfile');
-Route::post('profile/editProfile', 'UserController@saveChanges') -> name('saveChanges');
-
 // Profile
-Route::get('profile', 'UserController@showProfile');
-Route::get('profile/delete', [UserController::class, 'deleteProfile']) -> name('deleteProfile');
+Route::get('profile/{id}', 'UserController@showProfile');
+// edit profile
+Route::get('profile/{id}/edit', 'UserController@showEditProfile');
+Route::post('profile/{id}/edit', 'UserController@saveChanges') -> name('saveChanges');
+Route::get('profile/{id}/delete', [UserController::class, 'deleteProfile']) -> name('deleteProfile');
 
 //home
 Route::get('/', 'HomeController@show');
 
 //admin
-Route::get('deleteUser/{id}', [AdminController::class, 'deleteUser']) -> name('deleteUser');
-Route::get('deleteEvent/{id}', [AdminController::class, 'deleteEvent']) -> name('deleteEvent');
-Route::get('manageUsers', 'AdminController@showUsers');
-Route::get('manageEvents', 'AdminController@showEvents');
-Route::get('manageReports', 'AdminController@showReports');
+Route::get('delete/user/{id}', [AdminController::class, 'deleteUser']) -> name('deleteUser');
+Route::get('delete/event/{id}', [AdminController::class, 'deleteEvent']) -> name('deleteEvent');
+Route::get('manage/users', 'AdminController@showUsers');
+Route::get('manage/events', 'AdminController@showEvents');
+Route::get('manage/reports', 'AdminController@showReports');
 
-Route::get('blockUser/{id}', 'AdminController@blockUser');
-Route::get('unblockUser/{id}', 'AdminController@unblockUser');
+Route::get('block/user/{id}', 'AdminController@blockUser');
+Route::get('unblock/user/{id}', 'AdminController@unblockUser');
 
 //feed
 Route::get('events', 'EventController@showEvents');
@@ -52,15 +51,15 @@ Route::get('events', 'EventController@showEvents');
 Route::get('events/{id}/info', 'EventController@showOneEventInfo')->name('event');
 Route::get('events/{id}/forum', 'EventController@showOneEventForum');
 
-Route::get('eventsCreate', [EventController::class, 'showForm'])->name('eventsCreate');
-Route::post('eventsCreate', [EventController::class, 'createEvent']);
-Route::get('editEvent/{id}', [EventController::class, 'showEditEventForm'])->name('editEvent');
-Route::post('editEvent/{id}', [EventController::class, 'editEvent']);
+Route::get('events_create', [EventController::class, 'showForm'])->name('events_create');
+Route::post('events_create', [EventController::class, 'createEvent']);
+Route::get('edit/event/{id}', [EventController::class, 'showEditEventForm'])->name('edit/event');
+Route::post('edit/event/{id}', [EventController::class, 'editEvent']);
 
-Route::get('joinEvent/{id}', [EventController::class, 'joinEvent']);
-Route::get('abstainEvent/{id}', [EventController::class, 'abstainEvent']);
-Route::get('removeFromEvent/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
-Route::get('eventOrganizer/{id_user}/{id_event}', [Event_OrganizerController::class, 'makeAnOrganizer'])->name('makeAnOrganizer');
+Route::get('join/event/{id}', [EventController::class, 'joinEvent']);
+Route::get('abstain/event/{id}', [EventController::class, 'abstainEvent']);
+Route::get('remove_from_event/{id_attendee}/{id_event}', [EventController::class, 'removeFromEvent']) -> name('removeFromEvent');
+Route::get('event_organizer/{id_user}/{id_event}', [Event_OrganizerController::class, 'makeAnOrganizer'])->name('makeAnOrganizer');
 Route::post('/create/report/{id}', [EventController::class, 'reportEvent']);
 
 Route::post('/api/eventsSearch', [EventController::class,'searchEvents']);
@@ -71,8 +70,8 @@ Route::post('/api/event/reply/create', [MessageController::class,'createReply'])
 Route::get('/api/event/comment/delete/{id}', [MessageController::class,'deleteComment']);
 Route::post('/api/comment/vote/create', [MessageController::class,'vote']);
 Route::post('/api/comment/vote/delete', [MessageController::class,'deleteVote']);
-Route::post('/editComment', [MessageController::class,'editComment']);
-Route::post('/editComment/cancel', [MessageController::class,'cancelEditComment']);
+Route::post('/edit_comment', [MessageController::class,'editComment']);
+Route::post('/edit_comment/cancel', [MessageController::class,'cancelEditComment']);
 
 //invites
 Route::get('/invites/{id}', [InvitesController::class,'showInvite']);
@@ -88,16 +87,17 @@ Route::get('/report/{id}', [ReportsController::class,'showReportForm']);
 Route::get('/notifications', [NotificationsController::class, 'showNotifications']);
 
 //my events
-Route::get('myevents', 'EventController@showMyEvents');
+Route::get('my_events', 'EventController@showMyEvents');
 Route::get('calendar', 'EventController@showEventsAttend');
 
 //contact us
-Route::get('contactUs', 'StaticPagesController@showContactUs')->name('contactus');
-Route::post('contactUs', [StaticPagesController::class, 'sendEmail']);
+Route::get('contact_us', 'StaticPagesController@showContactUs')->name('contact_us');
+Route::post('contact_us', [StaticPagesController::class, 'sendEmail']);
 //static pages
-Route::get('aboutUS', [StaticPagesController::class, 'showAbout']);
-Route::get('userHelp', [StaticPagesController::class, 'showUserHelp']);
+Route::get('about_us', [StaticPagesController::class, 'showAbout']);
+Route::get('user/help', [StaticPagesController::class, 'showUserHelp']);
 
+// password reset
 Route::get('forgot_password', 'ForgotPassword@show')->middleware('guest')->name('password.request');
 Route::post('forgot_password', 'ForgotPassword@request')->middleware('guest')->name('password.email');
 Route::get('recover_password', 'ForgotPassword@showRecover')->middleware('guest')->name('password.reset');;

@@ -7,7 +7,7 @@
   <div class="formbg">
     <div class="formbg-inner" style="padding: 48px">
       <h5 style="padding-bottom: 0.5em">New Event</h5>
-      <form id="stripe-login" action="eventsCreate" method="POST" enctype="multipart/form-data">
+      <form id="stripe-login" action="/events_create" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="field" style="padding-bottom: 24px">

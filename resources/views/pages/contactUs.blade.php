@@ -8,7 +8,7 @@
         <div class="formbg">
             <div class="formbg-inner" style="padding: 48px">
             <h5 style="padding-bottom: 0.5em">Get in touch</h5>
-                <form id="stripe-login" method="POST" action="contactUs">
+                <form id="stripe-login" method="POST" action="contact_us">
                     {{ csrf_field() }}
                     <div class="field" style="padding-bottom: 24px">
                         <label for="name">Name</label>
