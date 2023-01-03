@@ -22,7 +22,10 @@
             <div>
                 @if ($event->visibility)
                     <button id="{{$event->id}}" onclick="copyLinkFeed({{$event->id}});">Share</button>
-                    <a class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+                    @if (Auth::check())
+                    <a id="join" type='button' class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+                    @else <a id="join" type='button' data-bs-toggle="modal" data-bs-target="#ModalCenter" id="attend1" data-bs-placement="top" title="Log In Needed" class='button' style="float:right; {{ ($attendee[$event->id]) ? 'background-color: CornflowerBlue' : '' }}" href="/{{($attendee[$event->id]) ? 'abstainEvent' : 'joinEvent'}}/{{$event->id}}">
+                    @endif
                     @if($attendee[$event->id])
                         Attending
                     @else
@@ -38,6 +41,21 @@
 
         @endif
     @endforeach 
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="Share event!!" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-body">
+            You need to login first.
+           </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>        </div>
+        </div>
+    </div>
+
 </div>
 @if (Auth::check())
 <div class="text-center">
