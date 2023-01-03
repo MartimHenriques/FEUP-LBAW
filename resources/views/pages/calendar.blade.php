@@ -4,7 +4,7 @@
 
 @section('content')
 
-<h1>Events attended</h1>
+<h2>Events attended</h2>
 <div class="eventsAttended">
     @if(count($eventsattended)>0)
     @each('partials.eventCard', $eventsattended, 'event')
@@ -13,7 +13,7 @@
     @endif
     
 </div>
-<h1>Events to attend</h1>
+<h2>Events to attend</h2>
 @if(count($eventstoattend)>0)
     <div class="eventsToAttend">
         @each('partials.eventCard', $eventstoattend, 'event')

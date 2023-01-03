@@ -71,7 +71,7 @@
         @yield('content2')
       </section>
       @endif
-      <footer id="footer" class="d-flex flex-wrap justify-content-between align-items-center border-top" @if (!Request::is('login', 'register', '/')) style="padding-left: 14em;" @endif>
+      <footer  @if (!Request::is('login', 'register', '/')) id="footer" @else id="footer2" @endif class="d-flex flex-wrap justify-content-between align-items-center border-top">
           <p class="col-md-4 mb-0">© 2022 WeMeet, Inc</p>
       
           <ul class="nav col-md-4 justify-content-end">

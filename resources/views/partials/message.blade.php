@@ -36,7 +36,7 @@
     @endforeach
     @if($message->parent == NULL && !$event->is_canceled)
     <div id="reply">
-        <input id="replyInput" type="text" name="reply" placeholder="Write reply">
+        <input id="replyInput" type="text" name="reply" placeholder="Write a reply">
         <button id="submitReply" type="submit">
             post
         </button>

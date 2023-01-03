@@ -84,7 +84,8 @@ class MessageController extends Controller
         else{
             $message = $msg;
         }
+        $event = Event::find($request->get('id_event'));
    
-        return json_encode(view('partials.message', ['message' => $message])->render());
+        return json_encode(view('partials.message', ['message' => $message, 'event' => $event])->render());
     }
 }

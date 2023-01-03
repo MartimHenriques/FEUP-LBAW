@@ -30,6 +30,7 @@ function addMessageHandler() {
   
   let msg = document.querySelectorAll(".message")[0]
   let newMessage = document.createElement('div')
+  newMessage.className = "message"
   newMessage.innerHTML = JSON.parse(this.responseText)
   if(msg){
     msg.parentNode.insertBefore(newMessage,  msg)

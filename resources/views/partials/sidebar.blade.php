@@ -2,6 +2,15 @@
 @section('sidebar')
 
 <aside class="sidebar">
+    <div class="input-group rounded" style="margin-top: 7em">
+        <form action="api/eventsSearch" method="POST">
+            @csrf
+            <input type="search" name="search" id="eventSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="searcon" style="font-size:17px;" />
+            <button type='submit' name="button" value="searchEvent" style="display:none;" disabled>
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
 <h4>Events</h4>
 <nav class="menu">
     <a href="{{ url('/events') }}" class="menu-item"><i class="bi bi-house-door-fill"></i> Home page</a>
