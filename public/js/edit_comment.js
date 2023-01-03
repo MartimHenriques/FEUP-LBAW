@@ -9,15 +9,18 @@ document.querySelectorAll("#editBtn").forEach((e) => {
         content = div.textContent
         console.log(content.innerText)
         div.innerHTML = "<input id='messageInput' type='text' name='content' placeholder='Write a comment'>";
-        e.parentElement.innerHTML = "<a id='cancelEdit' onclick='cancelEdit()'>Cancel</a> <a id='saveEdit' type='button' class='button' onclick='myFunction()'>Save</a>"
+        e.parentElement.innerHTML = "<a id='cancelEdit' onclick='cancelEdit()'>Cancel</a> <a id='saveEdit' type='button' class='button' onclick='editComment()'>Save</a>"
       
     }
     )});
 
-function myFunction() {
+function editComment() {
     let id = msg.getAttribute('msg-id')
     let newContent = div.children[0].value
     sendAjaxRequest('post', '/editComment', {id:id, newContent:newContent} , editCommentHandler);
+}
+function cancelEditComment() {
+
 }
 
 

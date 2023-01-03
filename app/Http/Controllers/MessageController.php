@@ -22,6 +22,7 @@ class MessageController extends Controller
         $msg->id_event = $request->get('id');
         $msg->save();
 
+
         $event = Event::find($request->get('id'));
         
         return json_encode(view('partials.message', ['message' => $msg, 'event' => $event])->render());
@@ -34,10 +35,12 @@ class MessageController extends Controller
         $msg->id_event =  $request->get('id');
         $msg->parent =  $request->get('id_parent');
         $msg->save();
+
         
         $event = Event::find($request->get('id'));
 
         return json_encode(view('partials.message',['message' => $msg, 'event' => $event])->render());
+
     }
 
 
